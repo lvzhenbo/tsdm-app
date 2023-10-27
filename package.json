@@ -5,11 +5,20 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build": "run-p type-check build-only",
     "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
-    "lint": "eslint"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier --write src/",
+    "android:add": "ionic cap add android",
+    "android:open": "ionic cap open android",
+    "android:dev": "ionic cap run android -l --external",
+    "android:copy": "ionic cap copy android",
+    "android:build": "ionic cap build android",
+    "android:sync": "ionic cap sync android"
   },
   "dependencies": {
     "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
@@ -21,6 +30,7 @@
     "@capacitor/status-bar": "5.0.6",
     "@ionic/vue": "^7.5.2",
     "@ionic/vue-router": "^7.5.2",
+    "destr": "^2.0.2",
     "ionicons": "^7.2.1",
     "vue": "^3.3.7",
     "vue-router": "^4.2.5"

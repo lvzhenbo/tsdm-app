@@ -6,7 +6,6 @@
 </template>
 
 <script setup lang="ts">
-  import { IonPage } from '@ionic/vue';
   import MenuLayout from './menu.vue';
   import PageLayout from './page.vue';
 

@@ -36,21 +36,6 @@
 
 <script setup lang="ts">
   import { forumGroup } from '@/api/forum';
-  import { onMounted, ref } from 'vue';
-  import {
-    IonPage,
-    IonContent,
-    IonCard,
-    IonCardHeader,
-    IonCardContent,
-    IonCardTitle,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonButton,
-    IonIcon,
-    IonSpinner,
-  } from '@ionic/vue';
   import { setStorage, getStorage } from '@/utils';
   import { reloadOutline } from 'ionicons/icons';
 

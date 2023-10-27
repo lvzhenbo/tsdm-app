@@ -15,19 +15,6 @@
 </template>
 
 <script setup lang="ts">
-  import {
-    IonPage,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonRouterOutlet,
-    IonButtons,
-    IonMenuButton,
-  } from '@ionic/vue';
-  import { ref, watch } from 'vue';
-  import { useRoute } from 'vue-router';
-
   defineOptions({
     name: 'PageLayout',
   });

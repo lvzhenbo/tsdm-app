@@ -17,15 +17,6 @@
 </template>
 
 <script setup lang="ts">
-  import {
-    IonMenu,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonList,
-    IonItem,
-  } from '@ionic/vue';
   defineOptions({
     name: 'MenuLayout',
   });

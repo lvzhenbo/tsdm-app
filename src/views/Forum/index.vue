@@ -1,10 +1,20 @@
 <template>
   <IonPage>
-    <IonContent>
-      <IonList lines="none" :inset="true">
+    <IonContent color="light">
+      <IonList v-if="loading" lines="full" :inset="true">
+        <IonItem v-for="n in 3" :key="n">
+          <IonLabel>
+            <IonSkeletonText :animated="true" style="width: 30%" />
+            <IonNote color="medium">
+              <IonSkeletonText :animated="true" style="width: 40%" />
+            </IonNote>
+          </IonLabel>
+        </IonItem>
+      </IonList>
+      <IonList v-else lines="full" :inset="true">
         <IonItem v-for="item in subGroupList" :key="item.fid" :button="true">
           <IonLabel>
-            <strong class="text-xl">{{ item.title }}</strong> <br />
+            {{ item.title }} <br />
             <IonNote color="medium"> 今日发帖：{{ item.todaypost }} </IonNote>
           </IonLabel>
         </IonItem>
@@ -29,6 +39,7 @@
   const subGroupList = ref<SubGroupList[]>([]);
   const route = useRoute();
   const gid = route.params.gid as string;
+  const loading = ref(false);
 
   onMounted(async () => {
     getSubGroup();
@@ -36,6 +47,7 @@
 
   async function getSubGroup() {
     try {
+      loading.value = true;
       const res = await subGroup(gid);
       if (res.data) {
         const data = JSON.parse(res.data);
@@ -43,7 +55,9 @@
           subGroupList.value = data.forum;
         }
       }
+      loading.value = false;
     } catch (error) {
+      loading.value = false;
       console.error(error);
     }
   }

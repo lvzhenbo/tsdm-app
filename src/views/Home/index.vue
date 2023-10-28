@@ -17,14 +17,13 @@
           <IonGrid>
             <IonRow>
               <IonCol v-for="item in groupList" :key="item.gid" size="6">
-                <IonButton
-                  :router-link="`/forum/${item.gid}`"
-                  expand="block"
-                  fill="clear"
-                  class="text-black"
+                <div
+                  class="ion-activatable text-center rounded relative overflow-hidden leading-9 cursor-pointer dark:text-white"
+                  @click="() => $router.push(`/forum/${item.gid}`)"
                 >
                   {{ item.title }}
-                </IonButton>
+                  <IonRippleEffect />
+                </div>
               </IonCol>
             </IonRow>
           </IonGrid>

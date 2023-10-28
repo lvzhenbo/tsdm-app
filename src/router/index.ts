@@ -17,14 +17,14 @@ const routes: Array<RouteRecordRaw> = [
           title: '天使动漫论坛',
         },
       },
-      {
-        path: 'login',
-        name: 'Login',
-        component: () => import('@/views/Login/index.vue'),
-        meta: {
-          title: '登录',
-        },
-      },
+      // {
+      //   path: 'login',
+      //   name: 'Login',
+      //   component: () => import('@/views/Login/index.vue'),
+      //   meta: {
+      //     title: '登录',
+      //   },
+      // },
       {
         path: 'forum/:gid',
         name: 'Forum',

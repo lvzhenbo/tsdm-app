@@ -27,11 +27,6 @@ export const subGroup = (gid: string) =>
     ...API.ForumGroup,
     params: {
       ...API.ForumGroup.params,
-      gid: gid,
+      gid,
     },
-  });
-export const forumData = (params: { fid: number; mod: 'forumdisplay' }) =>
-  request({
-    ...API.ForumGroup,
-    data: new URLSearchParams(params as unknown as Record<string, string>).toString(),
   });

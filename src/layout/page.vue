@@ -5,7 +5,20 @@
         <IonButtons slot="start">
           <IonMenuButton></IonMenuButton>
         </IonButtons>
-        <IonTitle> {{ title }} </IonTitle>
+        <IonTitle v-if="route.name === 'Forum'">
+          <IonSelect
+            aria-label="Fruit"
+            interface="popover"
+            placeholder="Select fruit"
+            :value="gidRef"
+            @ion-change="(e) => $router.replace(`/forum/${e.detail.value}`)"
+          >
+            <IonSelectOption v-for="item in groupList" :key="item.gid" :value="item.gid">
+              {{ item.title }}
+            </IonSelectOption>
+          </IonSelect>
+        </IonTitle>
+        <IonTitle v-else> {{ title }} </IonTitle>
       </IonToolbar>
     </IonHeader>
     <IonContent>
@@ -15,16 +28,37 @@
 </template>
 
 <script setup lang="ts">
+  import { getStorage } from '@/utils';
+
+  interface Group {
+    gid: number;
+    title: string;
+  }
+
   defineOptions({
     name: 'PageLayout',
   });
 
   const title = ref('天使动漫论坛');
   const route = useRoute();
+  const groupList = ref<Group[]>([]);
+  const gidRef = ref(0);
+
   watch(
     route,
-    (val) => {
-      if (val.meta.title) {
+    async (val) => {
+      if (val.name === 'Forum') {
+        const gid = val.params.gid as string;
+        gidRef.value = Number(gid);
+        const groupListStorage = await getStorage('groupList');
+        if (groupListStorage) {
+          groupList.value = groupListStorage;
+          const group = groupListStorage.find((item: any) => item.gid === Number(gid));
+          if (group) {
+            title.value = group.title;
+          }
+        }
+      } else if (val.meta.title) {
         title.value = val.meta.title as string;
       } else {
         title.value = '天使动漫论坛';
@@ -36,4 +70,8 @@
   );
 </script>
 
-<style scoped></style>
+<style scoped>
+  ion-select::part(icon) {
+    color: white;
+  }
+</style>

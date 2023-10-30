@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
+import { pinia } from './stores';
 
 import { IonicVue } from '@ionic/vue';
 import { SafeAreaController } from '@aashu-dubey/capacitor-statusbar-safe-area';
@@ -26,7 +27,7 @@ import './theme/variables.css';
 
 import './theme/tailwind.css';
 
-const app = createApp(App).use(IonicVue).use(router);
+const app = createApp(App).use(IonicVue).use(router).use(pinia);
 
 router.isReady().then(() => {
   app.mount('#app');

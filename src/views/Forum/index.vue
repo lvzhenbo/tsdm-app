@@ -1,18 +1,18 @@
 <template>
   <IonPage>
     <IonContent color="light">
-      <IonList v-if="loading" lines="full" :inset="true">
-        <IonItem v-for="n in 3" :key="n">
+      <IonList v-if="loading" lines="none" :inset="true">
+        <IonItem v-for="n in 4" :key="n">
           <IonLabel>
-            <IonSkeletonText :animated="true" style="width: 30%" />
+            <IonSkeletonText :animated="true" class="w-1/3" />
             <IonNote color="medium">
-              <IonSkeletonText :animated="true" style="width: 40%" />
+              <IonSkeletonText :animated="true" class="w-1/2" />
             </IonNote>
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonList v-else lines="full" :inset="true">
-        <IonItem v-for="item in subGroupList" :key="item.fid" :button="true">
+      <IonList v-else lines="none" :inset="true">
+        <IonItem v-for="item in subGroupList" :key="item.fid" :button="true" :detail="true">
           <IonLabel>
             {{ item.title }} <br />
             <IonNote color="medium"> 今日发帖：{{ item.todaypost }} </IonNote>

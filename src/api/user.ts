@@ -49,3 +49,12 @@ export const login = (params: LoginParams) =>
     ...API.Login,
     data: new URLSearchParams(params as unknown as Record<string, string>).toString(),
   });
+
+export const userInfo = (uid: string) =>
+  request({
+    ...API.UserInfo,
+    params: {
+      ...API.UserInfo.params,
+      uid,
+    },
+  });

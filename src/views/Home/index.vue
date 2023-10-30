@@ -18,7 +18,7 @@
             <IonRow>
               <IonCol v-for="item in groupList" :key="item.gid" size="6">
                 <div
-                  class="ion-activatable text-center rounded relative overflow-hidden leading-9 cursor-pointer dark:text-white"
+                  class="ion-activatable text-center rounded relative overflow-hidden leading-9 cursor-pointer dark:text-white text-black"
                   @click="() => $router.push(`/forum/${item.gid}`)"
                 >
                   {{ item.title }}
@@ -54,7 +54,6 @@
     const groupListStorage = await getStorage('groupList');
     if (groupListStorage) {
       groupList.value = groupListStorage;
-      return;
     }
     getForumGroup();
   });

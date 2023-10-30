@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     IonApp: typeof import('@ionic/vue')['IonApp']
+    IonAvatar: typeof import('@ionic/vue')['IonAvatar']
     IonButton: typeof import('@ionic/vue')['IonButton']
     IonButtons: typeof import('@ionic/vue')['IonButtons']
     IonCard: typeof import('@ionic/vue')['IonCard']
@@ -19,11 +20,14 @@ declare module 'vue' {
     IonGrid: typeof import('@ionic/vue')['IonGrid']
     IonHeader: typeof import('@ionic/vue')['IonHeader']
     IonIcon: typeof import('@ionic/vue')['IonIcon']
+    IonImg: typeof import('@ionic/vue')['IonImg']
+    IonInput: typeof import('@ionic/vue')['IonInput']
     IonItem: typeof import('@ionic/vue')['IonItem']
     IonLabel: typeof import('@ionic/vue')['IonLabel']
     IonList: typeof import('@ionic/vue')['IonList']
     IonMenu: typeof import('@ionic/vue')['IonMenu']
     IonMenuButton: typeof import('@ionic/vue')['IonMenuButton']
+    IonMenuToggle: typeof import('@ionic/vue')['IonMenuToggle']
     IonNote: typeof import('@ionic/vue')['IonNote']
     IonPage: typeof import('@ionic/vue')['IonPage']
     IonRippleEffect: typeof import('@ionic/vue')['IonRippleEffect']

@@ -33,6 +33,14 @@ const routes: Array<RouteRecordRaw> = [
           title: '分区',
         },
       },
+      {
+        path: 'forumview/:fid',
+        name: 'ForumView',
+        component: () => import('@/views/ForumView/index.vue'),
+        meta: {
+          title: '板块详情',
+        },
+      },
     ],
   },
 ];

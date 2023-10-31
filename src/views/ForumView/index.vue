@@ -1,6 +1,6 @@
 <template>
   <IonPage>
-    <IonContent color="light">
+    <IonContent>
       <IonList v-if="loading" lines="none" :inset="true">
         <IonItem v-for="n in 4" :key="n">
           <IonLabel>
@@ -12,53 +12,53 @@
         </IonItem>
       </IonList>
       <IonList v-else lines="none" :inset="true">
-        <IonItem
-          v-for="item in subGroupList"
-          :key="item.fid"
-          :button="true"
-          :detail="true"
-          @click="() => $router.push(`/forumview/${item.fid}`)"
-        >
+        <IonItem v-for="item in forumData" :key="item.tid" :button="true">
           <IonLabel>
             {{ item.title }} <br />
-            <IonNote color="medium"> 今日发帖：{{ item.todaypost }} </IonNote>
+            <IonNote color="medium"> {{ item.author }} </IonNote>
           </IonLabel>
         </IonItem>
       </IonList>
     </IonContent>
   </IonPage>
 </template>
-
 <script setup lang="ts">
-  import { subGroup } from '@/api/forum';
+  import { forumView } from '@/api/forum';
 
-  interface SubGroupList {
+  interface ForumData {
     fid: number;
+    username: string;
+    tid: number;
     title: string;
-    todaypost: number;
+    authorid: string;
+    author: string;
+    name: string;
+    typeid: string;
+    total: number;
   }
 
   defineOptions({
-    name: 'ForumIndex',
+    name: 'ForumView',
   });
 
-  const subGroupList = ref<SubGroupList[]>([]);
+  const forumData = ref<ForumData[]>([]);
   const route = useRoute();
-  const gid = route.params.gid as string;
+  const fid = route.params.fid as string;
+  const pages = ref(1);
   const loading = ref(false);
 
   onMounted(async () => {
-    getSubGroup();
+    getForumData();
   });
 
-  async function getSubGroup() {
+  async function getForumData() {
     try {
       loading.value = true;
-      const res = await subGroup(gid);
+      const res = await forumView(fid, String(pages));
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
-          subGroupList.value = data.forum;
+          forumData.value = data.thread;
         }
       }
       loading.value = false;
@@ -68,5 +68,4 @@
     }
   }
 </script>
-
 <style scoped></style>

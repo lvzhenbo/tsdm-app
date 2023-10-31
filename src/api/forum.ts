@@ -30,3 +30,13 @@ export const subGroup = (gid: string) =>
       gid,
     },
   });
+export const forumView = (fid: string, page: string) =>
+  request({
+    ...API.ForumGroup,
+    params: {
+      ...API.ForumGroup.params,
+      mod: 'forumdisplay',
+      fid,
+      page,
+    },
+  });

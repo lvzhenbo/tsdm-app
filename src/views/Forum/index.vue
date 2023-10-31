@@ -17,7 +17,7 @@
           :key="item.fid"
           :button="true"
           :detail="true"
-          @click="() => $router.push(`/forumview/${item.fid}`)"
+          @click="handleToForumView(item)"
         >
           <IonLabel>
             {{ item.title }} <br />
@@ -31,8 +31,9 @@
 
 <script setup lang="ts">
   import { subGroup } from '@/api/forum';
+  import { useForumStore } from '@/stores/modules/forum';
 
-  interface SubGroupList {
+  interface SubGroup {
     fid: number;
     title: string;
     todaypost: number;
@@ -42,10 +43,12 @@
     name: 'ForumIndex',
   });
 
-  const subGroupList = ref<SubGroupList[]>([]);
+  const subGroupList = ref<SubGroup[]>([]);
   const route = useRoute();
+  const router = useRouter();
   const gid = route.params.gid as string;
   const loading = ref(false);
+  const forumStore = useForumStore();
 
   onMounted(async () => {
     getSubGroup();
@@ -66,6 +69,11 @@
       loading.value = false;
       console.error(error);
     }
+  }
+
+  function handleToForumView(data: SubGroup) {
+    forumStore.setForumTitle(data.title);
+    router.push(`/forumview/${data.fid}`);
   }
 </script>
 

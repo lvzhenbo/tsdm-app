@@ -19,6 +19,28 @@
           </IonSelect>
         </IonTitle>
         <IonTitle v-else> {{ title }} </IonTitle>
+        <IonButtons v-if="route.name === 'ForumView'" slot="primary">
+          <IonButton id="popover-button">
+            <IonIcon slot="icon-only" :ios="ellipsisHorizontal" :md="ellipsisVertical" />
+          </IonButton>
+          <IonPopover trigger="popover-button">
+            <IonContent>
+              <IonList lines="none">
+                <IonItem
+                  :button="true"
+                  :detail="false"
+                  @click="
+                    async () => {
+                      await Browser.open({ url: 'https://ionicframework.com/' });
+                    }
+                  "
+                >
+                  转到浏览器
+                </IonItem>
+              </IonList>
+            </IonContent>
+          </IonPopover>
+        </IonButtons>
       </IonToolbar>
     </IonHeader>
     <IonContent>
@@ -29,6 +51,9 @@
 
 <script setup lang="ts">
   import { getStorage } from '@/utils';
+  import { useForumStore } from '@/stores/modules/forum';
+  import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
+  import { Browser } from '@capacitor/browser';
 
   interface Group {
     gid: number;
@@ -43,6 +68,7 @@
   const route = useRoute();
   const groupList = ref<Group[]>([]);
   const gidRef = ref(0);
+  const forumStore = useForumStore();
 
   watch(
     route,
@@ -58,6 +84,8 @@
             title.value = group.title;
           }
         }
+      } else if (val.name === 'ForumView') {
+        title.value = forumStore.forumTitle;
       } else if (val.meta.title) {
         title.value = val.meta.title as string;
       } else {

@@ -11,6 +11,9 @@ dependencies:
   '@capacitor/app':
     specifier: 5.0.6
     version: 5.0.6(@capacitor/core@5.5.1)
+  '@capacitor/browser':
+    specifier: ^5.1.0
+    version: 5.1.0(@capacitor/core@5.5.1)
   '@capacitor/core':
     specifier: 5.5.1
     version: 5.5.1
@@ -1326,6 +1329,14 @@ packages:
 
   /@capacitor/app@5.0.6(@capacitor/core@5.5.1):
     resolution: {integrity: sha512-6ZXVdnNmaYILasC/RjQw+yfTmq2ZO7Q3v5lFcDVfq3PFGnybyYQh+RstBrYri+376OmXOXxBD7E6UxBhrMzXGA==}
+    peerDependencies:
+      '@capacitor/core': ^5.0.0
+    dependencies:
+      '@capacitor/core': 5.5.1
+    dev: false
+
+  /@capacitor/browser@5.1.0(@capacitor/core@5.5.1):
+    resolution: {integrity: sha512-7togqchk2Tvq4SmLaWhcrd4x48ES/GEZsceM+29aun7WhxQEVcDU0cJsVdSU2LNFwNhWgPV2GW90etVd1B3OdQ==}
     peerDependencies:
       '@capacitor/core': ^5.0.0
     dependencies:

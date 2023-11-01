@@ -8,6 +8,7 @@
     "src/**/*.vue",
     "src/**/*.ts",
     "src/**/*.tsx",
+    "src/**/*.json",
     "types/**/*.d.ts"
   ],
   "exclude": ["src/**/__tests__/*"],

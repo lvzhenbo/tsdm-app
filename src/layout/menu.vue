@@ -16,7 +16,7 @@
       <IonList lines="none">
         <IonMenuToggle>
           <IonItem button @click="handleTo('/home')">首页</IonItem>
-          <IonItem>Menu Item</IonItem>
+          <IonItem button @click="handleTo('/userInfo', true)">我的资料</IonItem>
           <IonItem>Menu Item</IonItem>
           <IonItem>Menu Item</IonItem>
         </IonMenuToggle>
@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-  import { menuController } from '@ionic/vue';
+  import { menuController, alertController } from '@ionic/vue';
   import { personCircle } from 'ionicons/icons';
   import { useUserStore } from '@/stores/modules/user';
   import { getStorage } from '@/utils';
@@ -47,7 +47,28 @@
     router.push('/login');
   };
 
-  const handleTo = async (path: string) => {
+  const handleTo = async (path: string, auth = false) => {
+    if (auth && !userStore.userInfo) {
+      const alert = await alertController.create({
+        header: '提示',
+        message: '请先登录',
+        buttons: [
+          {
+            text: '取消',
+            role: 'cancel',
+          },
+          {
+            text: '确定',
+            role: 'confirm',
+            handler: () => {
+              router.push('/login');
+            },
+          },
+        ],
+      });
+      await alert.present();
+      return;
+    }
     router.push(path);
   };
 

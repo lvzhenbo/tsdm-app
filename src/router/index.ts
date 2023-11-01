@@ -26,6 +26,14 @@ const routes: Array<RouteRecordRaw> = [
         },
       },
       {
+        path: 'userInfo',
+        name: 'UserInfo',
+        component: () => import('@/views/UserInfo/index.vue'),
+        meta: {
+          title: '我的资料',
+        },
+      },
+      {
         path: 'forum/:gid',
         name: 'Forum',
         component: () => import('@/views/Forum/index.vue'),

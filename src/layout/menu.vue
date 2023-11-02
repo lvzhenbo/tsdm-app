@@ -15,10 +15,29 @@
     <IonContent>
       <IonList lines="none">
         <IonMenuToggle>
-          <IonItem button @click="handleTo('/home')">首页</IonItem>
-          <IonItem button @click="handleTo('/userInfo', true)">我的资料</IonItem>
-          <IonItem>Menu Item</IonItem>
-          <IonItem>Menu Item</IonItem>
+          <IonItem button @click="handleTo('/home')">
+            <IonIcon slot="start" aria-hidden="true" :icon="home"></IonIcon>
+            <IonLabel>首页</IonLabel>
+          </IonItem>
+          <IonItem button @click="handleTo('/userInfo', true)">
+            <IonIcon slot="start" aria-hidden="true" :icon="person"></IonIcon>
+            <IonLabel>我的资料</IonLabel>
+          </IonItem>
+          <IonItem
+            button
+            @click="
+              async () => {
+                await Browser.open({ url: 'https://www.tsdm39.com/' });
+              }
+            "
+          >
+            <IonIcon slot="start" aria-hidden="true" :icon="globe"></IonIcon>
+            <IonLabel>网页论坛</IonLabel>
+          </IonItem>
+          <IonItem button>
+            <IonIcon slot="start" aria-hidden="true" :icon="settings"></IonIcon>
+            <IonLabel>设置</IonLabel>
+          </IonItem>
         </IonMenuToggle>
       </IonList>
     </IonContent>
@@ -27,9 +46,10 @@
 
 <script setup lang="ts">
   import { menuController, alertController } from '@ionic/vue';
-  import { personCircle } from 'ionicons/icons';
+  import { personCircle, home, person, globe, settings } from 'ionicons/icons';
   import { useUserStore } from '@/stores/modules/user';
   import { getStorage } from '@/utils';
+  import { Browser } from '@capacitor/browser';
 
   defineOptions({
     name: 'MenuLayout',

@@ -51,6 +51,14 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('@/views/Settings/index.vue'),
+    meta: {
+      title: '设置',
+    },
+  },
 ];
 
 const router = createRouter({

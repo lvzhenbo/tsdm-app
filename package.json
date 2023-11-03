@@ -31,6 +31,7 @@
     "@capacitor/status-bar": "5.0.6",
     "@ionic/vue": "^7.5.3",
     "@ionic/vue-router": "^7.5.3",
+    "@vueuse/core": "^10.5.0",
     "date-fns": "^2.30.0",
     "destr": "^2.0.2",
     "ionicons": "^7.2.1",

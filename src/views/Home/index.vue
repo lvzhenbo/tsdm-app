@@ -18,7 +18,8 @@
             <IonRow>
               <IonCol v-for="item in groupList" :key="item.gid" size="6">
                 <div
-                  class="ion-activatable text-center rounded relative overflow-hidden leading-9 cursor-pointer dark:text-white text-black"
+                  class="ion-activatable text-center rounded relative overflow-hidden leading-9 cursor-pointer"
+                  :class="settingStore.isDark ? 'text-white' : 'text-black'"
                   @click="() => $router.push(`/forum/${item.gid}`)"
                 >
                   {{ item.title }}
@@ -37,6 +38,7 @@
   import { forumGroup } from '@/api/forum';
   import { setStorage, getStorage } from '@/utils';
   import { reloadOutline } from 'ionicons/icons';
+  import { useSettingStore } from '@/stores/modules/setting';
 
   interface Group {
     gid: number;
@@ -49,6 +51,7 @@
 
   const groupList = ref<Group[]>([]);
   const reload = ref(false);
+  const settingStore = useSettingStore();
 
   onMounted(async () => {
     const groupListStorage = await getStorage('groupList');

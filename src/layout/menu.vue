@@ -23,18 +23,11 @@
             <IonIcon slot="start" aria-hidden="true" :icon="person"></IonIcon>
             <IonLabel>我的资料</IonLabel>
           </IonItem>
-          <IonItem
-            button
-            @click="
-              async () => {
-                await Browser.open({ url: 'https://www.tsdm39.com/' });
-              }
-            "
-          >
+          <IonItem button @click="openUrl({ url: 'https://www.tsdm39.com' })">
             <IonIcon slot="start" aria-hidden="true" :icon="globe"></IonIcon>
             <IonLabel>网页论坛</IonLabel>
           </IonItem>
-          <IonItem button>
+          <IonItem button @click="handleTo('/settings')">
             <IonIcon slot="start" aria-hidden="true" :icon="settings"></IonIcon>
             <IonLabel>设置</IonLabel>
           </IonItem>
@@ -48,8 +41,7 @@
   import { menuController, alertController } from '@ionic/vue';
   import { personCircle, home, person, globe, settings } from 'ionicons/icons';
   import { useUserStore } from '@/stores/modules/user';
-  import { getStorage } from '@/utils';
-  import { Browser } from '@capacitor/browser';
+  import { getStorage, openUrl } from '@/utils';
 
   defineOptions({
     name: 'MenuLayout',

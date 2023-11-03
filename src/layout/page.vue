@@ -3,7 +3,7 @@
     <IonHeader>
       <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
         <IonButtons slot="start">
-          <IonMenuButton></IonMenuButton>
+          <IonMenuButton />
         </IonButtons>
         <IonTitle v-if="route.name === 'Forum'">
           <IonSelect
@@ -29,11 +29,7 @@
                 <IonItem
                   :button="true"
                   :detail="false"
-                  @click="
-                    async () => {
-                      await Browser.open({ url: 'https://ionicframework.com/' });
-                    }
-                  "
+                  @click="openUrl({ url: 'https://www.tsdm39.com' })"
                 >
                   转到浏览器
                 </IonItem>
@@ -50,10 +46,9 @@
 </template>
 
 <script setup lang="ts">
-  import { getStorage } from '@/utils';
+  import { getStorage, openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
   import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
-  import { Browser } from '@capacitor/browser';
 
   interface Group {
     gid: number;

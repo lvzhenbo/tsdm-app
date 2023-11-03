@@ -1,11 +1,18 @@
 <template>
   <IonPage>
     <IonContent color="light">
-      <IonList :inset="true">
+      <IonList v-if="forumData?.subforum.length" :inset="true">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
         </IonListHeader>
-        <IonItem v-for="item in forumData?.subforum" :button="true">{{ item.name }}</IonItem>
+        <IonItem
+          v-for="item in forumData?.subforum"
+          :key="item.fid"
+          :button="true"
+          @click="handleToSub(item)"
+        >
+          {{ item.name }}
+        </IonItem>
       </IonList>
       <IonChip v-for="item in forumData?.threadtype" :key="item.typeid" class="mt-4 ml-4">
         {{ item.name }}
@@ -20,9 +27,9 @@
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonList :inset="true">
+      <IonList v-if="forumData?.recommend.length" :inset="true">
         <IonListHeader>
-          <IonLabel>子版块</IonLabel>
+          <IonLabel class="text-lg">推荐主题</IonLabel>
         </IonListHeader>
         <IonItem v-for="item in forumData?.recommend" :key="item.tid" :button="true">
           <IonLabel> {{ item.title }} <br /> </IonLabel>
@@ -57,7 +64,9 @@
 </template>
 <script setup lang="ts">
   import { forumView } from '@/api/forum';
+  import type { InfiniteScrollCustomEvent } from '@ionic/vue';
   import { chevronUpCircle, add, star } from 'ionicons/icons';
+  import { useForumStore } from '@/stores/modules/forum';
 
   interface ForumData {
     thread: Thread[];
@@ -116,16 +125,19 @@
 
   const forumData = ref<ForumData | null>(null);
   const route = useRoute();
+  const router = useRouter();
   const fid = route.params.fid as string;
   const pages = ref(1);
   const loading = ref(false);
   const threadList = ref<Thread[]>([]);
-  const ionInfinite = () => {
-    loadMorePage();
-  };
+  const forumStore = useForumStore();
 
   onMounted(async () => {
     getForumData();
+    if (forumStore.prevTitle) {
+      forumStore.setForumTitle(forumStore.prevTitle);
+      forumStore.setPrevTitle('');
+    }
   });
 
   async function getForumData() {
@@ -153,7 +165,7 @@
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
-          threadList.value = [...threadList.value, data.thread];
+          threadList.value = [...threadList.value, ...data.thread];
         }
       }
       loading.value = false;
@@ -162,5 +174,21 @@
       console.error(error);
     }
   }
+
+  const ionInfinite = async (ev: InfiniteScrollCustomEvent) => {
+    await loadMorePage();
+    ev.target.complete();
+  };
+
+  const handleToSub = (item: Subforum) => {
+    forumStore.setPrevTitle(forumData.value!.forumname);
+    forumStore.setForumTitle(item.name);
+    router.push({
+      name: 'ForumView',
+      params: {
+        fid: item.fid,
+      },
+    });
+  };
 </script>
 <style scoped></style>

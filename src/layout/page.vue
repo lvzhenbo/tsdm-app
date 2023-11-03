@@ -20,6 +20,17 @@
         </IonTitle>
         <IonTitle v-else> {{ title }} </IonTitle>
         <IonButtons v-if="route.name === 'ForumView'" slot="primary">
+          <IonButton id="filter-button">
+            <IonIcon slot="icon-only" :ios="filterCircle" :md="filterCircle"/>
+          </IonButton>
+          <IonPopover trigger="filter-button">
+            <IonContent>
+              <IonList lines="none">
+                <IonItem>默认排序</IonItem>
+                <IonItem>按发布时间排序</IonItem>
+              </IonList>
+            </IonContent>
+          </IonPopover>
           <IonButton id="popover-button">
             <IonIcon slot="icon-only" :ios="ellipsisHorizontal" :md="ellipsisVertical" />
           </IonButton>
@@ -48,7 +59,7 @@
 <script setup lang="ts">
   import { getStorage, openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
-  import { ellipsisHorizontal, ellipsisVertical } from 'ionicons/icons';
+  import { ellipsisHorizontal, ellipsisVertical,filterCircle } from 'ionicons/icons';
 
   interface Group {
     gid: number;

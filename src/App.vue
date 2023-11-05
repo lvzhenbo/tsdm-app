@@ -40,9 +40,12 @@
           settingStore.isDark = true;
           document.body.classList.toggle('dark', true);
         }
+      } else {
+        settingStore.isDark = isDark.value;
+        document.body.classList.toggle('dark', isDark.value);
       }
     },
-    { deep: true },
+    { deep: true, immediate: true },
   );
 
   watch(isDark, (val) => {

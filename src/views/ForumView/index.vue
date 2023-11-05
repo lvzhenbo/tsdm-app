@@ -67,6 +67,7 @@
   import type { InfiniteScrollCustomEvent } from '@ionic/vue';
   import { chevronUpCircle, add, star } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
+  import { toastController } from '@ionic/vue';
 
   interface ForumData {
     thread: Thread[];
@@ -149,6 +150,8 @@
         if (data.status === 0) {
           forumData.value = data;
           threadList.value = data.thread;
+        } else {
+          notAllowedToast();
         }
       }
       loading.value = false;
@@ -173,6 +176,23 @@
       loading.value = false;
       console.error(error);
     }
+  }
+  async function notAllowedToast() {
+    const toast = await toastController.create({
+      message: '您没有权限查看该板块',
+      duration: 5000,
+      position: 'bottom',
+      buttons: [
+        {
+          text: '刷新',
+          role: 'refresh',
+          handler: () => {
+            getForumData();
+          },
+        },
+      ],
+    });
+    await toast.present();
   }
 
   const ionInfinite = async (ev: InfiniteScrollCustomEvent) => {

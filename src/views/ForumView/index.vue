@@ -132,12 +132,18 @@
   const loading = ref(false);
   const threadList = ref<Thread[]>([]);
   const forumStore = useForumStore();
+  const toast = ref<null | HTMLIonToastElement>(null);
 
   onMounted(async () => {
     getForumData();
     if (forumStore.prevTitle) {
       forumStore.setForumTitle(forumStore.prevTitle);
       forumStore.setPrevTitle('');
+    }
+  });
+  onUnmounted(() => {
+    if (toast.value) {
+      toast.value.dismiss();
     }
   });
 
@@ -178,7 +184,7 @@
     }
   }
   async function notAllowedToast() {
-    const toast = await toastController.create({
+    toast.value = await toastController.create({
       message: '您没有权限查看该板块',
       duration: 5000,
       position: 'bottom',
@@ -192,7 +198,7 @@
         },
       ],
     });
-    await toast.present();
+    await toast.value.present();
   }
 
   const ionInfinite = async (ev: InfiniteScrollCustomEvent) => {

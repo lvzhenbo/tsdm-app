@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">天使动漫论坛</string>
+    <string name="title_activity_main">天使动漫论坛</string>
+    <string name="package_name">com.tsdm39.app</string>
+    <string name="custom_url_scheme">com.tsdm39.app</string>
+</resources>

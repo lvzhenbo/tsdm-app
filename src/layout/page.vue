@@ -21,13 +21,13 @@
         <IonTitle v-else> {{ title }} </IonTitle>
         <IonButtons v-if="route.name === 'ForumView'" slot="primary">
           <IonButton id="filter-button">
-            <IonIcon slot="icon-only" :ios="filterCircle" :md="filterCircle"/>
+            <IonIcon slot="icon-only" :ios="filterCircle" :md="filterCircle" />
           </IonButton>
           <IonPopover trigger="filter-button">
             <IonContent>
               <IonList lines="none">
-                <IonItem>默认排序</IonItem>
-                <IonItem>按发布时间排序</IonItem>
+                <IonItem button @click="setFilter('')">默认排序</IonItem>
+                <IonItem button @click="setFilter('dateline')">按发布时间排序</IonItem>
               </IonList>
             </IonContent>
           </IonPopover>
@@ -59,7 +59,7 @@
 <script setup lang="ts">
   import { getStorage, openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
-  import { ellipsisHorizontal, ellipsisVertical,filterCircle } from 'ionicons/icons';
+  import { ellipsisHorizontal, ellipsisVertical, filterCircle } from 'ionicons/icons';
 
   interface Group {
     gid: number;
@@ -75,6 +75,11 @@
   const groupList = ref<Group[]>([]);
   const gidRef = ref(0);
   const forumStore = useForumStore();
+  const filter = ref('');
+
+  provide('threadFilter', {
+    filter,
+  });
 
   watch(
     route,
@@ -102,6 +107,10 @@
       immediate: true,
     },
   );
+
+  async function setFilter(filters: string) {
+    filter.value = filters;
+  }
 </script>
 
 <style scoped>

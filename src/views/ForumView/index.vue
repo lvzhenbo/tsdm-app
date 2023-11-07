@@ -73,6 +73,7 @@
   import { arrowUp, add, star, grid } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
+  import { inject, ref } from 'vue';
 
   interface ForumData {
     thread: Thread[];
@@ -139,6 +140,7 @@
   const forumStore = useForumStore();
   const toast = ref<null | HTMLIonToastElement>(null);
   const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
+  const { filter } = inject<string>('threadFilter');
 
   onMounted(async () => {
     getForumData();
@@ -152,11 +154,17 @@
       toast.value.dismiss();
     }
   });
+  watch(
+    () => filter.value,
+    () => {
+      getForumData();
+    },
+  );
 
   async function getForumData() {
     try {
       loading.value = true;
-      const res = await forumView(fid, String(pages.value));
+      const res = await forumView(fid, String(pages.value), filter.value);
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
@@ -176,7 +184,7 @@
     try {
       const nextPage = pages.value + 1;
       loading.value = true;
-      const res = await forumView(fid, String(nextPage));
+      const res = await forumView(fid, String(nextPage), filter.value);
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {

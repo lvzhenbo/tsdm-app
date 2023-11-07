@@ -1,6 +1,6 @@
 <template>
   <IonPage>
-    <IonContent color="light">
+    <IonContent ref="contentRef" color="light">
       <IonList v-if="forumData?.subforum.length" :inset="true">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
@@ -14,9 +14,11 @@
           {{ item.name }}
         </IonItem>
       </IonList>
-      <IonChip v-for="item in forumData?.threadtype" :key="item.typeid" class="mt-4 ml-4">
-        {{ item.name }}
-      </IonChip>
+      <div class="px-4">
+        <IonChip v-for="item in forumData?.threadtype" :key="item.typeid">
+          {{ item.name }}
+        </IonChip>
+      </div>
       <IonList v-if="loading" lines="none" :inset="true">
         <IonItem v-for="n in 4" :key="n">
           <IonLabel>
@@ -48,13 +50,16 @@
       </IonInfiniteScroll>
       <IonFab slot="fixed" vertical="bottom" horizontal="end">
         <IonFabButton>
-          <IonIcon :icon="chevronUpCircle" />
+          <IonIcon :icon="grid" />
         </IonFabButton>
         <IonFabList side="top">
-          <IonFabButton>
+          <IonFabButton color="secondary" @click="contentRef?.$el.scrollToTop(500)">
+            <IonIcon :icon="arrowUp"></IonIcon>
+          </IonFabButton>
+          <IonFabButton color="warning">
             <IonIcon :icon="star"></IonIcon>
           </IonFabButton>
-          <IonFabButton>
+          <IonFabButton color="primary">
             <IonIcon :icon="add"></IonIcon>
           </IonFabButton>
         </IonFabList>
@@ -64,8 +69,8 @@
 </template>
 <script setup lang="ts">
   import { forumView } from '@/api/forum';
-  import type { InfiniteScrollCustomEvent } from '@ionic/vue';
-  import { chevronUpCircle, add, star } from 'ionicons/icons';
+  import type { InfiniteScrollCustomEvent, IonContent } from '@ionic/vue';
+  import { arrowUp, add, star, grid } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
 
@@ -133,6 +138,7 @@
   const threadList = ref<Thread[]>([]);
   const forumStore = useForumStore();
   const toast = ref<null | HTMLIonToastElement>(null);
+  const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
 
   onMounted(async () => {
     getForumData();

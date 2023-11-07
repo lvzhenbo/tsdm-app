@@ -58,3 +58,8 @@ export const userInfo = (uid: string) =>
       uid,
     },
   });
+
+export const permissionUserInfo = () =>
+  request({
+    ...API.UserInfo,
+  });

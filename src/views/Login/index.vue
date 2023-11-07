@@ -131,7 +131,8 @@
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
-          await setCookie(res.headers['Set-Cookie']);
+          const cookies = res.headers['Set-Cookie'].replace(/secure,/g, 'secure;');
+          await setCookie(cookies);
           await getUserInfo(data.values.uid);
           await loading.dismiss();
           const alert = await alertController.create({

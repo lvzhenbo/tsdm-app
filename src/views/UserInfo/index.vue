@@ -131,9 +131,14 @@
   import groupList from './groupList.json';
   import { format } from 'date-fns';
   import { zhCN } from 'date-fns/locale';
+  import { permissionUserInfo } from '@/api/user';
 
   defineOptions({
     name: 'UserInfo',
+  });
+
+  onMounted(() => {
+    getUserInfo();
   });
 
   const userStore = useUserStore();
@@ -147,6 +152,17 @@
       locale: zhCN,
     });
   });
+
+  async function getUserInfo() {
+    const res = await permissionUserInfo();
+    if (res.data) {
+      const data = JSON.parse(res.data);
+      console.log(data);
+      if (data.status === 0) {
+        useUserStore().setUserInfo(data);
+      }
+    }
+  }
 </script>
 
 <style scoped></style>

@@ -157,7 +157,6 @@
     const res = await permissionUserInfo();
     if (res.data) {
       const data = JSON.parse(res.data);
-      console.log(data);
       if (data.status === 0) {
         useUserStore().setUserInfo(data);
       }

@@ -73,7 +73,7 @@
   import { arrowUp, add, star, grid } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
-  import { inject, ref } from 'vue';
+  import { threadFilterKey, type ThreadFilterValue } from '#/provideInject';
 
   interface ForumData {
     thread: Thread[];
@@ -140,7 +140,7 @@
   const forumStore = useForumStore();
   const toast = ref<null | HTMLIonToastElement>(null);
   const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
-  const { filter } = inject<string>('threadFilter');
+  const { filter } = inject(threadFilterKey) as ThreadFilterValue;
 
   onMounted(async () => {
     getForumData();

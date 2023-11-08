@@ -60,6 +60,7 @@
   import { getStorage, openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
   import { ellipsisHorizontal, ellipsisVertical, filterCircle } from 'ionicons/icons';
+  import { threadFilterKey } from '#/provideInject';
 
   interface Group {
     gid: number;
@@ -77,7 +78,7 @@
   const forumStore = useForumStore();
   const filter = ref('');
 
-  provide('threadFilter', {
+  provide(threadFilterKey, {
     filter,
   });
 

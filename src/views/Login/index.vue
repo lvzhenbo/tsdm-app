@@ -219,7 +219,6 @@
       const res = await userInfo(uid);
       if (res.data) {
         const data = JSON.parse(res.data);
-        console.log(data);
         if (data.status === 0) {
           userStore.setUserInfo(data);
         }

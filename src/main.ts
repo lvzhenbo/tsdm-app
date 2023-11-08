@@ -22,12 +22,16 @@ import '@ionic/vue/css/text-transformation.css';
 import '@ionic/vue/css/flex-utils.css';
 import '@ionic/vue/css/display.css';
 
-/* Theme variables */
+// Theme variables
 import './theme/variables.css';
-
+// Tailwind
 import './theme/tailwind.css';
 
-const app = createApp(App).use(IonicVue).use(router).use(pinia);
+const app = createApp(App);
+
+app.use(IonicVue);
+app.use(router);
+app.use(pinia);
 
 router.isReady().then(() => {
   app.mount('#app');

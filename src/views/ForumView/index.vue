@@ -1,6 +1,18 @@
 <template>
   <IonPage>
     <IonContent ref="contentRef" color="light">
+      <IonModal id="dialog-modal" trigger="open-modal">
+        <div class="mb-2.5">
+          <IonList>
+            <IonListHeader>
+              <IonLabel class="text-base">版主列表</IonLabel>
+            </IonListHeader>
+            <IonItem v-for="item in forumData?.moderator" :key="item.uid">
+              <IonLabel>{{ item.username }}</IonLabel>
+            </IonItem>
+          </IonList>
+        </div>
+      </IonModal>
       <IonList v-if="forumData?.subforum.length" :inset="true">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
@@ -62,6 +74,9 @@
           <IonFabButton color="primary">
             <IonIcon :icon="add"></IonIcon>
           </IonFabButton>
+          <IonFabButton id="open-modal" color="danger">
+            <IonIcon :icon="people"></IonIcon>
+          </IonFabButton>
         </IonFabList>
       </IonFab>
     </IonContent>
@@ -70,7 +85,7 @@
 <script setup lang="ts">
   import { forumView } from '@/api/forum';
   import type { InfiniteScrollCustomEvent, IonContent } from '@ionic/vue';
-  import { arrowUp, add, star, grid } from 'ionicons/icons';
+  import { arrowUp, add, star, grid, people } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
   import { threadFilterKey, type ThreadFilterValue } from '#/provideInject.d';
@@ -231,4 +246,12 @@
     });
   };
 </script>
-<style scoped></style>
+<style scoped>
+  ion-modal#dialog-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+</style>

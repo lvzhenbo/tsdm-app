@@ -60,7 +60,7 @@
   import { getStorage, openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
   import { ellipsisHorizontal, ellipsisVertical, filterCircle } from 'ionicons/icons';
-  import { threadFilterKey } from '#/provideInject';
+  import { threadFilterKey } from '#/provideInject.d';
 
   interface Group {
     gid: number;

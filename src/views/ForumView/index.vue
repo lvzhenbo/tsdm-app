@@ -73,7 +73,7 @@
   import { arrowUp, add, star, grid } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
-  import { threadFilterKey, type ThreadFilterValue } from '#/provideInject';
+  import { threadFilterKey, type ThreadFilterValue } from '#/provideInject.d';
 
   interface ForumData {
     thread: Thread[];

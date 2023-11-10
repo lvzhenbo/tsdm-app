@@ -41,7 +41,7 @@
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonList v-if="forumData?.recommend.length" :inset="true">
+      <IonList v-if="recommend" :inset="true">
         <IonListHeader>
           <IonLabel class="text-lg">推荐主题</IonLabel>
         </IonListHeader>
@@ -156,6 +156,7 @@
   const fid = route.params.fid as string;
   const pages = ref(1);
   const loading = ref(false);
+  const recommend = ref(false);
   const threadList = ref<Thread[]>([]);
   const forumStore = useForumStore();
   const toast = ref<null | HTMLIonToastElement>(null);
@@ -183,6 +184,7 @@
 
   async function getForumData() {
     try {
+      recommend.value = false;
       loading.value = true;
       const res = await forumView(fid, String(pages.value), filter.value);
       if (res.data) {
@@ -195,6 +197,7 @@
         }
       }
       loading.value = false;
+      recommend.value = true;
     } catch (error) {
       loading.value = false;
       console.error(error);

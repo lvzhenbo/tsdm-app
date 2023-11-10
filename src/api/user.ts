@@ -59,6 +59,15 @@ export const userInfo = (uid: string) =>
     },
   });
 
+export const otherUserInfo = (username: string) =>
+  request({
+    ...API.UserInfo,
+    params: {
+      ...API.UserInfo.params,
+      username,
+    },
+  });
+
 export const permissionUserInfo = () =>
   request({
     ...API.UserInfo,

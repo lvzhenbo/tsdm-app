@@ -67,6 +67,14 @@ const routes: Array<RouteRecordRaw> = [
       title: '设置',
     },
   },
+  {
+    path: '/otheruserinfo/:username',
+    name: 'OtherUserInfo',
+    component: () => import('@/views/OtherUserInfo/index.vue'),
+    meta: {
+      title: '个人资料',
+    },
+  },
 ];
 
 const router = createRouter({

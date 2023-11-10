@@ -7,7 +7,12 @@
             <IonListHeader>
               <IonLabel class="text-base">版主列表</IonLabel>
             </IonListHeader>
-            <IonItem v-for="item in forumData?.moderator" :key="item.uid">
+            <IonItem
+              v-for="item in forumData?.moderator"
+              :key="item.uid"
+              button
+              @click="handleToOtherUserInfo(item)"
+            >
               <IonLabel>{{ item.username }}</IonLabel>
             </IonItem>
           </IonList>
@@ -262,6 +267,15 @@
       name: 'Thread',
       params: {
         tid: item.tid,
+      },
+    });
+  };
+
+  const handleToOtherUserInfo = (item: Moderator) => {
+    router.push({
+      name: 'OtherUserInfo',
+      params: {
+        username: item.username,
       },
     });
   };

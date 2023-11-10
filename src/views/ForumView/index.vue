@@ -50,7 +50,12 @@
         </IonItem>
       </IonList>
       <IonList v-if="forumData?.thread.length" lines="none" :inset="true">
-        <IonItem v-for="item in threadList" :key="item.tid" :button="true">
+        <IonItem
+          v-for="item in threadList"
+          :key="item.tid"
+          :button="true"
+          @click="handleToThread(item)"
+        >
           <IonLabel>
             {{ item.title }} <br />
             <IonNote color="medium"> {{ item.author }} </IonNote>
@@ -242,6 +247,16 @@
       name: 'ForumView',
       params: {
         fid: item.fid,
+      },
+    });
+  };
+
+  const handleToThread = (item: Thread) => {
+    forumStore.setThreadTitle(item.title);
+    router.push({
+      name: 'Thread',
+      params: {
+        tid: item.tid,
       },
     });
   };

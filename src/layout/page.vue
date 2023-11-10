@@ -7,7 +7,6 @@
         </IonButtons>
         <IonTitle v-if="route.name === 'Forum'">
           <IonSelect
-            aria-label="Fruit"
             interface="popover"
             placeholder="Select fruit"
             :value="gidRef"
@@ -37,11 +36,7 @@
           <IonPopover trigger="popover-button">
             <IonContent>
               <IonList lines="none">
-                <IonItem
-                  :button="true"
-                  :detail="false"
-                  @click="openUrl({ url: 'https://www.tsdm39.com' })"
-                >
+                <IonItem button :detail="false" @click="openUrl({ url: 'https://www.tsdm39.com' })">
                   转到浏览器
                 </IonItem>
               </IonList>
@@ -98,6 +93,8 @@
         }
       } else if (val.name === 'ForumView') {
         title.value = forumStore.forumTitle;
+      } else if (val.name === 'Thread') {
+        title.value = forumStore.threadTitle;
       } else if (val.meta.title) {
         title.value = val.meta.title as string;
       } else {

@@ -49,6 +49,14 @@ const routes: Array<RouteRecordRaw> = [
           title: '板块详情',
         },
       },
+      {
+        path: 'thread/:tid',
+        name: 'Thread',
+        component: () => import('@/views/Thread/index.vue'),
+        meta: {
+          title: '帖子详情',
+        },
+      },
     ],
   },
   {

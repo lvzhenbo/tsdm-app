@@ -1,6 +1,11 @@
 import request from '@/utils/http';
 import type { HttpOptions } from '@capacitor/core';
 
+interface ThreadParams {
+  tid: string;
+  page: string;
+}
+
 const API = {
   ForumGroup: {
     method: 'GET',
@@ -39,5 +44,14 @@ export const forumView = (fid: string, page: string, orderby: string) =>
       fid,
       page,
       orderby,
+    },
+  });
+
+export const thread = (params: ThreadParams) =>
+  request({
+    ...API.Thread,
+    params: {
+      ...API.Thread.params,
+      ...params,
     },
   });

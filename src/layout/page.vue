@@ -25,8 +25,12 @@
           <IonPopover trigger="filter-button">
             <IonContent>
               <IonList lines="none">
+                <IonListHeader>排序方式</IonListHeader>
                 <IonItem button @click="setFilter('')">默认排序</IonItem>
-                <IonItem button @click="setFilter('dateline')">按发布时间排序</IonItem>
+                <IonItem button @click="setFilter('dateline')">主题发布时间</IonItem>
+                <IonItem button @click="setFilter('lastpost')">最后回复时间</IonItem>
+                <IonItem button @click="setFilter('views')">主题查看数</IonItem>
+                <IonItem button @click="setFilter('replies')">主题回复数</IonItem>
               </IonList>
             </IonContent>
           </IonPopover>

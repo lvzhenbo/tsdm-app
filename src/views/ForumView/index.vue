@@ -188,7 +188,9 @@
       loading.value = true;
       const res = await forumView(fid, String(pages.value), filter.value);
       if (res.data) {
-        const data = JSON.parse(res.data);
+        const data = JSON.parse(
+          res.data.replace(/\r\n/g, '<br/>').replace(/\n/g, '').replace(/\r/g, ''),
+        );
         if (data.status === 0) {
           forumData.value = data;
           threadList.value = data.thread;

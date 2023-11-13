@@ -42,7 +42,6 @@ declare module 'vue' {
     IonRippleEffect: typeof import('@ionic/vue')['IonRippleEffect']
     IonRouterOutlet: typeof import('@ionic/vue')['IonRouterOutlet']
     IonRow: typeof import('@ionic/vue')['IonRow']
-    IonSearchbar: typeof import('@ionic/vue')['IonSearchbar']
     IonSelect: typeof import('@ionic/vue')['IonSelect']
     IonSelectOption: typeof import('@ionic/vue')['IonSelectOption']
     IonSkeletonText: typeof import('@ionic/vue')['IonSkeletonText']

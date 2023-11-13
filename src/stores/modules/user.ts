@@ -1,4 +1,4 @@
-import { setStorage } from '@/utils';
+import { setStorage, removeStorage } from '@/utils';
 
 export interface UserInfo {
   uid: number;
@@ -33,8 +33,14 @@ export const useUserStore = defineStore('user', () => {
     setStorage('userInfo', info);
     userInfo.value = info;
   };
+
+  const removeUserInfo = () => {
+    removeStorage('userInfo');
+    userInfo.value = null;
+  };
   return {
     userInfo,
     setUserInfo,
+    removeUserInfo,
   };
 });

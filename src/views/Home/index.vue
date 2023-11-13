@@ -1,6 +1,6 @@
 <template>
   <IonPage>
-    <IonContent>
+    <IonContent color="light">
       <IonCard>
         <IonCardHeader class="flex flex-row items-center justify-between">
           <IonCardTitle>论坛分区</IonCardTitle>

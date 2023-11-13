@@ -28,7 +28,6 @@ export interface UserInfo {
 
 export const useUserStore = defineStore('user', () => {
   const userInfo = ref<UserInfo | null>(null);
-  const otherUserInfo = ref<UserInfo | null>(null);
 
   const setUserInfo = (info: UserInfo) => {
     setStorage('userInfo', info);
@@ -36,7 +35,6 @@ export const useUserStore = defineStore('user', () => {
   };
   return {
     userInfo,
-    otherUserInfo,
     setUserInfo,
   };
 });

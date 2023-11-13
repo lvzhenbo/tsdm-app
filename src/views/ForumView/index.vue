@@ -1,23 +1,6 @@
 <template>
   <IonPage>
     <IonContent ref="contentRef" color="light">
-      <IonModal id="dialog-modal" trigger="open-modal">
-        <div class="mb-2.5">
-          <IonList>
-            <IonListHeader>
-              <IonLabel class="text-base">版主列表</IonLabel>
-            </IonListHeader>
-            <IonItem
-              v-for="item in forumData?.moderator"
-              :key="item.uid"
-              button
-              @click="handleToOtherUserInfo(item)"
-            >
-              <IonLabel>{{ item.username }}</IonLabel>
-            </IonItem>
-          </IonList>
-        </div>
-      </IonModal>
       <IonList v-if="forumData?.subforum.length" :inset="true">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
@@ -90,11 +73,28 @@
         </IonFabList>
       </IonFab>
     </IonContent>
+    <IonModal id="dialog-modal" ref="modalRef" trigger="open-modal">
+      <div class="mb-2.5">
+        <IonList>
+          <IonListHeader>
+            <IonLabel class="text-base">版主列表</IonLabel>
+          </IonListHeader>
+          <IonItem
+            v-for="item in forumData?.moderator"
+            :key="item.uid"
+            button
+            @click="handleToOtherUserInfo(item)"
+          >
+            <IonLabel>{{ item.username }}</IonLabel>
+          </IonItem>
+        </IonList>
+      </div>
+    </IonModal>
   </IonPage>
 </template>
 <script setup lang="ts">
   import { forumView } from '@/api/forum';
-  import type { InfiniteScrollCustomEvent, IonContent } from '@ionic/vue';
+  import type { InfiniteScrollCustomEvent, IonContent, IonModal } from '@ionic/vue';
   import { arrowUp, add, star, grid, people } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
@@ -166,6 +166,7 @@
   const forumStore = useForumStore();
   const toast = ref<null | HTMLIonToastElement>(null);
   const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
+  const modalRef = ref<null | InstanceType<typeof IonModal>>(null);
   const { filter } = inject(threadFilterKey) as ThreadFilterValue;
 
   onMounted(async () => {
@@ -272,6 +273,7 @@
   };
 
   const handleToOtherUserInfo = (item: Moderator) => {
+    modalRef.value?.$el.dismiss(null, 'comfirm');
     router.push({
       name: 'OtherUserInfo',
       params: {

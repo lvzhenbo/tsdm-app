@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@capacitor/android@5.5.1':
+    hash: ioqagmbxwdl2wjcxqlhr7odgpu
+    path: patches/@capacitor__android@5.5.1.patch
+
 dependencies:
   '@aashu-dubey/capacitor-statusbar-safe-area':
     specifier: ^2.1.1
@@ -60,7 +65,7 @@ dependencies:
 devDependencies:
   '@capacitor/android':
     specifier: ^5.5.1
-    version: 5.5.1(@capacitor/core@5.5.1)
+    version: 5.5.1(patch_hash=ioqagmbxwdl2wjcxqlhr7odgpu)(@capacitor/core@5.5.1)
   '@capacitor/cli':
     specifier: 5.5.1
     version: 5.5.1
@@ -1321,13 +1326,14 @@ packages:
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
 
-  /@capacitor/android@5.5.1(@capacitor/core@5.5.1):
+  /@capacitor/android@5.5.1(patch_hash=ioqagmbxwdl2wjcxqlhr7odgpu)(@capacitor/core@5.5.1):
     resolution: {integrity: sha512-WTnPnpaEvTtaEtTNRbh06Y1afF7A4plY/4uajAL0WW8tdR1FxieadF357yKGiAT6CudI/B+eOu6rxn6qWuphKg==}
     peerDependencies:
       '@capacitor/core': ^5.5.0
     dependencies:
       '@capacitor/core': 5.5.1
     dev: true
+    patched: true
 
   /@capacitor/app@5.0.6(@capacitor/core@5.5.1):
     resolution: {integrity: sha512-6ZXVdnNmaYILasC/RjQw+yfTmq2ZO7Q3v5lFcDVfq3PFGnybyYQh+RstBrYri+376OmXOXxBD7E6UxBhrMzXGA==}

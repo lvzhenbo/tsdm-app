@@ -1,0 +1,44 @@
+diff --git a/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookieManager.java b/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookieManager.java
+index 1baf16695b1176da31df7fac704df74d5ed3001e..baff36c5ddf2dea9c3b4fc4b2f37b1376feff806 100644
+--- a/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookieManager.java
++++ b/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookieManager.java
+@@ -47,9 +47,9 @@ public class CapacitorCookieManager extends CookieManager {
+         this.serverUrl = bridge.getServerUrl();
+     }
+ 
+-    public void removeSessionCookies() {
+-        this.webkitCookieManager.removeSessionCookies(null);
+-    }
++    // public void removeSessionCookies() {
++    //     this.webkitCookieManager.removeSessionCookies(null);
++    // }
+ 
+     public String getSanitizedDomain(String url) throws URISyntaxException {
+         if (url == null || url.isEmpty()) {
+diff --git a/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookies.java b/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookies.java
+index 45c01be2e3d6a49d8748c8b6ebc6eb2ce60da8ce..8a4cc169259e46fac03d5b74078b615734301cda 100644
+--- a/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookies.java
++++ b/capacitor/src/main/java/com/getcapacitor/plugin/CapacitorCookies.java
+@@ -22,16 +22,16 @@ public class CapacitorCookies extends Plugin {
+     public void load() {
+         this.bridge.getWebView().addJavascriptInterface(this, "CapacitorCookiesAndroidInterface");
+         this.cookieManager = new CapacitorCookieManager(null, java.net.CookiePolicy.ACCEPT_ALL, this.bridge);
+-        this.cookieManager.removeSessionCookies();
++        // this.cookieManager.removeSessionCookies();
+         CookieHandler.setDefault(this.cookieManager);
+         super.load();
+     }
+ 
+-    @Override
+-    protected void handleOnDestroy() {
+-        super.handleOnDestroy();
+-        this.cookieManager.removeSessionCookies();
+-    }
++    // @Override
++    // protected void handleOnDestroy() {
++    //     super.handleOnDestroy();
++    //     this.cookieManager.removeSessionCookies();
++    // }
+ 
+     @JavascriptInterface
+     public boolean isEnabled() {

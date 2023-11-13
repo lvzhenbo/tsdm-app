@@ -67,5 +67,10 @@
     "vue-eslint-parser": "^9.3.2",
     "vue-tsc": "^1.8.22"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "pnpm": {
+    "patchedDependencies": {
+      "@capacitor/android@5.5.1": "patches/@capacitor__android@5.5.1.patch"
+    }
+  }
 }

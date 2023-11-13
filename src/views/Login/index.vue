@@ -71,7 +71,6 @@
 
 <script setup lang="ts">
   import { alertController, loadingController, IonInput } from '@ionic/vue';
-  import { setCookie } from '@/utils/cookie';
   import { captcha, login, userInfo } from '@/api/user';
   import { useUserStore } from '@/stores/modules/user';
 
@@ -131,8 +130,6 @@
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
-          const cookies = res.headers['Set-Cookie'].replace(/secure,/g, 'secure;');
-          await setCookie(cookies);
           await getUserInfo(data.values.uid);
           await loading.dismiss();
           const alert = await alertController.create({

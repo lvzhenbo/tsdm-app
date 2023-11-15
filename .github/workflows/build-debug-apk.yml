@@ -19,7 +19,6 @@ jobs:
             uses: actions/setup-node@v3
             with:
                 node-version: '18'
-                cache: 'pnpm'
 
           - name: Setup JDK
             uses: actions/setup-java@v3
@@ -40,6 +39,7 @@ jobs:
           - name: Build Debug APK
             run: |
               cd android
+              chmod +x ./gradlew
               ./gradlew assembleDebug
 
           - name: Upload Debug APK

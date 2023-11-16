@@ -1,49 +1,49 @@
 name: Build Debug APK
 
-on: 
+on:
   push:
     branches:
       - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-          - name: Checkout Source
-            uses: actions/checkout@v3
-            with:
-                ref: main
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v3
+        with:
+          ref: main
 
-          - name: Setup Node.js
-            uses: actions/setup-node@v3
-            with:
-                node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-          - name: Setup JDK
-            uses: actions/setup-java@v3
-            with:
-                java-version: '17'
-                distribution: oracle
-                cache: 'gradle'
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: oracle
+          cache: 'gradle'
 
-          - name: Install pnpm
-            run: npm install -g pnpm
+      - name: Install pnpm
+        run: npm install -g pnpm
 
-          - name: Install dependencies
-            run: pnpm install
+      - name: Install dependencies
+        run: pnpm install
 
-          - name: Sync Files
-            run: pnpm run android:sync
+      - name: Sync Files
+        run: pnpm run android:sync
 
-          - name: Build Debug APK
-            run: |
-              cd android
-              chmod +x ./gradlew
-              ./gradlew assembleDebug
+      - name: Build Debug APK
+        run: |
+          cd android
+          chmod +x ./gradlew
+          ./gradlew assembleDebug
 
-          - name: Upload Debug APK
-            uses: actions/upload-artifact@v3
-            with:
-                name: debug-apk
-                path: android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk

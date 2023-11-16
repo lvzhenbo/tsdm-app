@@ -39,6 +39,8 @@ declare module 'vue' {
     IonNote: typeof import('@ionic/vue')['IonNote']
     IonPage: typeof import('@ionic/vue')['IonPage']
     IonPopover: typeof import('@ionic/vue')['IonPopover']
+    IonRefresher: typeof import('@ionic/vue')['IonRefresher']
+    IonRefresherContent: typeof import('@ionic/vue')['IonRefresherContent']
     IonRippleEffect: typeof import('@ionic/vue')['IonRippleEffect']
     IonRouterOutlet: typeof import('@ionic/vue')['IonRouterOutlet']
     IonRow: typeof import('@ionic/vue')['IonRow']

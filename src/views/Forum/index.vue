@@ -11,7 +11,10 @@
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonList v-else lines="none" :inset="true">
+      <IonRefresher slot="fixed" @ion-refresh="handleRefresh($event)">
+        <IonRefresherContent></IonRefresherContent>
+      </IonRefresher>
+      <IonList v-if="listShow" lines="none" :inset="true">
         <IonItem
           v-for="item in subGroupList"
           :key="item.fid"
@@ -32,6 +35,7 @@
 <script setup lang="ts">
   import { subGroup } from '@/api/forum';
   import { useForumStore } from '@/stores/modules/forum';
+  import type { RefresherCustomEvent } from '@ionic/vue';
 
   interface SubGroup {
     fid: number;
@@ -49,6 +53,7 @@
   const gid = route.params.gid as string;
   const loading = ref(false);
   const forumStore = useForumStore();
+  const listShow = ref(false);
 
   onMounted(async () => {
     getSubGroup();
@@ -56,6 +61,7 @@
 
   async function getSubGroup() {
     try {
+      listShow.value = false;
       loading.value = true;
       const res = await subGroup(gid);
       if (res.data) {
@@ -65,6 +71,7 @@
         }
       }
       loading.value = false;
+      listShow.value = true;
     } catch (error) {
       loading.value = false;
       console.error(error);
@@ -75,6 +82,13 @@
     forumStore.setForumTitle(data.title);
     router.push(`/forumview/${data.fid}`);
   }
+
+  const handleRefresh = (event: RefresherCustomEvent) => {
+    setTimeout(() => {
+      getSubGroup();
+      event.target.complete();
+    }, 2000);
+  };
 </script>
 
 <style scoped></style>

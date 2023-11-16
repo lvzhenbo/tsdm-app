@@ -1,6 +1,10 @@
 <template>
   <IonPage>
     <IonContent ref="contentRef" color="light">
+      <IonRefresher slot="fixed" @ion-refresh="handleRefresh($event)">
+        <IonRefresherContent></IonRefresherContent>
+      </IonRefresher>
+
       <IonList v-if="forumData?.subforum.length" :inset="true">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
@@ -94,7 +98,12 @@
 </template>
 <script setup lang="ts">
   import { forumView } from '@/api/forum';
-  import type { InfiniteScrollCustomEvent, IonContent, IonModal } from '@ionic/vue';
+  import type {
+    RefresherCustomEvent,
+    InfiniteScrollCustomEvent,
+    IonContent,
+    IonModal,
+  } from '@ionic/vue';
   import { arrowUp, add, star, grid, people } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
@@ -278,6 +287,12 @@
         username: item.username,
       },
     });
+  };
+  const handleRefresh = (event: RefresherCustomEvent) => {
+    setTimeout(() => {
+      getForumData();
+      event.target.complete();
+    }, 2000);
   };
 </script>
 <style scoped>

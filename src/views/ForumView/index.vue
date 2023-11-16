@@ -5,7 +5,7 @@
         <IonRefresherContent></IonRefresherContent>
       </IonRefresher>
 
-      <IonList v-if="forumData?.subforum.length" :inset="true">
+      <IonList v-if="listView && forumData?.subforum.length != 0" :inset="true">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
         </IonListHeader>
@@ -18,7 +18,7 @@
           {{ item.name }}
         </IonItem>
       </IonList>
-      <div class="px-4">
+      <div v-if="listView" class="px-4">
         <IonChip v-for="item in forumData?.threadtype" :key="item.typeid">
           {{ item.name }}
         </IonChip>
@@ -33,7 +33,7 @@
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonList v-if="recommend" :inset="true">
+      <IonList v-if="recommend && forumData?.recommend.length != 0" :inset="true">
         <IonListHeader>
           <IonLabel class="text-lg">推荐主题</IonLabel>
         </IonListHeader>
@@ -41,7 +41,7 @@
           <IonLabel> {{ item.title }} <br /> </IonLabel>
         </IonItem>
       </IonList>
-      <IonList v-if="forumData?.thread.length" lines="none" :inset="true">
+      <IonList v-if="listView" lines="none" :inset="true">
         <IonItem
           v-for="item in threadList"
           :key="item.tid"
@@ -171,6 +171,7 @@
   const pages = ref(1);
   const loading = ref(false);
   const recommend = ref(false);
+  const listView = ref(false);
   const threadList = ref<Thread[]>([]);
   const forumStore = useForumStore();
   const toast = ref<null | HTMLIonToastElement>(null);
@@ -199,6 +200,7 @@
 
   async function getForumData() {
     try {
+      listView.value = false;
       recommend.value = false;
       loading.value = true;
       const res = await forumView(fid, String(pages.value), filter.value);
@@ -212,6 +214,7 @@
         }
       }
       loading.value = false;
+      listView.value = true;
       recommend.value = true;
     } catch (error) {
       loading.value = false;
@@ -221,7 +224,6 @@
   async function loadMorePage() {
     try {
       const nextPage = pages.value + 1;
-      loading.value = true;
       const res = await forumView(fid, String(nextPage), filter.value);
       if (res.data) {
         const data = JSON.parse(res.data);
@@ -229,9 +231,7 @@
           threadList.value = [...threadList.value, ...data.thread];
         }
       }
-      loading.value = false;
     } catch (error) {
-      loading.value = false;
       console.error(error);
     }
   }
@@ -288,11 +288,9 @@
       },
     });
   };
-  const handleRefresh = (event: RefresherCustomEvent) => {
-    setTimeout(() => {
-      getForumData();
-      event.target.complete();
-    }, 2000);
+  const handleRefresh = async (event: RefresherCustomEvent) => {
+    await getForumData();
+    event.target.complete();
   };
 </script>
 <style scoped>

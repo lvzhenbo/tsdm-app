@@ -19,10 +19,10 @@
         </IonTitle>
         <IonTitle v-else> {{ title }} </IonTitle>
         <IonButtons v-if="route.name === 'ForumView'" slot="primary">
-          <IonButton id="filter-button">
+          <IonButton @click="popoverOpen">
             <IonIcon slot="icon-only" :ios="filterCircle" :md="filterCircle" />
           </IonButton>
-          <IonPopover trigger="filter-button">
+          <IonPopover :is-open="popover" @did-dismiss="popover = false">
             <IonContent>
               <IonList lines="none">
                 <IonListHeader>排序方式</IonListHeader>
@@ -76,6 +76,7 @@
   const gidRef = ref(0);
   const forumStore = useForumStore();
   const filter = ref('');
+  const popover = ref(false);
 
   provide(threadFilterKey, {
     filter,
@@ -112,7 +113,12 @@
 
   async function setFilter(filters: string) {
     filter.value = filters;
+    popover.value = false;
   }
+
+  const popoverOpen = () => {
+    popover.value = true;
+  };
 </script>
 
 <style scoped>

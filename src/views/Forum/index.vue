@@ -83,11 +83,9 @@
     router.push(`/forumview/${data.fid}`);
   }
 
-  const handleRefresh = (event: RefresherCustomEvent) => {
-    setTimeout(() => {
-      getSubGroup();
-      event.target.complete();
-    }, 2000);
+  const handleRefresh = async (event: RefresherCustomEvent) => {
+    await getSubGroup();
+    event.target.complete();
   };
 </script>
 

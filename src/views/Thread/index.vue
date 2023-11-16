@@ -70,7 +70,9 @@
 
       // console.log(res);
 
-      const data = JSON.parse(res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
+      const data = JSON.parse(
+        res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t'),
+      );
 
       console.log(data);
 

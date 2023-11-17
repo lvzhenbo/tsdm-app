@@ -22,6 +22,9 @@
           <div class="msg" v-html="item.message"> </div>
         </IonCardContent>
       </IonCard>
+      <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
+        <IonInfiniteScrollContent />
+      </IonInfiniteScroll>
     </IonContent>
   </IonPage>
 </template>
@@ -29,6 +32,7 @@
 <script setup lang="ts">
   import { thread } from '@/api/forum';
   import { useSettingStore } from '@/stores/modules/setting';
+  import type { InfiniteScrollCustomEvent } from '@ionic/vue';
 
   export interface PostData {
     status: number;
@@ -71,6 +75,7 @@
   const settingStore = useSettingStore();
   const page = ref(1);
   const postData = ref<PostData | null>(null);
+  const loadDone = ref(false);
 
   onMounted(() => {
     getThead();
@@ -105,10 +110,26 @@
 
       console.log(data);
 
-      postData.value = data;
+      if (data.postlist.length < 10) {
+        loadDone.value = true;
+      }
+
+      if (data.status === 0) {
+        if (postData.value) {
+          postData.value.postlist.push(...data.postlist);
+        } else {
+          postData.value = data;
+        }
+      }
+      page.value++;
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const ionInfinite = async (ev: InfiniteScrollCustomEvent) => {
+    await getThead();
+    ev.target.complete();
   };
 </script>
 

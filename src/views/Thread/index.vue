@@ -4,15 +4,15 @@
       <IonCard v-for="item in postData?.postlist" :key="item.pid">
         <IonCardHeader>
           <div class="flex items-center">
-            <IonAvatar class="w-12 h-12">
+            <IonAvatar class="w-12 h-12 min-w-0">
               <IonImg :src="item.avatar" />
             </IonAvatar>
-            <div class="ml-1">
-              <div>
+            <div class="ml-1 min-w-0">
+              <div class="truncate mb-1">
                 <span :class="settingStore.isDark ? 'text-white' : 'text-black'">
                   {{ item.author }}
                 </span>
-                <span> | {{ item.author_nickname }} </span>
+                <span v-if="item.author_nickname"> | {{ item.author_nickname }} </span>
               </div>
               <div v-html="item.authortitle"></div>
             </div>

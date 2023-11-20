@@ -78,14 +78,14 @@
           <IonFabButton color="secondary" @click="contentRef?.$el.scrollToTop(500)">
             <IonIcon :icon="arrowUp"></IonIcon>
           </IonFabButton>
+          <IonFabButton id="open-modal" color="danger">
+            <IonIcon :icon="people"></IonIcon>
+          </IonFabButton>
           <IonFabButton color="warning">
             <IonIcon :icon="star"></IonIcon>
           </IonFabButton>
           <IonFabButton color="primary">
             <IonIcon :icon="add"></IonIcon>
-          </IonFabButton>
-          <IonFabButton id="open-modal" color="danger">
-            <IonIcon :icon="people"></IonIcon>
           </IonFabButton>
         </IonFabList>
       </IonFab>
@@ -333,7 +333,7 @@
 <style scoped>
   ion-modal#dialog-modal {
     --width: fit-content;
-    --min-width: 250px;
+    --min-width: 300px;
     --height: fit-content;
     --border-radius: 6px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);

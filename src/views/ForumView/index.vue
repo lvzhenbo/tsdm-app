@@ -19,13 +19,13 @@
         </IonItem>
       </IonList>
       <div v-if="listView && forumData?.threadtype.length != 0" class="px-4 mt-3">
-        <IonChip :color="activeTypeId === '' ? 'primary' : ''" @click="handleChipFilterReset">
+        <IonChip :color="chipTypeID === -1 ? 'primary' : ''" @click="handleChipFilterReset">
           全部
         </IonChip>
         <IonChip
           v-for="item in forumData?.threadtype"
           :key="item.typeid"
-          :color="activeTypeId === item.typeid ? 'primary' : ''"
+          :color="chipTypeID === item.typeid ? 'primary' : ''"
           @click="handleChipFilter(item)"
         >
           {{ item.name }}
@@ -187,8 +187,7 @@
   const modalRef = ref<null | InstanceType<typeof IonModal>>(null);
   const { filter } = inject(threadFilterKey) as ThreadFilterValue;
   const chipFilter = ref('');
-  const chipTypeID = ref();
-  const activeTypeId = ref();
+  const chipTypeID = ref(-1);
 
   onMounted(async () => {
     getForumData();
@@ -219,7 +218,7 @@
         String(pages.value),
         filter.value,
         chipFilter.value,
-        chipTypeID.value,
+        chipTypeID.value === -1 ? '' : String(chipTypeID.value),
       );
       if (res.data) {
         const data = JSON.parse(res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
@@ -246,7 +245,7 @@
         String(nextPage),
         filter.value,
         chipFilter.value,
-        chipTypeID.value,
+        chipTypeID.value === -1 ? '' : String(chipTypeID.value),
       );
       if (res.data) {
         const data = JSON.parse(res.data);
@@ -318,13 +317,11 @@
   const handleChipFilter = (item: Threadtype) => {
     chipFilter.value = 'typeid';
     chipTypeID.value = item.typeid;
-    activeTypeId.value = item.typeid;
     getForumData();
   };
   const handleChipFilterReset = () => {
     chipFilter.value = '';
-    chipTypeID.value = '';
-    activeTypeId.value = '';
+    chipTypeID.value = -1;
     getForumData();
   };
 </script>

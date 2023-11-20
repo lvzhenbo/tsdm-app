@@ -35,7 +35,13 @@ export const subGroup = (gid: string) =>
       gid,
     },
   });
-export const forumView = (fid: string, page: string, orderby: string) =>
+export const forumView = (
+  fid: string,
+  page: string,
+  orderby: string,
+  filter: string,
+  typeid: string,
+) =>
   request({
     ...API.ForumGroup,
     params: {
@@ -44,6 +50,8 @@ export const forumView = (fid: string, page: string, orderby: string) =>
       fid,
       page,
       orderby,
+      filter,
+      typeid,
     },
   });
 

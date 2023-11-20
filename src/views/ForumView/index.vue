@@ -5,7 +5,7 @@
         <IonRefresherContent></IonRefresherContent>
       </IonRefresher>
 
-      <IonList v-if="listView && forumData?.subforum.length != 0" :inset="true">
+      <IonList v-if="listView && forumData?.subforum.length != 0" :inset="true" lines="none">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
         </IonListHeader>
@@ -18,8 +18,16 @@
           {{ item.name }}
         </IonItem>
       </IonList>
-      <div v-if="listView" class="px-4">
-        <IonChip v-for="item in forumData?.threadtype" :key="item.typeid">
+      <div v-if="listView && forumData?.threadtype.length != 0" class="px-4 mt-3">
+        <IonChip :color="activeTypeId === '' ? 'primary' : ''" @click="handleChipFilterReset">
+          全部
+        </IonChip>
+        <IonChip
+          v-for="item in forumData?.threadtype"
+          :key="item.typeid"
+          :color="activeTypeId === item.typeid ? 'primary' : ''"
+          @click="handleChipFilter(item)"
+        >
           {{ item.name }}
         </IonChip>
       </div>
@@ -178,6 +186,9 @@
   const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
   const modalRef = ref<null | InstanceType<typeof IonModal>>(null);
   const { filter } = inject(threadFilterKey) as ThreadFilterValue;
+  const chipFilter = ref('');
+  const chipTypeID = ref();
+  const activeTypeId = ref();
 
   onMounted(async () => {
     getForumData();
@@ -203,7 +214,13 @@
       listView.value = false;
       recommend.value = false;
       loading.value = true;
-      const res = await forumView(fid, String(pages.value), filter.value);
+      const res = await forumView(
+        fid,
+        String(pages.value),
+        filter.value,
+        chipFilter.value,
+        chipTypeID.value,
+      );
       if (res.data) {
         const data = JSON.parse(res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
         if (data.status === 0) {
@@ -224,7 +241,13 @@
   async function loadMorePage() {
     try {
       const nextPage = pages.value + 1;
-      const res = await forumView(fid, String(nextPage), filter.value);
+      const res = await forumView(
+        fid,
+        String(nextPage),
+        filter.value,
+        chipFilter.value,
+        chipTypeID.value,
+      );
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
@@ -291,6 +314,18 @@
   const handleRefresh = async (event: RefresherCustomEvent) => {
     await getForumData();
     event.target.complete();
+  };
+  const handleChipFilter = (item: Threadtype) => {
+    chipFilter.value = 'typeid';
+    chipTypeID.value = item.typeid;
+    activeTypeId.value = item.typeid;
+    getForumData();
+  };
+  const handleChipFilterReset = () => {
+    chipFilter.value = '';
+    chipTypeID.value = '';
+    activeTypeId.value = '';
+    getForumData();
   };
 </script>
 <style scoped>

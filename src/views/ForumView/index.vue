@@ -45,7 +45,12 @@
         <IonListHeader>
           <IonLabel class="text-lg">推荐主题</IonLabel>
         </IonListHeader>
-        <IonItem v-for="item in forumData?.recommend" :key="item.tid" :button="true">
+        <IonItem
+          v-for="item in forumData?.recommend"
+          :key="item.tid"
+          :button="true"
+          @click="handleToThread(item)"
+        >
           <IonLabel> {{ item.title }} <br /> </IonLabel>
         </IonItem>
       </IonList>
@@ -291,7 +296,7 @@
     });
   };
 
-  const handleToThread = (item: Thread) => {
+  const handleToThread = (item: Thread | Recommend) => {
     forumStore.setThreadTitle(item.title);
     router.push({
       name: 'Thread',

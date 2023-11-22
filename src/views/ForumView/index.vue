@@ -193,6 +193,15 @@
   const { filter } = inject(threadFilterKey) as ThreadFilterValue;
   const chipFilter = ref('');
   const chipTypeID = ref(-1);
+  const forumParams = computed(() => {
+    return {
+      fid: fid,
+      page: pages.value.toString(),
+      orderby: filter.value,
+      filter: chipFilter.value,
+      typeid: chipTypeID.value === -1 ? '' : String(chipTypeID.value),
+    };
+  });
 
   onMounted(async () => {
     getForumData();
@@ -218,13 +227,7 @@
       listView.value = false;
       recommend.value = false;
       loading.value = true;
-      const res = await forumView(
-        fid,
-        String(pages.value),
-        filter.value,
-        chipFilter.value,
-        chipTypeID.value === -1 ? '' : String(chipTypeID.value),
-      );
+      const res = await forumView(forumParams.value);
       if (res.data) {
         const data = JSON.parse(res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
         if (data.status === 0) {
@@ -244,14 +247,8 @@
   }
   async function loadMorePage() {
     try {
-      const nextPage = pages.value + 1;
-      const res = await forumView(
-        fid,
-        String(nextPage),
-        filter.value,
-        chipFilter.value,
-        chipTypeID.value === -1 ? '' : String(chipTypeID.value),
-      );
+      pages.value += 1;
+      const res = await forumView(forumParams.value);
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
@@ -322,11 +319,13 @@
   const handleChipFilter = (item: Threadtype) => {
     chipFilter.value = 'typeid';
     chipTypeID.value = item.typeid;
+    pages.value = 1;
     getForumData();
   };
   const handleChipFilterReset = () => {
     chipFilter.value = '';
     chipTypeID.value = -1;
+    pages.value = 1;
     getForumData();
   };
 </script>

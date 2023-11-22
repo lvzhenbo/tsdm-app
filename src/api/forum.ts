@@ -6,6 +6,14 @@ interface ThreadParams {
   page: string;
 }
 
+interface ForumViewParams {
+  fid: string;
+  page: string;
+  orderby: string;
+  filter: string;
+  typeid: string;
+}
+
 const API = {
   ForumGroup: {
     method: 'GET',
@@ -35,23 +43,13 @@ export const subGroup = (gid: string) =>
       gid,
     },
   });
-export const forumView = (
-  fid: string,
-  page: string,
-  orderby: string,
-  filter: string,
-  typeid: string,
-) =>
+export const forumView = (params: ForumViewParams) =>
   request({
     ...API.ForumGroup,
     params: {
       ...API.ForumGroup.params,
       mod: 'forumdisplay',
-      fid,
-      page,
-      orderby,
-      filter,
-      typeid,
+      ...params,
     },
   });
 

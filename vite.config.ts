@@ -9,6 +9,7 @@ import Components from 'unplugin-vue-components/vite';
 import { IonicResolver } from 'unplugin-vue-components/resolvers';
 
 import { visualizer } from 'rollup-plugin-visualizer';
+import analyze from 'rollup-plugin-analyzer';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,6 +34,7 @@ export default defineConfig({
     Components({
       resolvers: [IonicResolver()],
     }),
+    analyze(),
     visualizer(),
   ],
   resolve: {

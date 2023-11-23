@@ -31,3 +31,5 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+
+stats.html

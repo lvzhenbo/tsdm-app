@@ -19,7 +19,7 @@
           </div>
         </IonCardHeader>
         <IonCardContent :class="settingStore.isDark ? 'text-white' : 'text-black'">
-          <div class="msg" v-html="item.message"> </div>
+          <div class="msg" @click="handleClick" v-html="item.message"></div>
         </IonCardContent>
       </IonCard>
       <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
@@ -33,6 +33,9 @@
   import { thread } from '@/api/forum';
   import { useSettingStore } from '@/stores/modules/setting';
   import type { InfiniteScrollCustomEvent } from '@ionic/vue';
+  import { openUrl } from '@/utils';
+  import Viewer from 'viewerjs';
+  import 'viewerjs/dist/viewer.css';
 
   export interface PostData {
     status: number;
@@ -72,13 +75,18 @@
   });
 
   const route = useRoute();
+  const router = useRouter();
   const settingStore = useSettingStore();
   const page = ref(1);
   const postData = ref<PostData | null>(null);
   const loadDone = ref(false);
+  const viewer = ref<Viewer[]>([]);
 
   onMounted(() => {
     getThead();
+  });
+  onBeforeUnmount(() => {
+    destroyImgViewer();
   });
 
   const theme = computed(() => {
@@ -121,6 +129,21 @@
           postData.value = data;
         }
       }
+      nextTick(() => {
+        destroyImgViewer();
+        viewer.value = [];
+        document.querySelectorAll('.msg').forEach((item) => {
+          viewer.value.push(
+            new Viewer(item as HTMLElement, {
+              toolbar: false,
+              keyboard: false,
+              url(image: HTMLImageElement) {
+                return image.src;
+              },
+            }),
+          );
+        });
+      });
       page.value++;
     } catch (error) {
       console.error(error);
@@ -130,6 +153,38 @@
   const ionInfinite = async (ev: InfiniteScrollCustomEvent) => {
     await getThead();
     ev.target.complete();
+  };
+
+  const handleClick = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    console.log(target);
+
+    if (target.tagName === 'A') {
+      e.preventDefault();
+      const url = new URL(target.getAttribute('href') as string);
+      if (url.host === 'www.tsdm39.com') {
+        if (url.searchParams.get('tid')) {
+          router.push({
+            name: 'Thread',
+            params: {
+              tid: url.searchParams.get('tid') as string,
+            },
+          });
+        }
+      } else {
+        openUrl({ url: url.href });
+      }
+
+      // const href = target.getAttribute('href');
+      // if (href) {
+      //   window.open(href, '_blank');
+      // }
+    }
+  };
+  const destroyImgViewer = () => {
+    viewer.value.forEach((item) => {
+      item.destroy();
+    });
   };
 </script>
 

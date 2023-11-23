@@ -52,5 +52,6 @@ declare module 'vue' {
     IonToolbar: typeof import('@ionic/vue')['IonToolbar']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserInfo: typeof import('./src/components/UserInfo.vue')['default']
   }
 }

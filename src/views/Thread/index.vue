@@ -19,24 +19,57 @@
           </div>
         </IonCardHeader>
         <IonCardContent :class="settingStore.isDark ? 'text-white' : 'text-black'">
+          <IonButton
+            v-if="item.floor === 1 && postData?.thread_price !== '0' && !postData?.thread_paid"
+            @click="getPayInfo"
+          >
+            支付
+          </IonButton>
           <div class="msg" @click="handleClick" v-html="item.message"></div>
         </IonCardContent>
       </IonCard>
       <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
         <IonInfiniteScrollContent />
       </IonInfiniteScroll>
+      <IonModal :is-open="isOpen">
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>购买主题</IonTitle>
+            <IonButtons slot="end">
+              <IonButton @click="isOpen = false">Close</IonButton>
+            </IonButtons>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent color="light">
+          <IonList :inset="true">
+            <IonItem>
+              <IonLabel>作者</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonLabel>售价(天使币)</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonLabel>作者所得(天使币)</IonLabel>
+            </IonItem>
+            <IonItem>
+              <IonLabel>购买后余额(天使币)</IonLabel>
+            </IonItem>
+          </IonList>
+        </IonContent>
+      </IonModal>
     </IonContent>
   </IonPage>
 </template>
 
 <script setup lang="ts">
-  import { thread } from '@/api/forum';
+  import { thread, pay } from '@/api/forum';
   import { useSettingStore } from '@/stores/modules/setting';
-  import type { InfiniteScrollCustomEvent } from '@ionic/vue';
   import { openUrl } from '@/utils';
+  import { useForumStore } from '@/stores/modules/forum';
+  import type { InfiniteScrollCustomEvent } from '@ionic/vue';
+  import { onIonViewWillLeave, useBackButton } from '@ionic/vue';
   import Viewer from 'viewerjs';
   import 'viewerjs/dist/viewer.css';
-  import { onIonViewWillLeave, useBackButton } from '@ionic/vue';
 
   export interface PostData {
     status: number;
@@ -83,11 +116,14 @@
   const loadDone = ref(false);
   const viewer = ref<Viewer[]>([]);
   const isShow = ref(false);
+  const forumStore = useForumStore();
+  const isOpen = ref(false);
 
   onMounted(() => {
     getThead();
   });
   onIonViewWillLeave(() => {
+    forumStore.threadTitleUndo();
     destroyImgViewer();
   });
 
@@ -128,11 +164,13 @@
 
       console.log(data);
 
-      if (data.postlist.length < 10) {
-        loadDone.value = true;
-      }
-
       if (data.status === 0) {
+        if (page.value === 1) {
+          forumStore.setThreadTitle(data.subject);
+        }
+        if (data.postlist.length < 10) {
+          loadDone.value = true;
+        }
         if (postData.value) {
           postData.value.postlist.push(...data.postlist);
         } else {
@@ -179,11 +217,13 @@
       e.preventDefault();
       const url = new URL(target.getAttribute('href') as string);
       if (url.host === 'www.tsdm39.com') {
-        if (url.searchParams.get('tid')) {
+        // 暂不支持楼层直达
+        if (url.searchParams.get('tid') || url.searchParams.get('ptid')) {
           router.push({
             name: 'Thread',
             params: {
-              tid: url.searchParams.get('tid') as string,
+              tid:
+                (url.searchParams.get('tid') as string) || (url.searchParams.get('ptid') as string),
             },
           });
         }
@@ -206,6 +246,18 @@
     viewer.value.forEach((item) => {
       item.hide();
     });
+  };
+
+  const getPayInfo = async () => {
+    try {
+      const res = await pay();
+      const data = res.data;
+      const html = new DOMParser().parseFromString(data, 'text/html');
+      console.log(html);
+      isOpen.value = true;
+    } catch (error) {
+      console.error(error);
+    }
   };
 </script>
 

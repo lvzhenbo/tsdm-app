@@ -294,7 +294,6 @@
   };
 
   const handleToThread = (item: Thread | Recommend) => {
-    forumStore.setThreadTitle(item.title);
     router.push({
       name: 'Thread',
       params: {

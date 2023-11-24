@@ -32,6 +32,18 @@ const API = {
       mod: 'viewthread',
     },
   } as HttpOptions,
+  Pay: {
+    method: 'GET',
+    url: '/forum.php',
+    params: {
+      tsdmapp: '1',
+      mod: 'misc',
+      action: 'pay',
+      mobile: 'yes',
+      tid: '1180701',
+      pid: '71057691',
+    },
+  } as HttpOptions,
 };
 
 export const forumGroup = () => request(API.ForumGroup);
@@ -60,4 +72,9 @@ export const thread = (params: ThreadParams) =>
       ...API.Thread.params,
       ...params,
     },
+  });
+
+export const pay = () =>
+  request({
+    ...API.Pay,
   });

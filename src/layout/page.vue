@@ -17,6 +17,7 @@
             </IonSelectOption>
           </IonSelect>
         </IonTitle>
+        <IonTitle v-else-if="route.name === 'Thread'"> {{ forumStore.threadTitle }} </IonTitle>
         <IonTitle v-else> {{ title }} </IonTitle>
         <IonButtons v-if="route.name === 'ForumView'" slot="primary">
           <IonButton @click="popoverOpen">
@@ -98,8 +99,6 @@
         }
       } else if (val.name === 'ForumView') {
         title.value = forumStore.forumTitle;
-      } else if (val.name === 'Thread') {
-        title.value = forumStore.threadTitle;
       } else if (val.meta.title) {
         title.value = val.meta.title as string;
       } else {

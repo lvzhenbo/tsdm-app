@@ -1,7 +1,9 @@
+import { useRefHistory } from '@vueuse/core';
+
 export const useForumStore = defineStore('forum', () => {
-  const forumTitle = ref('板块名称');
+  const forumTitle = ref('板块标题');
   const prevTitle = ref('');
-  const threadTitle = ref('');
+  const threadTitle = ref('帖子标题');
 
   const setForumTitle = (title: string) => {
     forumTitle.value = title;
@@ -15,6 +17,13 @@ export const useForumStore = defineStore('forum', () => {
     threadTitle.value = title;
   };
 
+  const {
+    undo: threadTitleUndo,
+    redo: threadTitleRedo,
+    canUndo: canThreadTitleUndo,
+    canRedo: canThreadTitleRedo,
+  } = useRefHistory(threadTitle);
+
   return {
     forumTitle,
     prevTitle,
@@ -22,5 +31,9 @@ export const useForumStore = defineStore('forum', () => {
     setForumTitle,
     setPrevTitle,
     setThreadTitle,
+    threadTitleUndo,
+    threadTitleRedo,
+    canThreadTitleUndo,
+    canThreadTitleRedo,
   };
 });

@@ -39,6 +39,8 @@
   import { setStorage, getStorage } from '@/utils';
   import { reloadOutline } from 'ionicons/icons';
   import { useSettingStore } from '@/stores/modules/setting';
+  import { useBackButton, useIonRouter } from '@ionic/vue';
+  import { App } from '@capacitor/app';
 
   interface Group {
     gid: number;
@@ -52,6 +54,7 @@
   const groupList = ref<Group[]>([]);
   const reload = ref(false);
   const settingStore = useSettingStore();
+  const ionRouter = useIonRouter();
 
   onMounted(async () => {
     const groupListStorage = await getStorage('groupList');
@@ -59,6 +62,12 @@
       groupList.value = groupListStorage;
     }
     getForumGroup();
+  });
+
+  useBackButton(-1, () => {
+    if (!ionRouter.canGoBack()) {
+      App.exitApp();
+    }
   });
 
   async function getForumGroup() {

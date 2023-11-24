@@ -36,6 +36,7 @@
   import { openUrl } from '@/utils';
   import Viewer from 'viewerjs';
   import 'viewerjs/dist/viewer.css';
+  import { onIonViewWillLeave, useBackButton } from '@ionic/vue';
 
   export interface PostData {
     status: number;
@@ -81,12 +82,21 @@
   const postData = ref<PostData | null>(null);
   const loadDone = ref(false);
   const viewer = ref<Viewer[]>([]);
+  const isShow = ref(false);
 
   onMounted(() => {
     getThead();
   });
-  onBeforeUnmount(() => {
+  onIonViewWillLeave(() => {
     destroyImgViewer();
+  });
+
+  useBackButton(10, (processNextHandler) => {
+    if (isShow.value) {
+      hideImgViewer();
+    } else {
+      processNextHandler();
+    }
   });
 
   const theme = computed(() => {
@@ -140,6 +150,12 @@
               url(image: HTMLImageElement) {
                 return image.src;
               },
+              show() {
+                isShow.value = true;
+              },
+              hide() {
+                isShow.value = false;
+              },
             }),
           );
         });
@@ -184,6 +200,11 @@
   const destroyImgViewer = () => {
     viewer.value.forEach((item) => {
       item.destroy();
+    });
+  };
+  const hideImgViewer = () => {
+    viewer.value.forEach((item) => {
+      item.hide();
     });
   };
 </script>

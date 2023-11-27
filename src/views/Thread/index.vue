@@ -321,6 +321,9 @@
 </script>
 
 <style scoped>
+  .msg {
+    @apply select-auto;
+  }
   .msg :deep(.quote) {
     @apply p-1 border-l-4 border-[v-bind('theme.color')] bg-[v-bind('theme.bg')] rounded-md shadow-md backdrop-blur-sm;
   }

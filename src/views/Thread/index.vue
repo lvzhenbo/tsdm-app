@@ -21,11 +21,11 @@
         <IonCardContent :class="settingStore.isDark ? 'text-white' : 'text-black'">
           <IonButton
             v-if="item.floor === 1 && postData?.thread_price !== '0' && !postData?.thread_paid"
-            @click="getPayInfo"
+            @click="getPayInfo(item.pid)"
           >
             支付
           </IonButton>
-          <div class="msg" @click="handleClick" v-html="item.message"></div>
+          <div class="msg" @click="handleGetPayInfo" v-html="item.message"></div>
         </IonCardContent>
       </IonCard>
       <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
@@ -33,10 +33,17 @@
       </IonInfiniteScroll>
       <IonModal :is-open="isOpen">
         <IonHeader>
-          <IonToolbar>
+          <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+            <IonButtons slot="start">
+              <IonButton @click="isOpen = false">
+                <IonIcon slot="icon-only" :icon="close" />
+              </IonButton>
+            </IonButtons>
             <IonTitle>购买主题</IonTitle>
             <IonButtons slot="end">
-              <IonButton @click="isOpen = false">Close</IonButton>
+              <IonButton @click="handlePay">
+                <IonIcon slot="icon-only" :icon="checkmark" />
+              </IonButton>
             </IonButtons>
           </IonToolbar>
         </IonHeader>
@@ -44,15 +51,19 @@
           <IonList :inset="true">
             <IonItem>
               <IonLabel>作者</IonLabel>
+              <IonNote slot="end">{{ payInfoData.author }}</IonNote>
             </IonItem>
             <IonItem>
               <IonLabel>售价(天使币)</IonLabel>
+              <IonNote slot="end">{{ payInfoData.price }}</IonNote>
             </IonItem>
             <IonItem>
               <IonLabel>作者所得(天使币)</IonLabel>
+              <IonNote slot="end">{{ payInfoData.authorIncome }}</IonNote>
             </IonItem>
             <IonItem>
               <IonLabel>购买后余额(天使币)</IonLabel>
+              <IonNote slot="end">{{ payInfoData.balance }}</IonNote>
             </IonItem>
           </IonList>
         </IonContent>
@@ -62,16 +73,17 @@
 </template>
 
 <script setup lang="ts">
-  import { thread, pay } from '@/api/forum';
+  import { thread, payInfo, type PayParams, pay } from '@/api/forum';
   import { useSettingStore } from '@/stores/modules/setting';
   import { openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
   import type { InfiniteScrollCustomEvent } from '@ionic/vue';
   import { onIonViewWillLeave, useBackButton } from '@ionic/vue';
+  import { close, checkmark } from 'ionicons/icons';
   import Viewer from 'viewerjs';
   import 'viewerjs/dist/viewer.css';
 
-  export interface PostData {
+  interface PostData {
     status: number;
     postlist: Postlist[];
     totalpost: string;
@@ -86,7 +98,7 @@
     thread_paid: number;
   }
 
-  export interface Postlist {
+  interface Postlist {
     pid: string;
     author: string;
     authorid: string;
@@ -104,6 +116,13 @@
     author_nickname: string;
   }
 
+  interface PayInfoData {
+    author: string;
+    price: string;
+    authorIncome: string;
+    balance: string;
+  }
+
   defineOptions({
     name: 'ThreadIndex',
   });
@@ -118,15 +137,28 @@
   const isShow = ref(false);
   const forumStore = useForumStore();
   const isOpen = ref(false);
+  const payInfoData = ref<PayInfoData>({
+    author: '',
+    price: '',
+    authorIncome: '',
+    balance: '',
+  });
+  const payParams = ref<PayParams>({
+    formhash: '',
+    referer: '',
+    tid: route.params.tid as string,
+    paysubmit: 'true',
+  });
 
   onMounted(() => {
     getThead();
   });
   onIonViewWillLeave(() => {
-    forumStore.threadTitleUndo();
     destroyImgViewer();
   });
-
+  onUnmounted(() => {
+    forumStore.threadTitleUndo();
+  });
   useBackButton(10, (processNextHandler) => {
     if (isShow.value) {
       hideImgViewer();
@@ -209,7 +241,7 @@
     ev.target.complete();
   };
 
-  const handleClick = (e: MouseEvent) => {
+  const handleGetPayInfo = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
     console.log(target);
 
@@ -226,15 +258,17 @@
                 (url.searchParams.get('tid') as string) || (url.searchParams.get('ptid') as string),
             },
           });
+        } else if (url.searchParams.get('username')) {
+          router.push({
+            name: 'OtherUserInfo',
+            params: {
+              username: url.searchParams.get('username') as string,
+            },
+          });
         }
       } else {
         openUrl({ url: url.href });
       }
-
-      // const href = target.getAttribute('href');
-      // if (href) {
-      //   window.open(href, '_blank');
-      // }
     }
   };
   const destroyImgViewer = () => {
@@ -248,13 +282,38 @@
     });
   };
 
-  const getPayInfo = async () => {
+  const getPayInfo = async (pid: string) => {
     try {
-      const res = await pay();
+      const res = await payInfo({
+        tid: route.params.tid as string,
+        pid,
+      });
       const data = res.data;
       const html = new DOMParser().parseFromString(data, 'text/html');
       console.log(html);
+      const td = html.querySelectorAll('td');
+      payInfoData.value.author = td[0].textContent as string;
+      payInfoData.value.price = td[1].textContent as string;
+      payInfoData.value.authorIncome = td[2].textContent as string;
+      payInfoData.value.balance = td[3].textContent as string;
+      payParams.value.formhash = html.querySelector('input[name=formhash]')?.getAttribute('value')!;
+      payParams.value.referer = `https://www.tsdm39.com/forum.php?mod=viewthread&tid=${route.params.tid}&mobile=yes`;
       isOpen.value = true;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handlePay = async () => {
+    try {
+      const res = await pay(payParams.value);
+      const data = res.data;
+      const html = new DOMParser().parseFromString(data, 'text/html');
+      console.log(html);
+      isOpen.value = false;
+      page.value = 1;
+      postData.value = null;
+      getThead();
     } catch (error) {
       console.error(error);
     }
@@ -267,5 +326,8 @@
   }
   .msg :deep(.quote blockquote) {
     @apply text-[#999999] pr-6;
+  }
+  .msg :deep(a) {
+    @apply text-[--ion-color-primary];
   }
 </style>

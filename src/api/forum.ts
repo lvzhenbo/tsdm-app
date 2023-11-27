@@ -14,6 +14,18 @@ interface ForumViewParams {
   typeid: string;
 }
 
+interface PayInfoParams {
+  tid: string;
+  pid: string;
+}
+
+export interface PayParams {
+  formhash: string;
+  referer: string;
+  tid: string;
+  paysubmit: string;
+}
+
 const API = {
   ForumGroup: {
     method: 'GET',
@@ -32,7 +44,7 @@ const API = {
       mod: 'viewthread',
     },
   } as HttpOptions,
-  Pay: {
+  PayInfo: {
     method: 'GET',
     url: '/forum.php',
     params: {
@@ -40,8 +52,20 @@ const API = {
       mod: 'misc',
       action: 'pay',
       mobile: 'yes',
-      tid: '1180701',
-      pid: '71057691',
+    },
+  } as HttpOptions,
+  Pay: {
+    method: 'POST',
+    url: '/forum.php',
+    params: {
+      mod: 'misc',
+      action: 'pay',
+      mobile: 'yes',
+      paysubmit: 'yes',
+      infloat: 'yes',
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
   } as HttpOptions,
 };
@@ -74,7 +98,17 @@ export const thread = (params: ThreadParams) =>
     },
   });
 
-export const pay = () =>
+export const payInfo = (params: PayInfoParams) =>
+  request({
+    ...API.PayInfo,
+    params: {
+      ...API.PayInfo.params,
+      ...params,
+    },
+  });
+
+export const pay = (params: PayParams) =>
   request({
     ...API.Pay,
+    data: new URLSearchParams(params as unknown as Record<string, string>).toString(),
   });

@@ -50,3 +50,15 @@ jobs:
         with:
           name: debug-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload Web Dist
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-dist
+          path: dist
+
+      - name: Upload Web Stats
+        uses: actions/upload-artifact@v3
+        with:
+          name: web-stats
+          path: stats.html

@@ -78,8 +78,14 @@
   import { openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
   import type { InfiniteScrollCustomEvent } from '@ionic/vue';
-  import { onIonViewWillLeave, useBackButton } from '@ionic/vue';
+  import {
+    onIonViewWillLeave,
+    useBackButton,
+    alertController,
+    loadingController,
+  } from '@ionic/vue';
   import { close, checkmark } from 'ionicons/icons';
+  import { destr } from 'destr';
   import Viewer from 'viewerjs';
   import 'viewerjs/dist/viewer.css';
 
@@ -283,12 +289,21 @@
   };
 
   const getPayInfo = async (pid: string) => {
+    const loading = await loadingController.create({
+      message: '加载中...',
+    });
     try {
+      await loading.present();
       const res = await payInfo({
         tid: route.params.tid as string,
         pid,
       });
       const data = res.data;
+      const result = destr(data);
+      if (typeof result !== 'string') {
+        await loading.dismiss();
+        coinNotEnough();
+      }
       const html = new DOMParser().parseFromString(data, 'text/html');
       console.log(html);
       const td = html.querySelectorAll('td');
@@ -298,6 +313,7 @@
       payInfoData.value.balance = td[3].textContent as string;
       payParams.value.formhash = html.querySelector('input[name=formhash]')?.getAttribute('value')!;
       payParams.value.referer = `https://www.tsdm39.com/forum.php?mod=viewthread&tid=${route.params.tid}&mobile=yes`;
+      await loading.dismiss();
       isOpen.value = true;
     } catch (error) {
       console.error(error);
@@ -306,17 +322,48 @@
 
   const handlePay = async () => {
     try {
+      const loading = await loadingController.create({
+        message: '支付中...',
+      });
+      await loading.present();
       const res = await pay(payParams.value);
       const data = res.data;
       const html = new DOMParser().parseFromString(data, 'text/html');
       console.log(html);
-      isOpen.value = false;
-      page.value = 1;
-      postData.value = null;
-      getThead();
+      await loading.dismiss();
+      const alert = await alertController.create({
+        header: '提示',
+        message: '购买成功',
+        buttons: [
+          {
+            text: '确定',
+            role: 'cancel',
+            handler: () => {
+              isOpen.value = false;
+              page.value = 1;
+              postData.value = null;
+              getThead();
+            },
+          },
+        ],
+      });
+      await alert.present();
     } catch (error) {
       console.error(error);
     }
+  };
+  const coinNotEnough = async () => {
+    const alert = await alertController.create({
+      header: '错误',
+      message: '天使币不足',
+      buttons: [
+        {
+          text: '确定',
+          role: 'cancel',
+        },
+      ],
+    });
+    await alert.present();
   };
 </script>
 

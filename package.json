@@ -1,7 +1,7 @@
 {
   "name": "tsdm-app",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -30,6 +30,9 @@
     "@capacitor/status-bar": "5.0.6",
     "@ionic/vue": "^7.5.6",
     "@ionic/vue-router": "^7.5.6",
+    "@tiptap/pm": "^2.1.12",
+    "@tiptap/starter-kit": "^2.1.12",
+    "@tiptap/vue-3": "^2.1.12",
     "@vueuse/core": "^10.6.1",
     "date-fns": "^2.30.0",
     "destr": "^2.0.2",
@@ -73,7 +76,7 @@
     "vue-eslint-parser": "^9.3.2",
     "vue-tsc": "^1.8.22"
   },
-  "description": "An Ionic project",
+  "description": "一个跨平台的第三方天使动漫论坛客户端",
   "pnpm": {
     "patchedDependencies": {
       "@capacitor/android@5.5.1": "patches/@capacitor__android@5.5.1.patch"

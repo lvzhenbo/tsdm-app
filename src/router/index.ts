@@ -68,11 +68,19 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/otheruserinfo/:username',
+    path: '/otherUserInfo/:username',
     name: 'OtherUserInfo',
     component: () => import('@/views/OtherUserInfo/index.vue'),
     meta: {
       title: '个人资料',
+    },
+  },
+  {
+    path: '/threadAdd/:fid',
+    name: 'ThreadAdd',
+    component: () => import('@/views/Thread/add.vue'),
+    meta: {
+      title: '发表帖子',
     },
   },
 ];

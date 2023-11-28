@@ -23,7 +23,11 @@ export default defineConfig({
     },
   },
   plugins: [
-    vue(),
+    vue({
+      script: {
+        defineModel: true,
+      },
+    }),
     legacy(),
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia'],

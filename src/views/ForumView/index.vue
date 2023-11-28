@@ -84,7 +84,7 @@
           <IonFabButton color="warning">
             <IonIcon :icon="star"></IonIcon>
           </IonFabButton>
-          <IonFabButton color="primary">
+          <IonFabButton color="primary" @click="handleToAdd">
             <IonIcon :icon="add"></IonIcon>
           </IonFabButton>
         </IonFabList>
@@ -326,6 +326,14 @@
     chipTypeID.value = -1;
     pages.value = 1;
     getForumData();
+  };
+  const handleToAdd = () => {
+    router.push({
+      name: 'ThreadAdd',
+      params: {
+        fid: fid,
+      },
+    });
   };
 </script>
 <style scoped>

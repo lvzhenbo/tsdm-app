@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Editor: typeof import('./src/components/Editor/Editor.vue')['default']
     IonApp: typeof import('@ionic/vue')['IonApp']
     IonAvatar: typeof import('@ionic/vue')['IonAvatar']
     IonBackButton: typeof import('@ionic/vue')['IonBackButton']
@@ -28,6 +29,7 @@ declare module 'vue' {
     IonImg: typeof import('@ionic/vue')['IonImg']
     IonInfiniteScroll: typeof import('@ionic/vue')['IonInfiniteScroll']
     IonInfiniteScrollContent: typeof import('@ionic/vue')['IonInfiniteScrollContent']
+    IonInput: typeof import('@ionic/vue')['IonInput']
     IonItem: typeof import('@ionic/vue')['IonItem']
     IonLabel: typeof import('@ionic/vue')['IonLabel']
     IonList: typeof import('@ionic/vue')['IonList']
@@ -52,6 +54,6 @@ declare module 'vue' {
     IonToolbar: typeof import('@ionic/vue')['IonToolbar']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    UserInfo: typeof import('./src/components/UserInfo.vue')['default']
+    UserInfoCard: typeof import('./src/components/UserInfoCard/UserInfoCard.vue')['default']
   }
 }

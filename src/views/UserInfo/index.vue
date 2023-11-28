@@ -1,7 +1,7 @@
 <template>
   <IonPage>
     <IonContent>
-      <UserInfo :user-info="userStore.userInfo!" />
+      <UserInfoCard :user-info="userStore.userInfo!" />
     </IonContent>
   </IonPage>
 </template>

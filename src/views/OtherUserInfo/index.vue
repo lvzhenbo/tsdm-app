@@ -12,7 +12,7 @@
       <div v-if="loading" class="flex justify-center h-full items-center">
         <IonSpinner name="circular"></IonSpinner>
       </div>
-      <UserInfoVue v-if="!loading" :user-info="userInfo!" />
+      <UserInfoCard v-if="!loading" :user-info="userInfo!" />
     </IonContent>
   </IonPage>
 </template>
@@ -21,7 +21,6 @@
   import { otherUserInfo } from '@/api/user';
   import { type UserInfo } from '@/stores/modules/user';
   import { toastController } from '@ionic/vue';
-  import UserInfoVue from '@/components/UserInfo.vue';
 
   const route = useRoute();
   const router = useRouter();

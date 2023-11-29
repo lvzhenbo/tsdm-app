@@ -1,5 +1,7 @@
 <template>
-  <EditorContent :editor="editor" class="editor" />
+  <div class="p-1">
+    <EditorContent :editor="editor" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -19,11 +21,12 @@
     onUpdate: ({ editor }) => {
       content.value = editor.getHTML();
     },
+    editorProps: {
+      attributes: {
+        class: 'focus:outline-none focus:caret-[--ion-color-primary]',
+      },
+    },
   });
 </script>
 
-<style scoped>
-  .editor :deep(.tiptap) {
-    @apply focus:outline-none focus:caret-[--ion-color-primary];
-  }
-</style>
+<style scoped></style>

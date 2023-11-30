@@ -4,6 +4,7 @@ export function htmlToBBCode(html: string): string {
     bbcode = bbcode.replace(reg, str);
   };
   rep(/<a.*?href=\\"(.*?)\\".*?>(.*?)<\/a>/gi, '[url=$1]$2[/url]');
+
   rep(
     /<font.*?color=\\"(.*?)\\".*?class=\\"codeStyle\\".*?>(.*?)<\/font>/gi,
     '[code][color=$1]$2[/color][/code]',
@@ -20,7 +21,7 @@ export function htmlToBBCode(html: string): string {
     /<font.*?class=\\"quoteStyle\\".*?color=\\"(.*?)\\".*?>(.*?)<\/font>/gi,
     '[quote][color=$1]$2[/color][/quote]',
   );
-  rep(/<span style=\\"color: ?(.*?);\\">(.*?)<\/span>/gi, '[color=$1]$2[/color]');
+  rep(/<span style="color: ?(.*?)">(.*?)<\/span>/gi, '[color=$1]$2[/color]');
   rep(/<font.*?color=\\"(.*?)\\".*?>(.*?)<\/font>/gi, '[color=$1]$2[/color]');
   rep(/<span style=\\"font-size:(.*?);\\">(.*?)<\/span>/gi, '[size=$1]$2[/size]');
   rep(/<font>(.*?)<\/font>/gi, '$1');
@@ -33,6 +34,7 @@ export function htmlToBBCode(html: string): string {
   rep(/<em class=\\"quoteStyle\\">(.*?)<\/em>/gi, '[quote][i]$1[/i][/quote]');
   rep(/<u class=\\"codeStyle\\">(.*?)<\/u>/gi, '[code][u]$1[/u][/code]');
   rep(/<u class=\\"quoteStyle\\">(.*?)<\/u>/gi, '[quote][u]$1[/u][/quote]');
+  rep(/<p.*?style="text-align: (.*?)">(.*?)<\/p>/gi, '[align=$1]$2[/align]');
   rep(/<\/(strong|b)>/gi, '[/b]');
   rep(/<(strong|b)>/gi, '[b]');
   rep(/<\/(em|i)>/gi, '[/i]');
@@ -40,6 +42,8 @@ export function htmlToBBCode(html: string): string {
   rep(/<\/u>/gi, '[/u]');
   rep(/<span style=\\"text-decoration: ?underline;\\">(.*?)<\/span>/gi, '[u]$1[/u]');
   rep(/<u>/gi, '[u]');
+  rep(/<s>/gi, '[s]');
+  rep(/<\/s>/gi, '[/s]');
   rep(/<blockquote[^>]*>/gi, '[quote]');
   rep(/<\/blockquote>/gi, '[/quote]');
   rep(/<br \/>/gi, '\n');
@@ -52,5 +56,6 @@ export function htmlToBBCode(html: string): string {
   rep(/&lt;/gi, '<');
   rep(/&gt;/gi, '>');
   rep(/&amp;/gi, '&');
+
   return bbcode;
 }

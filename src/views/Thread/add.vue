@@ -16,9 +16,7 @@
         <IonItem>
           <IonLabel>
             正文
-            <div class="border w-full h-28 overflow-scroll rounded">
-              <Editor v-model="content" />
-            </div>
+            <Editor v-model="content" />
           </IonLabel>
         </IonItem>
       </IonList>

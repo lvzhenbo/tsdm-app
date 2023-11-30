@@ -6,50 +6,41 @@
         <IonRippleEffect />
       </div>
       <div class="icon ion-activatable" @click="editorCMD?.toggleBold().run()">
-        <IonIcon
-          src="/src/assets/svg/BoldOutlined.svg"
-          :color="editor?.isActive('bold') ? 'primary' : ''"
-        />
+        <IonIcon :src="BoldOutlined" :color="editor?.isActive('bold') ? 'primary' : ''" />
         <IonRippleEffect />
       </div>
       <div class="icon ion-activatable" @click="editorCMD?.toggleItalic().run()">
-        <IonIcon
-          src="/src/assets/svg/ItalicOutlined.svg"
-          :color="editor?.isActive('italic') ? 'primary' : ''"
-        />
+        <IonIcon :src="ItalicOutlined" :color="editor?.isActive('italic') ? 'primary' : ''" />
         <IonRippleEffect />
       </div>
       <div class="icon ion-activatable" @click="editorCMD?.toggleUnderline().run()">
-        <IonIcon
-          src="/src/assets/svg/UnderlineOutlined.svg"
-          :color="editor?.isActive('underline') ? 'primary' : ''"
-        />
+        <IonIcon :src="UnderlineOutlined" :color="editor?.isActive('underline') ? 'primary' : ''" />
         <IonRippleEffect />
       </div>
       <div class="icon ion-activatable" @click="editorCMD?.toggleStrike().run()">
         <IonIcon
-          src="/src/assets/svg/StrikethroughOutlined.svg"
+          :src="StrikethroughOutlined"
           :color="editor?.isActive('strike') ? 'primary' : ''"
         />
         <IonRippleEffect />
       </div>
       <div class="icon ion-activatable" @click="editorCMD?.setTextAlign('left').run()">
         <IonIcon
-          src="/src/assets/svg/AlignLeftOutlined.svg"
+          :src="AlignLeftOutlined"
           :color="editor?.isActive({ textAlign: 'left' }) ? 'primary' : ''"
         />
         <IonRippleEffect />
       </div>
       <div class="icon ion-activatable" @click="editorCMD?.setTextAlign('center').run()">
         <IonIcon
-          src="/src/assets/svg/AlignCenterOutlined.svg"
+          :src="AlignCenterOutlined"
           :color="editor?.isActive({ textAlign: 'center' }) ? 'primary' : ''"
         />
         <IonRippleEffect />
       </div>
       <div class="icon ion-activatable" @click="editorCMD?.setTextAlign('right').run()">
         <IonIcon
-          src="/src/assets/svg/AlignRightOutlined.svg"
+          :src="AlignRightOutlined"
           :color="editor?.isActive({ textAlign: 'right' }) ? 'primary' : ''"
         />
         <IonRippleEffect />
@@ -67,6 +58,13 @@
   import Underline from '@tiptap/extension-underline';
   import TextAlign from '@tiptap/extension-text-align';
   import { colorPalette } from 'ionicons/icons';
+  import BoldOutlined from '@/assets/svg/BoldOutlined.svg';
+  import ItalicOutlined from '@/assets/svg/ItalicOutlined.svg';
+  import UnderlineOutlined from '@/assets/svg/UnderlineOutlined.svg';
+  import StrikethroughOutlined from '@/assets/svg/StrikethroughOutlined.svg';
+  import AlignLeftOutlined from '@/assets/svg/AlignLeftOutlined.svg';
+  import AlignCenterOutlined from '@/assets/svg/AlignCenterOutlined.svg';
+  import AlignRightOutlined from '@/assets/svg/AlignRightOutlined.svg';
 
   defineOptions({
     name: 'EditorComponent',

@@ -25,7 +25,7 @@ export function htmlToBBCode(html: string): string {
   rep(/<font.*?color=\\"(.*?)\\".*?>(.*?)<\/font>/gi, '[color=$1]$2[/color]');
   rep(/<span style=\\"font-size:(.*?);\\">(.*?)<\/span>/gi, '[size=$1]$2[/size]');
   rep(/<font>(.*?)<\/font>/gi, '$1');
-  rep(/<img.*?src=\\"(.*?)\\".*?\/>/gi, '[img]$1[/img]');
+  rep(/<img.*?src="(.*?)".*?\/>/gi, '[img]$1[/img]');
   rep(/<span class=\\"codeStyle\\">(.*?)<\/span>/gi, '[code]$1[/code]');
   rep(/<span class=\\"quoteStyle\\">(.*?)<\/span>/gi, '[quote]$1[/quote]');
   rep(/<strong class=\\"codeStyle\\">(.*?)<\/strong>/gi, '[code][b]$1[/b][/code]');

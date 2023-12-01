@@ -51,7 +51,11 @@
           :button="true"
           @click="handleToThread(item)"
         >
-          <IonLabel> {{ item.title }} <br /> </IonLabel>
+          <IonLabel>
+            <span class="text-sm">
+              {{ item.title }}
+            </span>
+          </IonLabel>
         </IonItem>
       </IonList>
       <IonList v-if="listView" lines="none" :inset="true">
@@ -62,8 +66,8 @@
           @click="handleToThread(item)"
         >
           <IonLabel>
-            {{ item.title }} <br />
-            <IonNote color="medium"> {{ item.author }} </IonNote>
+            <span class="text-sm">{{ item.title }}</span> <br />
+            <IonNote> {{ item.typehtml }} {{ item.author }} </IonNote>
           </IonLabel>
         </IonItem>
       </IonList>

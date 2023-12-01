@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    CommendTab: typeof import('./src/components/Editor/CommendTab.vue')['default']
     Editor: typeof import('./src/components/Editor/Editor.vue')['default']
     IonApp: typeof import('@ionic/vue')['IonApp']
     IonAvatar: typeof import('@ionic/vue')['IonAvatar']

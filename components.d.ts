@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     CommendTab: typeof import('./src/components/Editor/CommendTab.vue')['default']
     Editor: typeof import('./src/components/Editor/Editor.vue')['default']
+    IonAlert: typeof import('@ionic/vue')['IonAlert']
     IonApp: typeof import('@ionic/vue')['IonApp']
     IonAvatar: typeof import('@ionic/vue')['IonAvatar']
     IonBackButton: typeof import('@ionic/vue')['IonBackButton']

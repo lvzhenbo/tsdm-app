@@ -43,6 +43,9 @@ dependencies:
   '@tiptap/extension-color':
     specifier: ^2.1.12
     version: 2.1.12(@tiptap/core@2.1.12)(@tiptap/extension-text-style@2.1.12)
+  '@tiptap/extension-image':
+    specifier: ^2.1.13
+    version: 2.1.13(@tiptap/core@2.1.12)
   '@tiptap/extension-text-align':
     specifier: ^2.1.12
     version: 2.1.12(@tiptap/core@2.1.12)
@@ -2373,6 +2376,14 @@ packages:
     dependencies:
       '@tiptap/core': 2.1.12(@tiptap/pm@2.1.12)
       '@tiptap/pm': 2.1.12
+    dev: false
+
+  /@tiptap/extension-image@2.1.13(@tiptap/core@2.1.12):
+    resolution: {integrity: sha512-7oVAos+BU4KR/zQsfltrd8hgIxKxyxZ19dhwb1BJI2Nt3Mnx+yFPRlRSehID6RT9dYqgW4UW5d6vh/3HQcYYYw==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.1.12(@tiptap/pm@2.1.12)
     dev: false
 
   /@tiptap/extension-italic@2.1.12(@tiptap/core@2.1.12):

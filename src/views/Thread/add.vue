@@ -27,12 +27,13 @@
 
 <script setup lang="ts">
   import { htmlToBBCode } from '@/utils/html2bbcode';
+  import { useEditor } from '@tiptap/vue-3';
   import StarterKit from '@tiptap/starter-kit';
   import Color from '@tiptap/extension-color';
   import TextStyle from '@tiptap/extension-text-style';
   import Underline from '@tiptap/extension-underline';
   import TextAlign from '@tiptap/extension-text-align';
-  import { useEditor } from '@tiptap/vue-3';
+  import Image from '@tiptap/extension-image';
 
   defineOptions({
     name: 'ThreadAdd',
@@ -49,6 +50,7 @@
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
+      Image,
     ],
     onUpdate: ({ editor }) => {
       content.value = editor.getHTML();

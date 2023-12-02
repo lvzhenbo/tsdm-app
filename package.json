@@ -31,6 +31,7 @@
     "@ionic/vue": "^7.5.7",
     "@ionic/vue-router": "^7.5.7",
     "@tiptap/extension-color": "^2.1.12",
+    "@tiptap/extension-image": "^2.1.13",
     "@tiptap/extension-text-align": "^2.1.12",
     "@tiptap/extension-text-style": "^2.1.12",
     "@tiptap/extension-underline": "^2.1.12",

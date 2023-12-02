@@ -41,6 +41,16 @@
       />
       <IonRippleEffect />
     </div>
+    <div id="image-button" class="icon ion-activatable">
+      <IonIcon :icon="image" />
+      <IonRippleEffect />
+    </div>
+    <IonAlert
+      trigger="image-button"
+      header="请输入图片地址"
+      :buttons="imageButtons"
+      :inputs="imageInputs"
+    ></IonAlert>
   </div>
 </template>
 
@@ -53,9 +63,9 @@
   import AlignLeftOutlined from '@/assets/svg/AlignLeftOutlined.svg';
   import AlignCenterOutlined from '@/assets/svg/AlignCenterOutlined.svg';
   import AlignRightOutlined from '@/assets/svg/AlignRightOutlined.svg';
-  import { colorPalette } from 'ionicons/icons';
+  import { colorPalette, image } from 'ionicons/icons';
   import { Keyboard } from '@capacitor/keyboard';
-  import { isPlatform } from '@ionic/vue';
+  import { isPlatform, alertController, type AlertButton, type AlertInput } from '@ionic/vue';
 
   const props = defineProps({
     editor: {
@@ -66,6 +76,46 @@
 
   const editorCMD = computed(() => props.editor.chain().focus());
   const keyboardHeight = ref('0px');
+  const imageInputs: AlertInput[] = [
+    {
+      name: 'image',
+      type: 'url',
+      placeholder: '请输入图片地址，以https://开头',
+    },
+  ];
+  const imageButtons: AlertButton[] = [
+    {
+      text: '取消',
+      role: 'cancel',
+    },
+    {
+      text: '确认',
+      role: 'confirm',
+      handler: async (e: { image: string }) => {
+        try {
+          if (!e.image.startsWith('https://')) {
+            const alert = await alertController.create({
+              header: '错误',
+              message: '图片地址必须以https://开头',
+              buttons: ['确认'],
+            });
+            await alert.present();
+            return false;
+          }
+          new URL(e.image);
+          editorCMD.value.setImage({ src: e.image }).run();
+        } catch (error) {
+          const alert = await alertController.create({
+            header: '错误',
+            message: '图片地址不合法，请输入正确的图片地址',
+            buttons: ['确认'],
+          });
+          await alert.present();
+          return false;
+        }
+      },
+    },
+  ];
 
   onMounted(() => {
     // 因 Web 端跨域问题导致不可用，暂时不考虑 web 端

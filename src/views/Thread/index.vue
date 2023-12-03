@@ -1,73 +1,109 @@
 <template>
   <IonPage>
     <IonContent color="light">
-      <IonCard v-for="item in postData?.postlist" :key="item.pid">
-        <IonCardHeader>
-          <div class="flex items-center">
-            <IonAvatar class="w-12 h-12">
-              <IonImg :src="item.avatar" />
-            </IonAvatar>
-            <div class="ml-3 min-w-0 flex-1">
-              <div class="truncate mb-1">
-                <span :class="settingStore.isDark ? 'text-white' : 'text-black'">
-                  {{ item.author }}
-                </span>
-                <span v-if="item.author_nickname"> | {{ item.author_nickname }} </span>
+      <div v-if="loading">
+        <IonCard v-for="i in 4" :key="i">
+          <IonCardHeader>
+            <div class="flex items-center">
+              <IonAvatar class="w-12 h-12">
+                <IonSkeletonText :animated="true" />
+              </IonAvatar>
+              <div class="ml-3 min-w-0 flex-1">
+                <div class="truncate mb-1">
+                  <IonSkeletonText :animated="true" class="w-24" />
+                </div>
+                <div>
+                  <IonSkeletonText :animated="true" class="w-20" />
+                </div>
               </div>
-              <div v-html="item.authortitle"></div>
+            </div>
+          </IonCardHeader>
+          <IonCardContent>
+            <IonSkeletonText :animated="true" />
+            <IonSkeletonText :animated="true" />
+            <IonSkeletonText :animated="true" />
+            <IonSkeletonText :animated="true" />
+          </IonCardContent>
+        </IonCard>
+      </div>
+      <div v-else>
+        <IonCard v-for="item in postData?.postlist" :key="item.pid">
+          <IonCardHeader>
+            <div class="flex items-center">
+              <IonAvatar class="w-12 h-12">
+                <IonImg :src="item.avatar" @ion-error="$event.target.src = Avatar" />
+              </IonAvatar>
+              <div class="ml-3 min-w-0 flex-1">
+                <div class="truncate mb-1">
+                  <span :class="settingStore.isDark ? 'text-white' : 'text-black'">
+                    {{ item.author }}
+                  </span>
+                  <span v-if="item.author_nickname"> | {{ item.author_nickname }} </span>
+                </div>
+                <div v-html="item.authortitle"></div>
+              </div>
+            </div>
+          </IonCardHeader>
+          <IonCardContent :class="settingStore.isDark ? 'text-white' : 'text-black'">
+            <IonButton
+              v-if="item.floor === 1 && postData?.thread_price !== '0' && !postData?.thread_paid"
+              @click="getPayInfo(item.pid)"
+            >
+              支付
+            </IonButton>
+            <div class="msg" @click="handleGetPayInfo" v-html="item.message"></div>
+          </IonCardContent>
+          <div class="flex items-center justify-end">
+            <div>{{ dateFormat(item.timestamp) }}</div>
+            <div class="ml-3 mr-1 text-[--ion-color-primary]">{{ '#' + item.floor }}</div>
+            <div>
+              <IonButton fill="clear" size="small">
+                <IonIcon slot="icon-only" :icon="ellipsisHorizontal" />
+              </IonButton>
             </div>
           </div>
-        </IonCardHeader>
-        <IonCardContent :class="settingStore.isDark ? 'text-white' : 'text-black'">
-          <IonButton
-            v-if="item.floor === 1 && postData?.thread_price !== '0' && !postData?.thread_paid"
-            @click="getPayInfo(item.pid)"
-          >
-            支付
-          </IonButton>
-          <div class="msg" @click="handleGetPayInfo" v-html="item.message"></div>
-        </IonCardContent>
-      </IonCard>
-      <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
-        <IonInfiniteScrollContent />
-      </IonInfiniteScroll>
-      <IonModal :is-open="isOpen">
-        <IonHeader>
-          <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
-            <IonButtons slot="start">
-              <IonButton @click="isOpen = false">
-                <IonIcon slot="icon-only" :icon="close" />
-              </IonButton>
-            </IonButtons>
-            <IonTitle>购买主题</IonTitle>
-            <IonButtons slot="end">
-              <IonButton @click="handlePay">
-                <IonIcon slot="icon-only" :icon="checkmark" />
-              </IonButton>
-            </IonButtons>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent color="light">
-          <IonList :inset="true">
-            <IonItem>
-              <IonLabel>作者</IonLabel>
-              <IonNote slot="end">{{ payInfoData.author }}</IonNote>
-            </IonItem>
-            <IonItem>
-              <IonLabel>售价(天使币)</IonLabel>
-              <IonNote slot="end">{{ payInfoData.price }}</IonNote>
-            </IonItem>
-            <IonItem>
-              <IonLabel>作者所得(天使币)</IonLabel>
-              <IonNote slot="end">{{ payInfoData.authorIncome }}</IonNote>
-            </IonItem>
-            <IonItem>
-              <IonLabel>购买后余额(天使币)</IonLabel>
-              <IonNote slot="end">{{ payInfoData.balance }}</IonNote>
-            </IonItem>
-          </IonList>
-        </IonContent>
-      </IonModal>
+        </IonCard>
+        <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
+          <IonInfiniteScrollContent />
+        </IonInfiniteScroll>
+        <IonModal :is-open="isOpen">
+          <IonHeader>
+            <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+              <IonButtons slot="start">
+                <IonButton @click="isOpen = false">
+                  <IonIcon slot="icon-only" :icon="close" />
+                </IonButton>
+              </IonButtons>
+              <IonTitle>购买主题</IonTitle>
+              <IonButtons slot="end">
+                <IonButton @click="handlePay">
+                  <IonIcon slot="icon-only" :icon="checkmark" />
+                </IonButton>
+              </IonButtons>
+            </IonToolbar>
+          </IonHeader>
+          <IonContent color="light">
+            <IonList :inset="true">
+              <IonItem>
+                <IonLabel>作者</IonLabel>
+                <IonNote slot="end">{{ payInfoData.author }}</IonNote>
+              </IonItem>
+              <IonItem>
+                <IonLabel>售价(天使币)</IonLabel>
+                <IonNote slot="end">{{ payInfoData.price }}</IonNote>
+              </IonItem>
+              <IonItem>
+                <IonLabel>作者所得(天使币)</IonLabel>
+                <IonNote slot="end">{{ payInfoData.authorIncome }}</IonNote>
+              </IonItem>
+              <IonItem>
+                <IonLabel>购买后余额(天使币)</IonLabel>
+                <IonNote slot="end">{{ payInfoData.balance }}</IonNote>
+              </IonItem>
+            </IonList>
+          </IonContent>
+        </IonModal>
+      </div>
     </IonContent>
   </IonPage>
 </template>
@@ -84,10 +120,13 @@
     alertController,
     loadingController,
   } from '@ionic/vue';
-  import { close, checkmark } from 'ionicons/icons';
+  import { close, checkmark, ellipsisHorizontal } from 'ionicons/icons';
   import { destr } from 'destr';
   import Viewer from 'viewerjs';
   import 'viewerjs/dist/viewer.css';
+  import Avatar from '@/assets/svg/Avatar.svg';
+  import { format } from 'date-fns';
+  import { zhCN } from 'date-fns/locale';
 
   interface PostData {
     status: number;
@@ -135,6 +174,7 @@
 
   const route = useRoute();
   const router = useRouter();
+  const loading = ref(false);
   const settingStore = useSettingStore();
   const page = ref(1);
   const postData = ref<PostData | null>(null);
@@ -189,6 +229,9 @@
 
   const getThead = async () => {
     try {
+      if (page.value === 1) {
+        loading.value = true;
+      }
       const res = await thread({
         tid: route.params.tid as string,
         page: page.value.toString(),
@@ -237,7 +280,9 @@
         });
       });
       page.value++;
+      loading.value = false;
     } catch (error) {
+      loading.value = false;
       console.error(error);
     }
   };
@@ -365,9 +410,19 @@
     });
     await alert.present();
   };
+
+  const dateFormat = (date: string) => {
+    date = date.padEnd(13, '0');
+    return format(new Date(Number(date)), 'PPP HH:mm', {
+      locale: zhCN,
+    });
+  };
 </script>
 
 <style scoped>
+  ion-skeleton-text {
+    --border-radius: 9999px;
+  }
   .msg {
     @apply select-auto;
   }

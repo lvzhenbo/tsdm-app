@@ -50,7 +50,9 @@
       TextAlign.configure({
         types: ['heading', 'paragraph'],
       }),
-      Image,
+      Image.configure({
+        inline: true,
+      }),
     ],
     onUpdate: ({ editor }) => {
       content.value = editor.getHTML();

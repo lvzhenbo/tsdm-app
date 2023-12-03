@@ -1,9 +1,35 @@
 <template>
   <div class="cmd">
-    <div class="icon ion-activatable" @click="editorCMD?.setColor('#958DF1').run()">
+    <div id="colorPanel" class="icon ion-activatable">
       <IonIcon :icon="colorPalette" />
       <IonRippleEffect />
     </div>
+    <ion-modal ref="modal" class="colorPanel" trigger="colorPanel">
+      <div class="mb-2.5">
+        <h1 class="m-5">选择颜色</h1>
+
+        <div class="flex ml-2 flex-wrap">
+          <div
+            v-for="color in colors"
+            :key="color"
+            class="w-10 h-10 rounded-full ml-3 mt-2 ion-activatable"
+            :style="{ backgroundColor: color }"
+            @click="setColors(color)"
+          >
+            <IonIcon
+              v-if="editor?.isActive('textStyle', { color: color })"
+              :icon="checkmarkOutline"
+              size="large"
+              class="ml-1 mt-1 text-white"
+            />
+          </div>
+        </div>
+        <div class="text-right mt-6 mr-5 mb-3">
+          <IonButton fill="clear" @click="dismiss">取消</IonButton>
+          <IonButton fill="clear" @click="dismiss">确定</IonButton>
+        </div>
+      </div>
+    </ion-modal>
     <div class="icon ion-activatable" @click="editorCMD?.toggleBold().run()">
       <IonIcon :src="BoldOutlined" :color="editor?.isActive('bold') ? 'primary' : ''" />
       <IonRippleEffect />
@@ -55,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-  import type { Editor } from '@tiptap/vue-3';
+  import { Editor } from '@tiptap/vue-3';
   import BoldOutlined from '@/assets/svg/BoldOutlined.svg';
   import ItalicOutlined from '@/assets/svg/ItalicOutlined.svg';
   import UnderlineOutlined from '@/assets/svg/UnderlineOutlined.svg';
@@ -63,7 +89,7 @@
   import AlignLeftOutlined from '@/assets/svg/AlignLeftOutlined.svg';
   import AlignCenterOutlined from '@/assets/svg/AlignCenterOutlined.svg';
   import AlignRightOutlined from '@/assets/svg/AlignRightOutlined.svg';
-  import { colorPalette, image } from 'ionicons/icons';
+  import { colorPalette, image, checkmarkOutline } from 'ionicons/icons';
   import { Keyboard } from '@capacitor/keyboard';
   import { isPlatform, alertController, type AlertButton, type AlertInput } from '@ionic/vue';
 
@@ -76,6 +102,22 @@
 
   const editorCMD = computed(() => props.editor.chain().focus());
   const keyboardHeight = ref('0px');
+  const modal = ref();
+  const dismiss = () => {
+    modal.value.$el.dismiss();
+  };
+  const colors = [
+    '#000000',
+    '#333333',
+    '#666666',
+    '#999999',
+    '#cccccc',
+    '#66ccff',
+    '#ff9900',
+    '#ff6600',
+    '#ff0000',
+    '#cc0000',
+  ];
   const imageInputs: AlertInput[] = [
     {
       name: 'image',
@@ -117,6 +159,14 @@
     },
   ];
 
+  const setColors = (color: string) => {
+    if (color === '#000000') {
+      editorCMD.value.unsetColor().run();
+    } else {
+      editorCMD.value.setColor(color).run();
+    }
+  };
+
   onMounted(() => {
     // 因 Web 端跨域问题导致不可用，暂时不考虑 web 端
     if (isPlatform('hybrid')) {
@@ -141,5 +191,12 @@
   }
   .cmd {
     @apply flex overflow-x-auto w-full bottom-[v-bind(keyboardHeight)] transition-all duration-150 p-2 bg-[--ion-background-color] text-[--ion-text-color] border-t border-slate-900/10;
+  }
+  .colorPanel {
+    --width: 70%;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
   }
 </style>

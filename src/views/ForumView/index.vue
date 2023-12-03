@@ -2,9 +2,8 @@
   <IonPage>
     <IonContent ref="contentRef" color="light">
       <IonRefresher slot="fixed" @ion-refresh="handleRefresh($event)">
-        <IonRefresherContent></IonRefresherContent>
+        <IonRefresherContent />
       </IonRefresher>
-
       <IonList v-if="listView && forumData?.subforum.length != 0" :inset="true" lines="none">
         <IonListHeader>
           <IonLabel>子版块</IonLabel>
@@ -59,8 +58,13 @@
         </IonItem>
       </IonList>
       <IonList v-if="listView" lines="none" :inset="true">
+        <IonListHeader>
+          <IonLabel class="text-lg">板块主题</IonLabel>
+          <IonCheckbox class="mr-4" @ion-change="handleChange">置顶主题</IonCheckbox>
+        </IonListHeader>
         <IonItem
           v-for="item in threadList"
+          v-show="topIsShow || item.displayorder === '0'"
           :key="item.tid"
           :button="true"
           @click="handleToThread(item)"
@@ -120,6 +124,7 @@
     InfiniteScrollCustomEvent,
     IonContent,
     IonModal,
+    CheckboxChangeEventDetail,
   } from '@ionic/vue';
   import { arrowUp, add, star, grid, people } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
@@ -206,6 +211,7 @@
       typeid: chipTypeID.value === -1 ? '' : String(chipTypeID.value),
     };
   });
+  const topIsShow = ref(false);
 
   onMounted(async () => {
     getForumData();
@@ -338,6 +344,10 @@
         fid: fid,
       },
     });
+  };
+
+  const handleChange = (e: CustomEvent<CheckboxChangeEventDetail>) => {
+    topIsShow.value = e.detail.checked;
   };
 </script>
 <style scoped>

@@ -4,7 +4,7 @@
       <IonIcon :icon="colorPalette" />
       <IonRippleEffect />
     </div>
-    <ion-modal ref="modal" class="colorPanel" trigger="colorPanel">
+    <IonModal ref="modal" class="colorPanel" trigger="colorPanel">
       <div class="mb-2.5">
         <h1 class="m-5">选择颜色</h1>
 
@@ -29,7 +29,7 @@
           <IonButton fill="clear" @click="dismiss">确定</IonButton>
         </div>
       </div>
-    </ion-modal>
+    </IonModal>
     <div class="icon ion-activatable" @click="editorCMD?.toggleBold().run()">
       <IonIcon :src="BoldOutlined" :color="editor?.isActive('bold') ? 'primary' : ''" />
       <IonRippleEffect />

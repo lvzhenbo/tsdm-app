@@ -240,7 +240,12 @@
       // console.log(res);
 
       const data = JSON.parse(
-        res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\t/g, '\\t'),
+        res.data
+          .replace(/\n/g, '\\n')
+          .replace(/\r/g, '\\r')
+          .replace(/\t/g, '\\t')
+          // eslint-disable-next-line no-control-regex
+          .replace(/\u0000/g, ''),
       );
 
       console.log(data);

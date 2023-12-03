@@ -11,7 +11,7 @@
     <IonContent color="light">
       <IonList :inset="true">
         <IonItem>
-          <IonInput label="标题"></IonInput>
+          <IonInput label="标题" placeholder="请输入标题"></IonInput>
         </IonItem>
         <IonItem>
           <IonLabel>

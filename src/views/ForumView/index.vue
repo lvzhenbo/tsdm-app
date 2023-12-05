@@ -75,7 +75,7 @@
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonInfiniteScroll @ion-infinite="ionInfinite">
+      <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
         <IonInfiniteScrollContent></IonInfiniteScrollContent>
       </IonInfiniteScroll>
       <IonFab slot="fixed" vertical="bottom" horizontal="end">
@@ -212,6 +212,7 @@
     };
   });
   const topIsShow = ref(false);
+  const loadDone = ref(false);
 
   onMounted(async () => {
     getForumData();
@@ -241,8 +242,12 @@
       if (res.data) {
         const data = JSON.parse(res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
         if (data.status === 0) {
-          forumData.value = data;
-          threadList.value = data.thread;
+          if (data.thread.length === 0) {
+            loadDone.value = true;
+          } else {
+            forumData.value = data;
+            threadList.value = data.thread;
+          }
         } else {
           notAllowedToast();
         }
@@ -322,6 +327,7 @@
     });
   };
   const handleRefresh = async (event: RefresherCustomEvent) => {
+    loadDone.value = false;
     await getForumData();
     event.target.complete();
   };

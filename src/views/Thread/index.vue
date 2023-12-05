@@ -1,6 +1,9 @@
 <template>
   <IonPage>
-    <IonContent color="light">
+    <IonContent ref="contentRef" color="light">
+      <IonRefresher slot="fixed" @ion-refresh="handleRefresh($event)">
+        <IonRefresherContent />
+      </IonRefresher>
       <div v-if="loading">
         <IonCard v-for="i in 4" :key="i">
           <IonCardHeader>
@@ -47,11 +50,12 @@
           <IonCardContent :class="settingStore.isDark ? 'text-white' : 'text-black'">
             <IonButton
               v-if="item.floor === 1 && postData?.thread_price !== '0' && !postData?.thread_paid"
+              class="flex"
               @click="getPayInfo(item.pid)"
             >
               支付
             </IonButton>
-            <div class="msg" @click="handleGetPayInfo" v-html="item.message"></div>
+            <div class="msg mt-4" @click="handleGetPayInfo" v-html="item.message"></div>
           </IonCardContent>
           <div class="flex items-center justify-end">
             <div>{{ dateFormat(item.timestamp) }}</div>
@@ -104,6 +108,22 @@
           </IonContent>
         </IonModal>
       </div>
+      <IonFab v-if="fabVisible" slot="fixed" vertical="bottom" horizontal="end">
+        <IonFabButton>
+          <IonIcon :icon="grid" />
+        </IonFabButton>
+        <IonFabList side="top">
+          <IonFabButton color="secondary" @click="contentRef?.$el.scrollToTop(500)">
+            <IonIcon :icon="arrowUp"></IonIcon>
+          </IonFabButton>
+          <IonFabButton color="primary">
+            <IonIcon :icon="add"></IonIcon>
+          </IonFabButton>
+          <IonFabButton color="tertiary" @click="handleFABRefresh">
+            <IonIcon :icon="refreshOutline"></IonIcon>
+          </IonFabButton>
+        </IonFabList>
+      </IonFab>
     </IonContent>
   </IonPage>
 </template>
@@ -113,14 +133,23 @@
   import { useSettingStore } from '@/stores/modules/setting';
   import { openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
-  import type { InfiniteScrollCustomEvent } from '@ionic/vue';
+  import type { InfiniteScrollCustomEvent, RefresherCustomEvent } from '@ionic/vue';
   import {
     onIonViewWillLeave,
     useBackButton,
     alertController,
     loadingController,
+    IonContent,
   } from '@ionic/vue';
-  import { close, checkmark, ellipsisHorizontal } from 'ionicons/icons';
+  import {
+    close,
+    checkmark,
+    ellipsisHorizontal,
+    arrowUp,
+    add,
+    grid,
+    refreshOutline,
+  } from 'ionicons/icons';
   import { destr } from 'destr';
   import Viewer from 'viewerjs';
   import 'viewerjs/dist/viewer.css';
@@ -183,6 +212,8 @@
   const isShow = ref(false);
   const forumStore = useForumStore();
   const isOpen = ref(false);
+  const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
+  const fabVisible = ref(false);
   const payInfoData = ref<PayInfoData>({
     author: '',
     price: '',
@@ -231,6 +262,7 @@
     try {
       if (page.value === 1) {
         loading.value = true;
+        fabVisible.value = false;
       }
       const res = await thread({
         tid: route.params.tid as string,
@@ -253,6 +285,7 @@
       if (data.status === 0) {
         if (page.value === 1) {
           forumStore.setThreadTitle(data.subject);
+          fabVisible.value = true;
         }
         if (data.postlist.length < 10) {
           loadDone.value = true;
@@ -421,6 +454,21 @@
     return format(new Date(Number(date)), 'PPP HH:mm', {
       locale: zhCN,
     });
+  };
+
+  const handleRefresh = async (event: RefresherCustomEvent) => {
+    page.value = 1;
+    postData.value = null;
+    loadDone.value = false;
+    await getThead();
+    event.target.complete();
+  };
+
+  const handleFABRefresh = async () => {
+    page.value = 1;
+    postData.value = null;
+    loadDone.value = false;
+    await getThead();
   };
 </script>
 

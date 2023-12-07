@@ -22,6 +22,42 @@
             <IonSelectOption value="dark">深色模式</IonSelectOption>
           </IonSelect>
         </IonItem>
+        <IonItem>
+          <IonSelect
+            label="签到心情"
+            :value="config.emotion"
+            ok-text="确认"
+            cancel-text="取消"
+            @ion-change="config.emotion = $event.detail.value"
+          >
+            <IonSelectOption value="1">开心</IonSelectOption>
+            <IonSelectOption value="2">郁闷</IonSelectOption>
+            <IonSelectOption value="3">难过</IonSelectOption>
+            <IonSelectOption value="4">无聊</IonSelectOption>
+            <IonSelectOption value="5">怒</IonSelectOption>
+            <IonSelectOption value="6">擦汗</IonSelectOption>
+            <IonSelectOption value="7">奋斗</IonSelectOption>
+            <IonSelectOption value="8">衰</IonSelectOption>
+            <IonSelectOption value="9">慵懒</IonSelectOption>
+          </IonSelect>
+        </IonItem>
+        <IonItem>
+          <IonInput
+            label="签到评论"
+            placeholder="请输入签到评论"
+            class="text-right"
+            :value="config.comment"
+            @ion-input="config.comment = $event.detail.value!"
+          />
+        </IonItem>
+        <IonItem>
+          <IonToggle
+            :checked="config.autoSignIn"
+            @ion-change="config.autoSignIn = $event.detail.checked"
+          >
+            <IonLabel>自动签到</IonLabel>
+          </IonToggle>
+        </IonItem>
       </IonList>
     </IonContent>
   </IonPage>
@@ -44,6 +80,9 @@
 
   const config = ref({
     theme: 'system',
+    emotion: '1',
+    comment: '安卓客户端签到',
+    autoSignIn: false,
   });
 
   watch(

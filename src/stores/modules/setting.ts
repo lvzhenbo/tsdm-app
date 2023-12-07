@@ -2,6 +2,9 @@ import { setStorage } from '@/utils';
 
 export interface Config {
   theme: string;
+  emotion: string;
+  comment: string;
+  autoSignIn: boolean;
 }
 
 export const useSettingStore = defineStore('setting', () => {

@@ -7,6 +7,12 @@ interface LoginParams {
   tsdm_verify: string;
 }
 
+interface SignInParams {
+  client_hash: string;
+  emotion: string;
+  comment: string;
+}
+
 const API = {
   Captcha: {
     method: 'GET',
@@ -40,6 +46,16 @@ const API = {
       do: 'profile',
     },
   } as HttpOptions,
+  SignIn: {
+    method: 'POST',
+    url: '/plugin.php',
+    params: {
+      id: 'minerva:sign_in',
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  } as HttpOptions,
 };
 
 export const captcha = () => request(API.Captcha);
@@ -71,4 +87,10 @@ export const otherUserInfo = (username: string) =>
 export const permissionUserInfo = () =>
   request({
     ...API.UserInfo,
+  });
+
+export const signIn = (params: SignInParams) =>
+  request({
+    ...API.SignIn,
+    data: new URLSearchParams(params as unknown as Record<string, string>).toString(),
   });

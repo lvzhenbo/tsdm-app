@@ -54,6 +54,7 @@ declare module 'vue' {
     IonSkeletonText: typeof import('@ionic/vue')['IonSkeletonText']
     IonSpinner: typeof import('@ionic/vue')['IonSpinner']
     IonTitle: typeof import('@ionic/vue')['IonTitle']
+    IonToggle: typeof import('@ionic/vue')['IonToggle']
     IonToolbar: typeof import('@ionic/vue')['IonToolbar']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

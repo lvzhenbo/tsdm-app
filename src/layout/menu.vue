@@ -10,6 +10,11 @@
         </div>
         <IonTitle v-if="!userStore.userInfo" @click="handleToLogin">请登录</IonTitle>
         <IonTitle v-else>{{ userStore.userInfo!.username }}</IonTitle>
+        <IonButtons v-if="userStore.userInfo" slot="primary" class="mr-4">
+          <IonButton fill="outline" shape="round" :disabled="signInLoading" @click="handleSignin">
+            签到
+          </IonButton>
+        </IonButtons>
       </IonToolbar>
     </IonHeader>
     <IonContent>
@@ -42,6 +47,7 @@
   import { personCircle, home, person, globe, settings } from 'ionicons/icons';
   import { useUserStore } from '@/stores/modules/user';
   import { getStorage, openUrl } from '@/utils';
+  import { signIn } from '@/api/user';
 
   defineOptions({
     name: 'MenuLayout',
@@ -49,6 +55,7 @@
 
   const router = useRouter();
   const userStore = useUserStore();
+  const signInLoading = ref(false);
 
   onMounted(() => {
     getUserInfo();
@@ -88,6 +95,48 @@
     const res = await getStorage('userInfo');
     if (res) {
       userStore.setUserInfo(res);
+    }
+  };
+
+  const handleSignin = async () => {
+    try {
+      signInLoading.value = true;
+      const res = await signIn({
+        // 暂时写死
+        client_hash: 'B1832985F388CC66664B9C0579B7CB5E',
+        emotion: '1',
+        comment: 'Androi客户端签到',
+      });
+      if (res.data) {
+        if (res.headers['Content-Type'].includes('application/json')) {
+          let message = '签到失败，请稍后重试';
+          if (res.data.message === 'already_signed') {
+            message = '您今天已经签到过了，明天再来吧~';
+          }
+          const alert = await alertController.create({
+            header: '每日签到',
+            message,
+            buttons: ['确定'],
+          });
+          await alert.present();
+        } else {
+          const alert = await alertController.create({
+            header: '每日签到',
+            message: '签到成功',
+            buttons: ['确定'],
+          });
+          await alert.present();
+        }
+      }
+      signInLoading.value = false;
+    } catch (error) {
+      const alert = await alertController.create({
+        header: '错误',
+        message: '签到失败，请稍后重试',
+        buttons: ['确定'],
+      });
+      await alert.present();
+      signInLoading.value = false;
     }
   };
 </script>

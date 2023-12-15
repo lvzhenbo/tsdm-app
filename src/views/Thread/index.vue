@@ -119,7 +119,7 @@
           <IonFabButton color="primary">
             <IonIcon :icon="add"></IonIcon>
           </IonFabButton>
-          <IonFabButton color="tertiary" @click="handleFABRefresh">
+          <IonFabButton color="tertiary" @click="refresh">
             <IonIcon :icon="refreshOutline"></IonIcon>
           </IonFabButton>
         </IonFabList>
@@ -258,6 +258,7 @@
     }
   });
 
+  // 获取帖子
   const getThead = async () => {
     try {
       if (page.value === 1) {
@@ -327,6 +328,7 @@
     }
   };
 
+  // 上拉加载
   const ionInfinite = async (ev: InfiniteScrollCustomEvent) => {
     await getThead();
     ev.target.complete();
@@ -336,6 +338,7 @@
     const target = e.target as HTMLElement;
     console.log(target);
 
+    // 处理链接
     function handleUrl(target: Element, e: Event) {
       e.preventDefault();
       const url = new URL(target.getAttribute('href') as string);
@@ -362,6 +365,7 @@
       }
     }
 
+    // 递归查找父元素是否为a标签
     function findParentLink(element: Element) {
       if (element.tagName === 'A') {
         return element;
@@ -381,17 +385,22 @@
       }
     }
   };
+
+  // 销毁图片查看器
   const destroyImgViewer = () => {
     viewer.value.forEach((item) => {
       item.destroy();
     });
   };
+
+  // 隐藏图片查看器
   const hideImgViewer = () => {
     viewer.value.forEach((item) => {
       item.hide();
     });
   };
 
+  // 获取支付信息
   const getPayInfo = async (pid: string) => {
     const loading = await loadingController.create({
       message: '加载中...',
@@ -424,6 +433,7 @@
     }
   };
 
+  // 支付
   const handlePay = async () => {
     try {
       const loading = await loadingController.create({
@@ -456,6 +466,8 @@
       console.error(error);
     }
   };
+
+  // 天使币不足
   const coinNotEnough = async () => {
     const alert = await alertController.create({
       header: '错误',
@@ -470,6 +482,7 @@
     await alert.present();
   };
 
+  // 时间格式化
   const dateFormat = (date: string) => {
     date = date.padEnd(13, '0');
     return format(new Date(Number(date)), 'PPP HH:mm', {
@@ -477,19 +490,17 @@
     });
   };
 
-  const handleRefresh = async (event: RefresherCustomEvent) => {
+  const refresh = async () => {
     page.value = 1;
     postData.value = null;
     loadDone.value = false;
     await getThead();
-    event.target.complete();
   };
 
-  const handleFABRefresh = async () => {
-    page.value = 1;
-    postData.value = null;
-    loadDone.value = false;
-    await getThead();
+  // 下拉刷新
+  const handleRefresh = async (event: RefresherCustomEvent) => {
+    await refresh();
+    event.target.complete();
   };
 </script>
 

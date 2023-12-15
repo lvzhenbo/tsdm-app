@@ -63,7 +63,7 @@ export const captcha = () => request(API.Captcha);
 export const login = (params: LoginParams) =>
   request({
     ...API.Login,
-    data: new URLSearchParams(params as unknown as Record<string, string>).toString(),
+    data: params,
   });
 
 export const userInfo = (uid: string) =>
@@ -92,5 +92,5 @@ export const permissionUserInfo = () =>
 export const signIn = (params: SignInParams) =>
   request({
     ...API.SignIn,
-    data: new URLSearchParams(params as unknown as Record<string, string>).toString(),
+    data: params,
   });

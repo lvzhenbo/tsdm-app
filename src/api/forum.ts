@@ -110,5 +110,5 @@ export const payInfo = (params: PayInfoParams) =>
 export const pay = (params: PayParams) =>
   request({
     ...API.Pay,
-    data: new URLSearchParams(params as unknown as Record<string, string>).toString(),
+    data: params,
   });

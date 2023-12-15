@@ -21,15 +21,15 @@
   },
   "dependencies": {
     "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
-    "@capacitor/app": "5.0.6",
+    "@capacitor/app": "^5.0.6",
     "@capacitor/browser": "^5.1.0",
-    "@capacitor/core": "5.5.1",
-    "@capacitor/haptics": "5.0.6",
-    "@capacitor/keyboard": "5.0.6",
+    "@capacitor/core": "^5.6.0",
+    "@capacitor/haptics": "^5.0.6",
+    "@capacitor/keyboard": "^5.0.6",
     "@capacitor/preferences": "^5.0.6",
-    "@capacitor/status-bar": "5.0.6",
-    "@ionic/vue": "^7.6.0",
-    "@ionic/vue-router": "^7.6.0",
+    "@capacitor/status-bar": "^5.0.6",
+    "@ionic/vue": "^7.6.1",
+    "@ionic/vue-router": "^7.6.1",
     "@tiptap/extension-color": "^2.1.13",
     "@tiptap/extension-image": "^2.1.13",
     "@tiptap/extension-text-align": "^2.1.13",
@@ -41,17 +41,17 @@
     "@vueuse/core": "^10.7.0",
     "date-fns": "^2.30.0",
     "destr": "^2.0.2",
-    "ionicons": "^7.2.1",
+    "ionicons": "^7.2.2",
     "pinia": "^2.1.7",
     "viewerjs": "^1.11.6",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
-    "@capacitor/android": "^5.5.1",
-    "@capacitor/cli": "5.5.1",
+    "@capacitor/android": "^5.6.0",
+    "@capacitor/cli": "^5.6.0",
     "@ionic/cli": "^7.1.5",
-    "@rushstack/eslint-patch": "^1.6.0",
+    "@rushstack/eslint-patch": "^1.6.1",
     "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.10.4",
     "@vitejs/plugin-legacy": "^5.2.0",
@@ -69,14 +69,14 @@
     "prettier": "^3.1.1",
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-visualizer": "^5.11.0",
-    "stylelint": "^16.0.1",
+    "stylelint": "^16.0.2",
     "stylelint-config-standard": "^35.0.0",
     "stylelint-config-tailwindcss": "^0.0.7",
     "tailwindcss": "^3.3.6",
     "typescript": "^5.3.3",
     "unplugin-auto-import": "^0.17.2",
     "unplugin-vue-components": "^0.26.0",
-    "vite": "^5.0.7",
+    "vite": "^5.0.9",
     "vitest": "^1.0.4",
     "vue-eslint-parser": "^9.3.2",
     "vue-tsc": "^1.8.25"
@@ -84,7 +84,7 @@
   "description": "一个跨平台的第三方天使动漫论坛客户端",
   "pnpm": {
     "patchedDependencies": {
-      "@capacitor/android@5.5.1": "patches/@capacitor__android@5.5.1.patch"
+      "@capacitor/android@5.6.0": "patches/@capacitor__android@5.6.0.patch"
     }
   }
 }

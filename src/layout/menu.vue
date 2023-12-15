@@ -108,7 +108,7 @@
         comment: 'Androi客户端签到',
       });
       if (res.data) {
-        if (res.headers['Content-Type'].includes('application/json')) {
+        if (res.data.status === -1) {
           let message = '签到失败，请稍后重试';
           if (res.data.message === 'already_signed') {
             message = '您今天已经签到过了，明天再来吧~';

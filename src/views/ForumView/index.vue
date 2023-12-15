@@ -51,9 +51,7 @@
           @click="handleToThread(item)"
         >
           <IonLabel>
-            <span class="text-sm">
-              {{ item.title }}
-            </span>
+            {{ item.title }}
           </IonLabel>
         </IonItem>
       </IonList>
@@ -63,14 +61,15 @@
           <IonCheckbox class="mr-4" @ion-change="handleChange">置顶主题</IonCheckbox>
         </IonListHeader>
         <IonItem
-          v-for="item in threadList"
+          v-for="(item, index) in threadList"
           v-show="topIsShow || item.displayorder === '0'"
           :key="item.tid"
           :button="true"
+          :class="index % 2 === 0 ? 'cusitem' : ''"
           @click="handleToThread(item)"
         >
           <IonLabel>
-            <span class="text-sm">{{ item.title }}</span> <br />
+            {{ item.title }} <br />
             <IonNote> {{ item.typehtml }} {{ item.author }} </IonNote>
           </IonLabel>
         </IonItem>
@@ -363,5 +362,8 @@
     --height: fit-content;
     --border-radius: 6px;
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  .cusitem {
+    --background: #f8f8f8;
   }
 </style>

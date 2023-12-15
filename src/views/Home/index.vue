@@ -18,7 +18,7 @@
             <IonRow>
               <IonCol v-for="item in groupList" :key="item.gid" size="6">
                 <div
-                  class="ion-activatable text-center rounded relative overflow-hidden leading-9 cursor-pointer"
+                  class="ion-activatable text-center rounded relative overflow-hidden leading-9 cursor-pointer text-base"
                   :class="settingStore.isDark ? 'text-white' : 'text-black'"
                   @click="() => $router.push(`/forum/${item.gid}`)"
                 >

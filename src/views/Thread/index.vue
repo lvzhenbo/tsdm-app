@@ -277,7 +277,9 @@
           .replace(/\r/g, '\\r')
           .replace(/\t/g, '\\t')
           // eslint-disable-next-line no-control-regex
-          .replace(/\u0000/g, ''),
+          .replace(/\u0000/g, '')
+          // eslint-disable-next-line no-control-regex
+          .replace(/\u0014/g, '\\u0014'),
       );
 
       console.log(data);
@@ -334,7 +336,7 @@
     const target = e.target as HTMLElement;
     console.log(target);
 
-    if (target.tagName === 'A') {
+    function handleUrl(target: Element, e: Event) {
       e.preventDefault();
       const url = new URL(target.getAttribute('href') as string);
       if (url.host === 'www.tsdm39.com') {
@@ -358,6 +360,12 @@
       } else {
         openUrl({ url: url.href });
       }
+    }
+
+    if (target.tagName === 'A') {
+      handleUrl(target, e);
+    } else if (target.parentElement?.tagName === 'A') {
+      handleUrl(target.parentElement, e);
     }
   };
   const destroyImgViewer = () => {

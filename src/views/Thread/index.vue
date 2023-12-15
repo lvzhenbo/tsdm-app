@@ -55,7 +55,7 @@
             >
               支付
             </IonButton>
-            <div class="msg mt-4" @click="handleGetPayInfo" v-html="item.message"></div>
+            <div class="msg mt-4" @click="handleClick" v-html="item.message"></div>
           </IonCardContent>
           <div class="flex items-center justify-end">
             <div>{{ dateFormat(item.timestamp) }}</div>
@@ -332,7 +332,7 @@
     ev.target.complete();
   };
 
-  const handleGetPayInfo = (e: MouseEvent) => {
+  const handleClick = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
     console.log(target);
 
@@ -362,10 +362,23 @@
       }
     }
 
+    function findParentLink(element: Element) {
+      if (element.tagName === 'A') {
+        return element;
+      } else if (element.parentElement) {
+        return findParentLink(element.parentElement);
+      } else {
+        return null;
+      }
+    }
+
     if (target.tagName === 'A') {
       handleUrl(target, e);
-    } else if (target.parentElement?.tagName === 'A') {
-      handleUrl(target.parentElement, e);
+    } else {
+      const link = findParentLink(target);
+      if (link) {
+        handleUrl(link, e);
+      }
     }
   };
   const destroyImgViewer = () => {

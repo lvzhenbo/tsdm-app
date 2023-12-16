@@ -46,8 +46,10 @@
   import { menuController, alertController } from '@ionic/vue';
   import { personCircle, home, person, globe, settings } from 'ionicons/icons';
   import { useUserStore } from '@/stores/modules/user';
-  import { getStorage, openUrl } from '@/utils';
+  import { getStorage, openUrl, setStorage } from '@/utils';
+  import { useSettingStore } from '@/stores/modules/setting';
   import { signIn } from '@/api/user';
+  import { autoSignInKey, type AutoSignInValue } from '#/provideInject.d';
 
   defineOptions({
     name: 'MenuLayout',
@@ -56,10 +58,22 @@
   const router = useRouter();
   const userStore = useUserStore();
   const signInLoading = ref(false);
+  const settingStore = useSettingStore();
+  const localConfig = settingStore.config;
+  const { autoSignIn } = inject(autoSignInKey) as AutoSignInValue;
 
   onMounted(() => {
     getUserInfo();
   });
+
+  watch(
+    () => autoSignIn.value,
+    () => {
+      if (autoSignIn.value === true) {
+        handleSignin();
+      }
+    },
+  );
 
   const handleToLogin = async () => {
     await menuController.close('main-menu');
@@ -104,8 +118,8 @@
       const res = await signIn({
         // 暂时写死
         client_hash: 'B1832985F388CC66664B9C0579B7CB5E',
-        emotion: '1',
-        comment: 'Androi客户端签到',
+        emotion: localConfig?.emotion ?? '1',
+        comment: localConfig?.comment ?? 'Android客户端签到',
       });
       if (res.data) {
         if (res.data.status === -1) {
@@ -129,6 +143,10 @@
         }
       }
       signInLoading.value = false;
+      const tempStamp = Date.now();
+      const tempDate = new Date().toISOString().split('T')[0];
+      setStorage('storedStamp', tempStamp);
+      setStorage('storedDate', tempDate);
     } catch (error) {
       const alert = await alertController.create({
         header: '错误',

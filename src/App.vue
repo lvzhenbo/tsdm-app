@@ -10,18 +10,21 @@
   import { useSettingStore } from '@/stores/modules/setting';
   import { getStorage } from './utils';
   import { usePreferredDark } from '@vueuse/core';
+  import { autoSignInKey } from '#/provideInject.d';
 
   if (isPlatform('android') && isPlatform('hybrid')) {
     StatusBar.setOverlaysWebView({ overlay: true });
   }
 
   const settingStore = useSettingStore();
+  const autoSignIn = ref(false);
 
   onMounted(async () => {
     const config = await getStorage('config');
     if (config) {
       settingStore.setConfig(config);
     }
+    handleAutoSignIn();
   });
 
   const isDark = usePreferredDark();
@@ -59,4 +62,21 @@
       document.body.classList.toggle('dark', val);
     }
   });
+
+  provide(autoSignInKey, {
+    autoSignIn,
+  });
+
+  const handleAutoSignIn = async () => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const currentStamp = Date.now();
+    const storedStamp = await getStorage('storedStamp');
+    const storedDate = await getStorage('storedDate');
+
+    if (currentDate != storedDate && currentStamp != storedStamp) {
+      autoSignIn.value = true;
+    } else {
+      autoSignIn.value = false;
+    }
+  };
 </script>

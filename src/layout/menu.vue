@@ -10,11 +10,11 @@
         </div>
         <IonTitle v-if="!userStore.userInfo" @click="handleToLogin">请登录</IonTitle>
         <IonTitle v-else>{{ userStore.userInfo!.username }}</IonTitle>
-        <IonButtons v-if="userStore.userInfo" slot="primary" class="mr-4">
+        <!-- <IonButtons v-if="userStore.userInfo" slot="primary" class="mr-4">
           <IonButton fill="outline" shape="round" :disabled="signInLoading" @click="handleSignin">
             签到
           </IonButton>
-        </IonButtons>
+        </IonButtons> -->
       </IonToolbar>
     </IonHeader>
     <IonContent>
@@ -70,7 +70,7 @@
     () => autoSignIn.value,
     () => {
       if (autoSignIn.value === true) {
-        handleSignin();
+        // handleSignin();
       }
     },
   );
@@ -116,8 +116,7 @@
     try {
       signInLoading.value = true;
       const res = await signIn({
-        // 暂时写死
-        client_hash: 'B1832985F388CC66664B9C0579B7CB5E',
+        client_hash: '',
         emotion: localConfig?.emotion ?? '1',
         comment: localConfig?.comment ?? 'Android客户端签到',
       });

@@ -28,6 +28,7 @@
             :value="config.emotion"
             ok-text="确认"
             cancel-text="取消"
+            disabled
             @ion-change="config.emotion = $event.detail.value"
           >
             <IonSelectOption value="1">开心</IonSelectOption>
@@ -47,12 +48,14 @@
             placeholder="请输入签到评论"
             class="text-right"
             :value="config.comment"
+            disabled
             @ion-input="config.comment = $event.detail.value!"
           />
         </IonItem>
         <IonItem>
           <IonToggle
             :checked="config.autoSignIn"
+            disabled
             @ion-change="config.autoSignIn = $event.detail.checked"
           >
             <IonLabel>自动签到</IonLabel>

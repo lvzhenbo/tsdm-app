@@ -129,6 +129,7 @@
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
   import { threadFilterKey, type ThreadFilterValue } from '#/provideInject.d';
+  import { useSettingStore } from '@/stores/modules/setting';
 
   interface ForumData {
     thread: Thread[];
@@ -212,6 +213,18 @@
   });
   const topIsShow = ref(false);
   const loadDone = ref(false);
+  const settingStore = useSettingStore();
+  const theme = computed(() => {
+    if (settingStore.isDark) {
+      return {
+        bg: '#121212',
+      };
+    } else {
+      return {
+        bg: '#f8f8f8',
+      };
+    }
+  });
 
   onMounted(async () => {
     getForumData();
@@ -364,6 +377,6 @@
     --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
   }
   .cusitem {
-    --background: #f8f8f8;
+    --background: v-bind(theme.bg);
   }
 </style>

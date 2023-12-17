@@ -9,12 +9,12 @@ import com.getcapacitor.annotation.CapacitorPlugin;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-@CapacitorPlugin(name = "Echo")
-public class EchoPlugin extends Plugin {
+@CapacitorPlugin(name = "ClientHash")
+public class ClientHashPlugin extends Plugin {
     static final char[] f2701b = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
     @PluginMethod()
-    public void echo(PluginCall call) {
+    public void getClientHash(PluginCall call) {
         String value = call.getString("value");
 
         JSObject ret = new JSObject();

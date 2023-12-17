@@ -50,7 +50,7 @@
   import { useSettingStore } from '@/stores/modules/setting';
   import { signIn } from '@/api/user';
   import { autoSignInKey, type AutoSignInValue } from '#/provideInject.d';
-  import Echo from '@/utils/echoPlugin';
+  import ClientHash from '@/utils/clientHashPlugin';
 
   defineOptions({
     name: 'MenuLayout',
@@ -115,50 +115,52 @@
 
   const handleSignin = async () => {
     // uid + _ + username
-    const { value } = await Echo.echo({ value: '1620826_lvzhenbo' });
+    const { value } = await ClientHash.getClientHash({
+      value: `${userStore.userInfo?.uid}_${userStore.userInfo?.username}`,
+    });
     console.log('Response from native:', value);
-    // try {
-    //   signInLoading.value = true;
-    //   const res = await signIn({
-    //     client_hash: '',
-    //     emotion: localConfig?.emotion ?? '1',
-    //     comment: localConfig?.comment ?? 'Android客户端签到',
-    //   });
-    //   if (res.data) {
-    //     if (res.data.status === -1) {
-    //       let message = '签到失败，请稍后重试';
-    //       if (res.data.message === 'already_signed') {
-    //         message = '您今天已经签到过了，明天再来吧~';
-    //       }
-    //       const alert = await alertController.create({
-    //         header: '每日签到',
-    //         message,
-    //         buttons: ['确定'],
-    //       });
-    //       await alert.present();
-    //     } else {
-    //       const alert = await alertController.create({
-    //         header: '每日签到',
-    //         message: '签到成功',
-    //         buttons: ['确定'],
-    //       });
-    //       await alert.present();
-    //     }
-    //   }
-    //   signInLoading.value = false;
-    //   const tempStamp = Date.now();
-    //   const tempDate = new Date().toISOString().split('T')[0];
-    //   setStorage('storedStamp', tempStamp);
-    //   setStorage('storedDate', tempDate);
-    // } catch (error) {
-    //   const alert = await alertController.create({
-    //     header: '错误',
-    //     message: '签到失败，请稍后重试',
-    //     buttons: ['确定'],
-    //   });
-    //   await alert.present();
-    //   signInLoading.value = false;
-    // }
+    try {
+      signInLoading.value = true;
+      const res = await signIn({
+        client_hash: value,
+        emotion: localConfig?.emotion ?? '1',
+        comment: localConfig?.comment ?? 'Android客户端签到',
+      });
+      if (res.data) {
+        if (res.data.status === -1) {
+          let message = '签到失败，请稍后重试';
+          if (res.data.message === 'already_signed') {
+            message = '您今天已经签到过了，明天再来吧~';
+          }
+          const alert = await alertController.create({
+            header: '每日签到',
+            message,
+            buttons: ['确定'],
+          });
+          await alert.present();
+        } else {
+          const alert = await alertController.create({
+            header: '每日签到',
+            message: '签到成功',
+            buttons: ['确定'],
+          });
+          await alert.present();
+        }
+      }
+      signInLoading.value = false;
+      const tempStamp = Date.now();
+      const tempDate = new Date().toISOString().split('T')[0];
+      setStorage('storedStamp', tempStamp);
+      setStorage('storedDate', tempDate);
+    } catch (error) {
+      const alert = await alertController.create({
+        header: '错误',
+        message: '签到失败，请稍后重试',
+        buttons: ['确定'],
+      });
+      await alert.present();
+      signInLoading.value = false;
+    }
   };
 </script>
 

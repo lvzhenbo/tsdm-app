@@ -48,6 +48,7 @@
             class="text-right"
             :value="config.comment"
             @ion-input="config.comment = $event.detail.value!"
+            @ion-blur="config.comment = config.comment || '安卓客户端签到'"
           />
         </IonItem>
         <IonItem>

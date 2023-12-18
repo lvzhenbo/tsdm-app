@@ -11,11 +11,13 @@
   import { getStorage } from './utils';
   import { usePreferredDark } from '@vueuse/core';
   import { autoSignInKey } from '#/provideInject.d';
+  import { useUserStore } from '@/stores/modules/user';
 
   if (isPlatform('android') && isPlatform('hybrid')) {
     StatusBar.setOverlaysWebView({ overlay: true });
   }
 
+  const userStore = useUserStore();
   const settingStore = useSettingStore();
   const autoSignIn = ref(false);
 
@@ -24,7 +26,9 @@
     if (config) {
       settingStore.setConfig(config);
     }
-    handleAutoSignIn();
+    if (userStore.userInfo != undefined && config?.autoSignIn) {
+      handleAutoSignIn();
+    }
   });
 
   const isDark = usePreferredDark();

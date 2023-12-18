@@ -51,6 +51,7 @@
   import { signIn } from '@/api/user';
   import { autoSignInKey, type AutoSignInValue } from '#/provideInject.d';
   import ClientHash from '@/utils/clientHashPlugin';
+  import { formatISO } from 'date-fns';
 
   defineOptions({
     name: 'MenuLayout',
@@ -144,13 +145,12 @@
             buttons: ['确定'],
           });
           await alert.present();
+          const tempTime = Date.now();
+          setStorage('storedStamp', tempTime);
+          setStorage('storedDate', formatISO(new Date(tempTime), { representation: 'date' }));
         }
       }
       signInLoading.value = false;
-      const tempStamp = Date.now();
-      const tempDate = new Date().toISOString().split('T')[0];
-      setStorage('storedStamp', tempStamp);
-      setStorage('storedDate', tempDate);
     } catch (error) {
       const alert = await alertController.create({
         header: '错误',

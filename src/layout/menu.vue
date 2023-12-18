@@ -71,7 +71,7 @@
     () => autoSignIn.value,
     () => {
       if (autoSignIn.value === true) {
-        // handleSignin();
+        handleSignin();
       }
     },
   );
@@ -114,7 +114,6 @@
   };
 
   const handleSignin = async () => {
-    // uid + _ + username
     const { value } = await ClientHash.getClientHash({
       value: `${userStore.userInfo?.uid}_${userStore.userInfo?.username}`,
     });
@@ -141,7 +140,7 @@
         } else {
           const alert = await alertController.create({
             header: '每日签到',
-            message: '签到成功',
+            message: `签到成功，获得${res.data.reward_value}天使币`,
             buttons: ['确定'],
           });
           await alert.present();

@@ -18,17 +18,7 @@
         </IonItem>
       </IonList>
       <div
-        v-if="
-          () => {
-            if (listView) {
-              return false;
-            }else if(!forumData?.threadtype){
-              return false;
-            }else{
-              return forumData?.threadtype.length != 0;
-            }
-          }
-        "
+        v-if="listView && forumData?.threadtype !== undefined && forumData?.threadtype.length != 0"
         class="px-4 mt-3"
       >
         <IonChip :color="chipTypeID === -1 ? 'primary' : ''" @click="handleChipFilterReset">
@@ -54,9 +44,7 @@
         </IonItem>
       </IonList>
       <IonList
-        v-if="
-          (recommend && !forumData?.recommend) || (recommend && forumData?.recommend.length != 0)
-        "
+        v-if="listView && forumData?.recommend !== undefined && forumData.recommend.length != 0"
         :inset="true"
       >
         <IonListHeader>
@@ -73,7 +61,7 @@
           </IonLabel>
         </IonItem>
       </IonList>
-      <IonList v-if="listView && forumData?.thread.length === 0" lines="none" :inset="true">
+      <IonList v-if="listView && forumData?.thread.length != 0" lines="none" :inset="true">
         <IonListHeader>
           <IonLabel class="text-lg">板块主题</IonLabel>
           <IonCheckbox class="mr-4" @ion-change="handleChange">置顶主题</IonCheckbox>
@@ -273,8 +261,8 @@
         const data = JSON.parse(res.data.replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
         if (data.status === 0) {
           if (data.thread.length === 0) {
-            loadDone.value = true;
             forumData.value = data;
+            loadDone.value = true;
           } else {
             forumData.value = data;
             threadList.value = data.thread;

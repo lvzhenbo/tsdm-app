@@ -12,6 +12,7 @@
   import { usePreferredDark } from '@vueuse/core';
   import { autoSignInKey } from '#/provideInject.d';
   import { useUserStore } from '@/stores/modules/user';
+  import { formatISO } from 'date-fns';
 
   if (isPlatform('android') && isPlatform('hybrid')) {
     StatusBar.setOverlaysWebView({ overlay: true });
@@ -25,6 +26,10 @@
     const config = await getStorage('config');
     if (config) {
       settingStore.setConfig(config);
+    }
+    const signInDate = await getStorage('storedDate');
+    if (signInDate) {
+      userStore.signInDate = signInDate;
     }
     if (userStore.userInfo != undefined && config?.autoSignIn) {
       handleAutoSignIn();
@@ -72,12 +77,12 @@
   });
 
   const handleAutoSignIn = async () => {
-    const currentDate = new Date().toISOString().split('T')[0];
     const currentStamp = Date.now();
+    const currentDate = formatISO(new Date(currentStamp), { representation: 'date' });
     const storedStamp = await getStorage('storedStamp');
     const storedDate = await getStorage('storedDate');
 
-    if (currentDate != storedDate && currentStamp != storedStamp) {
+    if (currentDate !== storedDate && currentStamp !== storedStamp) {
       autoSignIn.value = true;
     } else {
       autoSignIn.value = false;

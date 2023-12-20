@@ -12,7 +12,7 @@
         <IonTitle v-else>{{ userStore.userInfo!.username }}</IonTitle>
         <IonButtons v-if="userStore.userInfo" slot="primary" class="mr-4">
           <IonButton fill="outline" shape="round" :disabled="signInLoading" @click="handleSignin">
-            签到
+            {{ signInTitle }}
           </IonButton>
         </IonButtons>
       </IonToolbar>
@@ -63,6 +63,14 @@
   const settingStore = useSettingStore();
   const localConfig = settingStore.config;
   const { autoSignIn } = inject(autoSignInKey) as AutoSignInValue;
+  const signInTitle = computed(() => {
+    if (signInLoading.value) {
+      return '签到中';
+    } else if (userStore.signInDate === formatISO(new Date(), { representation: 'date' })) {
+      return '已签到';
+    }
+    return '签到';
+  });
 
   onMounted(() => {
     getUserInfo();
@@ -70,8 +78,8 @@
 
   watch(
     () => autoSignIn.value,
-    () => {
-      if (autoSignIn.value === true) {
+    (val) => {
+      if (val) {
         handleSignin();
       }
     },
@@ -132,12 +140,14 @@
           if (res.data.message === 'already_signed') {
             message = '您今天已经签到过了，明天再来吧~';
           }
-          const alert = await alertController.create({
-            header: '每日签到',
-            message,
-            buttons: ['确定'],
-          });
-          await alert.present();
+          if (!autoSignIn.value) {
+            const alert = await alertController.create({
+              header: '每日签到',
+              message,
+              buttons: ['确定'],
+            });
+            await alert.present();
+          }
         } else {
           const alert = await alertController.create({
             header: '每日签到',

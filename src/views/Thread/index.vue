@@ -70,43 +70,6 @@
         <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
           <IonInfiniteScrollContent />
         </IonInfiniteScroll>
-        <IonModal :is-open="isOpen">
-          <IonHeader>
-            <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
-              <IonButtons slot="start">
-                <IonButton @click="isOpen = false">
-                  <IonIcon slot="icon-only" :icon="close" />
-                </IonButton>
-              </IonButtons>
-              <IonTitle>购买主题</IonTitle>
-              <IonButtons slot="end">
-                <IonButton @click="handlePay">
-                  <IonIcon slot="icon-only" :icon="checkmark" />
-                </IonButton>
-              </IonButtons>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent color="light">
-            <IonList :inset="true">
-              <IonItem>
-                <IonLabel>作者</IonLabel>
-                <IonNote slot="end">{{ payInfoData.author }}</IonNote>
-              </IonItem>
-              <IonItem>
-                <IonLabel>售价(天使币)</IonLabel>
-                <IonNote slot="end">{{ payInfoData.price }}</IonNote>
-              </IonItem>
-              <IonItem>
-                <IonLabel>作者所得(天使币)</IonLabel>
-                <IonNote slot="end">{{ payInfoData.authorIncome }}</IonNote>
-              </IonItem>
-              <IonItem>
-                <IonLabel>购买后余额(天使币)</IonLabel>
-                <IonNote slot="end">{{ payInfoData.balance }}</IonNote>
-              </IonItem>
-            </IonList>
-          </IonContent>
-        </IonModal>
       </div>
       <IonFab v-if="fabVisible" slot="fixed" vertical="bottom" horizontal="end">
         <IonFabButton>
@@ -125,6 +88,43 @@
         </IonFabList>
       </IonFab>
     </IonContent>
+    <IonModal :is-open="isOpen">
+      <IonHeader>
+        <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+          <IonButtons slot="start">
+            <IonButton @click="isOpen = false">
+              <IonIcon slot="icon-only" :icon="close" />
+            </IonButton>
+          </IonButtons>
+          <IonTitle>购买主题</IonTitle>
+          <IonButtons slot="end">
+            <IonButton @click="handlePay">
+              <IonIcon slot="icon-only" :icon="checkmark" />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent color="light">
+        <IonList :inset="true">
+          <IonItem>
+            <IonLabel>作者</IonLabel>
+            <IonNote slot="end">{{ payInfoData.author }}</IonNote>
+          </IonItem>
+          <IonItem>
+            <IonLabel>售价(天使币)</IonLabel>
+            <IonNote slot="end">{{ payInfoData.price }}</IonNote>
+          </IonItem>
+          <IonItem>
+            <IonLabel>作者所得(天使币)</IonLabel>
+            <IonNote slot="end">{{ payInfoData.authorIncome }}</IonNote>
+          </IonItem>
+          <IonItem>
+            <IonLabel>购买后余额(天使币)</IonLabel>
+            <IonNote slot="end">{{ payInfoData.balance }}</IonNote>
+          </IonItem>
+        </IonList>
+      </IonContent>
+    </IonModal>
   </IonPage>
 </template>
 

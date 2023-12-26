@@ -21,7 +21,7 @@
         <IonTitle v-else> {{ title }} </IonTitle>
         <IonButtons v-if="route.name === 'ForumView'" slot="primary">
           <IonButton @click="popoverOpen">
-            <IonIcon slot="icon-only" :ios="filterCircle" :md="filterCircle" />
+            <IonIcon slot="icon-only" :icon="FilterIcon" />
           </IonButton>
           <IonPopover :is-open="popover" @did-dismiss="popover = false">
             <IonContent>
@@ -59,7 +59,7 @@
 <script setup lang="ts">
   import { getStorage, openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
-  import { ellipsisHorizontal, ellipsisVertical, filterCircle } from 'ionicons/icons';
+  import { ellipsisHorizontal, ellipsisVertical, filter as FilterIcon } from 'ionicons/icons';
   import { threadFilterKey } from '#/provideInject.d';
 
   interface Group {

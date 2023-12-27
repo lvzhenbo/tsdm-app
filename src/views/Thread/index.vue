@@ -56,6 +56,43 @@
               支付
             </IonButton>
             <div class="msg mt-4" @click="handleClick" v-html="item.message"></div>
+            <div v-if="item.ratelog.length">
+              <div class="border-t my-1"></div>
+              <div>
+                <div v-for="rateItem in item.ratelog" :key="rateItem.uid" class="my-1">
+                  <div>
+                    <IonText color="secondary">
+                      {{ rateItem.username }}
+                    </IonText>
+                    <span v-if="rateItem.reason"> 「{{ rateItem.reason }}」 </span>
+                  </div>
+                  <div class="flex">
+                    <div v-for="scoreItem in rateItem.score" :key="scoreItem" class="mx-1">
+                      <IonText color="medium">
+                        {{
+                          postData?.extcreditsname[Number(scoreItem.split(':')[0])] +
+                          '+' +
+                          scoreItem.split(':')[1]
+                        }}
+                      </IonText>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex justify-center">
+                <div
+                  v-for="ratelogextcredit in item.ratelogextcredits"
+                  :key="ratelogextcredit"
+                  class="mx-1"
+                >
+                  {{
+                    postData?.extcreditsname[Number(ratelogextcredit.split(':')[0])] +
+                    '+' +
+                    ratelogextcredit.split(':')[1]
+                  }}
+                </div>
+              </div>
+            </div>
           </IonCardContent>
           <div class="flex items-center justify-end">
             <div>{{ dateFormat(item.timestamp) }}</div>
@@ -185,9 +222,17 @@
     platform: number;
     authortitle: string;
     authorgid: string;
-    ratelog: any[];
+    ratelog: Ratelog[];
     ratelogextcredits: any[];
     author_nickname: string;
+  }
+
+  interface Ratelog {
+    uid: number;
+    username: string;
+    status: number;
+    score: string[];
+    reason: string;
   }
 
   interface PayInfoData {

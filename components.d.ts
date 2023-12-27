@@ -53,6 +53,7 @@ declare module 'vue' {
     IonSelectOption: typeof import('@ionic/vue')['IonSelectOption']
     IonSkeletonText: typeof import('@ionic/vue')['IonSkeletonText']
     IonSpinner: typeof import('@ionic/vue')['IonSpinner']
+    IonText: typeof import('@ionic/vue')['IonText']
     IonTitle: typeof import('@ionic/vue')['IonTitle']
     IonToggle: typeof import('@ionic/vue')['IonToggle']
     IonToolbar: typeof import('@ionic/vue')['IonToolbar']

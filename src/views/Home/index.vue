@@ -2,6 +2,19 @@
   <IonPage>
     <IonContent color="light">
       <IonCard>
+        <IonCardContent>
+          <IonInput placeholder="请输入搜索内容">
+            <IonSelect slot="start" interface="popover" value="1">
+              <IonSelectOption value="1">帖子</IonSelectOption>
+              <IonSelectOption value="2">用户</IonSelectOption>
+            </IonSelect>
+            <IonButton slot="end" fill="clear">
+              <IonIcon slot="icon-only" :icon="arrowForward" />
+            </IonButton>
+          </IonInput>
+        </IonCardContent>
+      </IonCard>
+      <IonCard>
         <IonCardHeader class="flex flex-row items-center justify-between">
           <IonCardTitle>论坛分区</IonCardTitle>
           <IonIcon
@@ -37,7 +50,7 @@
 <script setup lang="ts">
   import { forumGroup } from '@/api/forum';
   import { setStorage, getStorage } from '@/utils';
-  import { reloadOutline } from 'ionicons/icons';
+  import { reloadOutline, arrowForward } from 'ionicons/icons';
   import { useSettingStore } from '@/stores/modules/setting';
   import { useBackButton, useIonRouter } from '@ionic/vue';
   import { App } from '@capacitor/app';

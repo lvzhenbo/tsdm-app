@@ -1,7 +1,13 @@
 <template>
   <IonPage>
     <IonContent color="light">
-      <IonList v-if="searchData?.results.length" lines="none">
+      <div v-if="loading" class="flex justify-center h-full items-center">
+        <IonSpinner name="circular"></IonSpinner>
+      </div>
+      <h2 v-if="noResult" class="flex justify-center items-center h-40 text-xl text-slate-500"
+        >没有搜索结果
+      </h2>
+      <IonList v-if="searchData?.results != undefined && searchData?.results.length" lines="none">
         <IonItem
           v-for="(item, index) in searchData.results"
           :key="item.thread_id"
@@ -71,7 +77,9 @@
       };
     }
   });
+  const loading = ref(false);
   const loadDone = ref(false);
+  const noResult = ref(false);
 
   onMounted(() => {
     searchParams.value = { ...searchParams.value, ...route.query };
@@ -80,15 +88,21 @@
 
   const handleSearch = async () => {
     try {
+      loading.value = true;
       const res = await search(searchParams.value);
       if (res.data) {
         const data = JSON.parse(res.data);
-        // console.log(data);
         const totalPage = Math.ceil(data.total / data.page_size);
         if (page.value === 1) {
           searchData.value = data;
         } else {
           searchData.value?.results.push(...data.results);
+        }
+        if (searchData.value?.total === 0) {
+          loading.value = false;
+          noResult.value = true;
+          loadDone.value = true;
+          return;
         }
         page.value += 1;
         searchParams.value.page = page.value.toString();
@@ -96,8 +110,9 @@
           loadDone.value = true;
         }
       }
+      loading.value = false;
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 

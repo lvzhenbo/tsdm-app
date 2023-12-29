@@ -81,7 +81,7 @@
         </IonItem>
       </IonList>
       <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
-        <IonInfiniteScrollContent></IonInfiniteScrollContent>
+        <IonInfiniteScrollContent />
       </IonInfiniteScroll>
       <IonFab slot="fixed" vertical="bottom" horizontal="end">
         <IonFabButton>

@@ -52,8 +52,9 @@
   import { setStorage, getStorage } from '@/utils';
   import { reloadOutline, arrowForward } from 'ionicons/icons';
   import { useSettingStore } from '@/stores/modules/setting';
-  import { useBackButton, useIonRouter } from '@ionic/vue';
+  import { alertController, useBackButton, useIonRouter } from '@ionic/vue';
   import { App } from '@capacitor/app';
+  import { useUserStore } from '@/stores/modules/user';
 
   interface Group {
     gid: number;
@@ -64,12 +65,14 @@
     name: 'HomeIndex',
   });
 
+  const router = useRouter();
   const groupList = ref<Group[]>([]);
   const reload = ref(false);
   const settingStore = useSettingStore();
   const ionRouter = useIonRouter();
   const searchType = ref(1);
   const searchValue = ref('');
+  const userStore = useUserStore();
 
   onMounted(async () => {
     const groupListStorage = await getStorage('groupList');
@@ -103,11 +106,35 @@
     }
   }
 
-  function handleSearch() {
+  async function handleSearch() {
+    if (!searchValue.value) {
+      return;
+    }
     if (searchType.value === 1) {
-      // ionRouter.push({ path: '/search' });
+      if (!userStore.userInfo) {
+        const alert = await alertController.create({
+          header: '提示',
+          message: '请先登录',
+          buttons: [
+            {
+              text: '取消',
+              role: 'cancel',
+            },
+            {
+              text: '确定',
+              role: 'confirm',
+              handler: () => {
+                router.push('/login');
+              },
+            },
+          ],
+        });
+        await alert.present();
+        return;
+      }
+      router.push({ path: '/search', query: { query: searchValue.value } });
     } else {
-      ionRouter.push({ path: `/otherUserInfo/${searchValue.value}` });
+      router.push({ name: 'OtherUserInfo', params: { username: searchValue.value } });
     }
   }
 </script>

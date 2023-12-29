@@ -26,6 +26,11 @@ export interface PayParams {
   paysubmit: string;
 }
 
+export interface SearchParams {
+  query: string;
+  page: string;
+}
+
 const API = {
   ForumGroup: {
     method: 'GET',
@@ -66,6 +71,15 @@ const API = {
     },
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  } as HttpOptions,
+  Search: {
+    method: 'GET',
+    url: '/plugin.php',
+    params: {
+      id: 'Kahrpba:search',
+      mobile: 'yes',
+      tsdmapp: '1',
     },
   } as HttpOptions,
 };
@@ -111,4 +125,13 @@ export const pay = (params: PayParams) =>
   request({
     ...API.Pay,
     data: params,
+  });
+
+export const search = (params: SearchParams) =>
+  request({
+    ...API.Search,
+    params: {
+      ...API.Search.params,
+      ...params,
+    },
   });

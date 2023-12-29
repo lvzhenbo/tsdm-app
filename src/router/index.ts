@@ -57,6 +57,38 @@ const routes: Array<RouteRecordRaw> = [
           title: '帖子详情',
         },
       },
+      {
+        path: 'search',
+        name: 'Search',
+        component: () => import('@/views/Search/index.vue'),
+        meta: {
+          title: '搜索',
+        },
+      },
+      // {
+      //   path: 'message',
+      //   name: 'Message',
+      //   component: () => import('@/views/Message/index.vue'),
+      //   meta: {
+      //     title: '消息',
+      //   },
+      // },
+      // {
+      //   path: 'messageDetail/:id',
+      //   name: 'MessageDetail',
+      //   component: () => import('@/views/MessageDetail/index.vue'),
+      //   meta: {
+      //     title: '消息详情',
+      //   },
+      // },
+      // {
+      //   path: 'messageAdd/:id',
+      //   name: 'MessageAdd',
+      //   component: () => import('@/views/MessageAdd/index.vue'),
+      //   meta: {
+      //     title: '回复消息',
+      //   },
+      // },
     ],
   },
   {

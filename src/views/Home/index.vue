@@ -2,13 +2,13 @@
   <IonPage>
     <IonContent color="light">
       <IonCard>
-        <IonCardContent>
-          <IonInput placeholder="请输入搜索内容">
-            <IonSelect slot="start" interface="popover" value="1">
-              <IonSelectOption value="1">帖子</IonSelectOption>
-              <IonSelectOption value="2">用户</IonSelectOption>
+        <IonCardContent :class="settingStore.isDark ? 'text-white' : 'text-black'">
+          <IonInput v-model="searchValue" placeholder="请输入搜索内容">
+            <IonSelect slot="start" v-model="searchType" interface="popover">
+              <IonSelectOption :value="1">帖子</IonSelectOption>
+              <IonSelectOption :value="2">用户</IonSelectOption>
             </IonSelect>
-            <IonButton slot="end" fill="clear">
+            <IonButton slot="end" fill="clear" @click="handleSearch">
               <IonIcon slot="icon-only" :icon="arrowForward" />
             </IonButton>
           </IonInput>
@@ -68,6 +68,8 @@
   const reload = ref(false);
   const settingStore = useSettingStore();
   const ionRouter = useIonRouter();
+  const searchType = ref(1);
+  const searchValue = ref('');
 
   onMounted(async () => {
     const groupListStorage = await getStorage('groupList');
@@ -98,6 +100,14 @@
     } catch (error) {
       reload.value = false;
       console.error(error);
+    }
+  }
+
+  function handleSearch() {
+    if (searchType.value === 1) {
+      // ionRouter.push({ path: '/search' });
+    } else {
+      ionRouter.push({ path: `/otherUserInfo/${searchValue.value}` });
     }
   }
 </script>

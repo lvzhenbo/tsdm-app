@@ -23,6 +23,8 @@
   const autoSignIn = ref(false);
 
   onMounted(async () => {
+    console.log(import.meta.env);
+
     const config = await getStorage('config');
     if (config) {
       settingStore.setConfig(config);

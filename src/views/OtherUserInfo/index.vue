@@ -12,7 +12,7 @@
       <div v-if="loading" class="flex justify-center h-full items-center">
         <IonSpinner name="circular"></IonSpinner>
       </div>
-      <UserInfoCard v-if="!loading" :user-info="userInfo!" />
+      <UserInfoCard v-if="!loading && showInfoCard" :user-info="userInfo!" />
     </IonContent>
   </IonPage>
 </template>
@@ -23,11 +23,11 @@
   import { toastController } from '@ionic/vue';
 
   const route = useRoute();
-  const router = useRouter();
   const username = route.params.username as string;
   const userInfo = ref<UserInfo | null>(null);
   const toast = ref<null | HTMLIonToastElement>(null);
   const loading = ref(true);
+  const showInfoCard = ref(false);
 
   defineOptions({
     name: 'OtherotherUserInfo',
@@ -38,12 +38,14 @@
   });
 
   async function getOtherotherUserInfo() {
+    showInfoCard.value = false;
     loading.value = true;
     const res = await otherUserInfo(username);
     if (res.data) {
       const data = JSON.parse(res.data);
       if (data.status === 0) {
         userInfo.value = data;
+        showInfoCard.value = true;
       } else {
         notLoggedInToast();
       }
@@ -53,7 +55,7 @@
 
   async function notLoggedInToast() {
     toast.value = await toastController.create({
-      message: '您没有权限查看该板块',
+      message: '无法获取用户信息',
       duration: 5000,
       position: 'bottom',
       buttons: [
@@ -61,19 +63,13 @@
           text: '刷新',
           role: 'refresh',
           handler: () => {
-            handleToLogin();
+            getOtherotherUserInfo();
           },
         },
       ],
     });
     await toast.value.present();
   }
-
-  const handleToLogin = () => {
-    router.push({
-      name: 'Login',
-    });
-  };
 </script>
 
 <style scoped></style>

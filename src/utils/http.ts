@@ -1,7 +1,8 @@
 import { CapacitorHttp, type HttpOptions, type HttpResponse } from '@capacitor/core';
 import { isPlatform } from '@ionic/vue';
 
-const baseUrl = isPlatform('hybrid') ? 'https://www.tsdm39.com' : '';
+const envUrl = import.meta.env.VITE_BASE_URL;
+const baseUrl = isPlatform('hybrid') ? envUrl : '';
 
 function request(options: HttpOptions): Promise<HttpResponse> {
   // console.log(options.url);

@@ -46,7 +46,7 @@
                   :detail="false"
                   @click="
                     openUrl({
-                      url: 'https://tsdm39.com/forum.php?mod=forumdisplay&fid=' + route.params.fid,
+                      url: `${baseURL}/forum.php?mod=forumdisplay&fid=${route.params.fid}`,
                     })
                   "
                 >
@@ -68,7 +68,7 @@
                   :detail="false"
                   @click="
                     openUrl({
-                      url: 'https://tsdm39.com/forum.php?mod=viewthread&tid=' + route.params.tid,
+                      url: `${baseURL}/forum.php?mod=viewthread&tid=${route.params.tid}`,
                     })
                   "
                 >
@@ -108,6 +108,7 @@
   const forumStore = useForumStore();
   const filter = ref('');
   const popover = ref(false);
+  const baseURL = import.meta.env.VITE_BASE_URL;
 
   provide(threadFilterKey, {
     filter,

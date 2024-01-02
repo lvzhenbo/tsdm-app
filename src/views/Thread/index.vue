@@ -259,6 +259,7 @@
   const isOpen = ref(false);
   const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
   const fabVisible = ref(false);
+  const baseURL = import.meta.env.VITE_BASE_URL;
   const payInfoData = ref<PayInfoData>({
     author: '',
     price: '',
@@ -387,7 +388,7 @@
     function handleUrl(target: Element, e: Event) {
       e.preventDefault();
       const url = new URL(target.getAttribute('href') as string);
-      if (url.host === 'www.tsdm39.com') {
+      if (url.host === baseURL) {
         // 暂不支持楼层直达
         if (url.searchParams.get('tid') || url.searchParams.get('ptid')) {
           router.push({
@@ -470,7 +471,7 @@
       payInfoData.value.authorIncome = td[2].textContent as string;
       payInfoData.value.balance = td[3].textContent as string;
       payParams.value.formhash = html.querySelector('input[name=formhash]')?.getAttribute('value')!;
-      payParams.value.referer = `https://www.tsdm39.com/forum.php?mod=viewthread&tid=${route.params.tid}&mobile=yes`;
+      payParams.value.referer = `${baseURL}/forum.php?mod=viewthread&tid=${route.params.tid}&mobile=yes`;
       await loading.dismiss();
       isOpen.value = true;
     } catch (error) {

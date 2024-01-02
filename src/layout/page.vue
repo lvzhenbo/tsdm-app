@@ -41,7 +41,37 @@
           <IonPopover trigger="popover-button">
             <IonContent>
               <IonList lines="none">
-                <IonItem button :detail="false" @click="openUrl({ url: 'https://www.tsdm39.com' })">
+                <IonItem
+                  button
+                  :detail="false"
+                  @click="
+                    openUrl({
+                      url: 'https://tsdm39.com/forum.php?mod=forumdisplay&fid=' + route.params.fid,
+                    })
+                  "
+                >
+                  转到浏览器
+                </IonItem>
+              </IonList>
+            </IonContent>
+          </IonPopover>
+        </IonButtons>
+        <IonButtons v-if="route.name === 'Thread'" slot="primary">
+          <IonButton id="thread-button">
+            <IonIcon slot="icon-only" :ios="ellipsisHorizontal" :md="ellipsisVertical" />
+          </IonButton>
+          <IonPopover trigger="thread-button">
+            <IonContent>
+              <IonList lines="none">
+                <IonItem
+                  button
+                  :detail="false"
+                  @click="
+                    openUrl({
+                      url: 'https://tsdm39.com/forum.php?mod=viewthread&tid=' + route.params.tid,
+                    })
+                  "
+                >
                   转到浏览器
                 </IonItem>
               </IonList>

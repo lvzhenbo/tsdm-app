@@ -98,7 +98,7 @@
             <div>{{ dateFormat(item.timestamp) }}</div>
             <div class="ml-3 mr-1 text-[--ion-color-primary]">{{ '#' + item.floor }}</div>
             <div>
-              <IonButton fill="clear" size="small">
+              <IonButton fill="clear" size="small" @click="openExtraAction">
                 <IonIcon slot="icon-only" :icon="ellipsisHorizontal" />
               </IonButton>
             </div>
@@ -177,6 +177,7 @@
     alertController,
     loadingController,
     IonContent,
+    popoverController,
   } from '@ionic/vue';
   import {
     close,
@@ -194,6 +195,7 @@
   import { format } from 'date-fns';
   import { zhCN } from 'date-fns/locale';
   import { baseUrl } from '@/utils/config';
+  import ExtraAction from './extraAction.vue';
 
   interface PostData {
     status: number;
@@ -547,6 +549,15 @@
   const handleRefresh = async (event: RefresherCustomEvent) => {
     await refresh();
     event.target.complete();
+  };
+
+  // 打开更多操作
+  const openExtraAction = async (ev: Event) => {
+    const extraAction = await popoverController.create({
+      component: ExtraAction,
+      event: ev,
+    });
+    await extraAction.present();
   };
 </script>
 

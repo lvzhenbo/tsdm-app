@@ -46,7 +46,7 @@
                   :detail="false"
                   @click="
                     openUrl({
-                      url: `${baseURL}/forum.php?mod=forumdisplay&fid=${route.params.fid}`,
+                      url: `${baseUrl}/forum.php?mod=forumdisplay&fid=${route.params.fid}`,
                     })
                   "
                 >
@@ -68,7 +68,7 @@
                   :detail="false"
                   @click="
                     openUrl({
-                      url: `${baseURL}/forum.php?mod=viewthread&tid=${route.params.tid}`,
+                      url: `${baseUrl}/forum.php?mod=viewthread&tid=${route.params.tid}`,
                     })
                   "
                 >
@@ -91,6 +91,7 @@
   import { useForumStore } from '@/stores/modules/forum';
   import { ellipsisHorizontal, ellipsisVertical, filter as FilterIcon } from 'ionicons/icons';
   import { threadFilterKey } from '#/provideInject.d';
+  import { baseUrl } from '@/utils/config';
 
   interface Group {
     gid: number;
@@ -108,7 +109,6 @@
   const forumStore = useForumStore();
   const filter = ref('');
   const popover = ref(false);
-  const baseURL = import.meta.env.VITE_BASE_URL;
 
   provide(threadFilterKey, {
     filter,

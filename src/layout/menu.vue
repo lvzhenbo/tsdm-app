@@ -28,7 +28,7 @@
             <IonIcon slot="start" aria-hidden="true" :icon="person"></IonIcon>
             <IonLabel>我的资料</IonLabel>
           </IonItem>
-          <IonItem button @click="openUrl({ url: baseURL })">
+          <IonItem button @click="openUrl({ url: baseUrl })">
             <IonIcon slot="start" aria-hidden="true" :icon="globe"></IonIcon>
             <IonLabel>网页论坛</IonLabel>
           </IonItem>
@@ -52,6 +52,7 @@
   import { autoSignInKey, type AutoSignInValue } from '#/provideInject.d';
   import ClientHash from '@/utils/clientHashPlugin';
   import { formatISO } from 'date-fns';
+  import { baseUrl } from '@/utils/config';
 
   defineOptions({
     name: 'MenuLayout',
@@ -63,7 +64,6 @@
   const settingStore = useSettingStore();
   const localConfig = settingStore.config;
   const { autoSignIn } = inject(autoSignInKey) as AutoSignInValue;
-  const baseURL = import.meta.env.VITE_BASE_URL;
   const signInTitle = computed(() => {
     if (signInLoading.value) {
       return '签到中';

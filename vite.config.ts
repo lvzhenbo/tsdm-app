@@ -6,7 +6,7 @@ import { defineConfig } from 'vite';
 
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { IonicResolver } from 'unplugin-vue-components/resolvers';
+import { IonicResolver, VarletUIResolver } from 'unplugin-vue-components/resolvers';
 
 import { visualizer } from 'rollup-plugin-visualizer';
 import analyze from 'rollup-plugin-analyzer';
@@ -30,9 +30,10 @@ export default defineConfig({
       eslintrc: {
         enabled: true,
       },
+      resolvers: [VarletUIResolver({ autoImport: true })],
     }),
     Components({
-      resolvers: [IonicResolver()],
+      resolvers: [IonicResolver(), VarletUIResolver()],
     }),
     analyze(),
     visualizer(),

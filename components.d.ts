@@ -60,5 +60,6 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     UserInfoCard: typeof import('./src/components/UserInfoCard/UserInfoCard.vue')['default']
+    VarCounter: typeof import('@varlet/ui')['_CounterComponent']
   }
 }

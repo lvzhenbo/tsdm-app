@@ -31,6 +31,11 @@ export interface SearchParams {
   page: string;
 }
 
+export interface RateParams {
+  tid: string;
+  pid: string;
+}
+
 const API = {
   ForumGroup: {
     method: 'GET',
@@ -80,6 +85,16 @@ const API = {
       id: 'Kahrpba:search',
       mobile: 'yes',
       tsdmapp: '1',
+    },
+  } as HttpOptions,
+  CoinRemain: {
+    method: 'GET',
+    url: '/forum.php',
+    params: {
+      mobile: 'yes',
+      tsdmapp: '1',
+      mod: 'misc',
+      action: 'rate',
     },
   } as HttpOptions,
 };
@@ -132,6 +147,15 @@ export const search = (params: SearchParams) =>
     ...API.Search,
     params: {
       ...API.Search.params,
+      ...params,
+    },
+  });
+
+export const coinRemain = (params: RateParams) =>
+  request({
+    ...API.CoinRemain,
+    params: {
+      ...API.CoinRemain.params,
       ...params,
     },
   });

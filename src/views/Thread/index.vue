@@ -259,19 +259,23 @@
 
   const route = useRoute();
   const router = useRouter();
-  const loading = ref(false);
   const settingStore = useSettingStore();
-  const page = ref(1);
-  const postData = ref<PostData | null>(null);
-  const loadDone = ref(false);
-  const viewer = ref<Viewer[]>([]);
-  const isShow = ref(false);
   const forumStore = useForumStore();
-  const isOpen = ref(false);
   const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
+
+  const isOpen = ref(false);
   const fabVisible = ref(false);
   const rateVisible = ref(false);
   const pid = ref('');
+
+  const loading = ref(false);
+  const loadDone = ref(false);
+  const page = ref(1);
+  const postData = ref<PostData | null>(null);
+
+  const viewer = ref<Viewer[]>([]);
+  const isPicShow = ref(false);
+
   const payInfoData = ref<PayInfoData>({
     author: '',
     price: '',
@@ -295,7 +299,7 @@
     forumStore.threadTitleUndo();
   });
   useBackButton(10, (processNextHandler) => {
-    if (isShow.value) {
+    if (isPicShow.value) {
       hideImgViewer();
     } else {
       processNextHandler();
@@ -369,10 +373,10 @@
                 return image.src;
               },
               show() {
-                isShow.value = true;
+                isPicShow.value = true;
               },
               hide() {
-                isShow.value = false;
+                isPicShow.value = false;
               },
             }),
           );
@@ -390,6 +394,19 @@
   const ionInfinite = async (ev: InfiniteScrollCustomEvent) => {
     await getThead();
     ev.target.complete();
+  };
+
+  const refresh = async () => {
+    page.value = 1;
+    postData.value = null;
+    loadDone.value = false;
+    await getThead();
+  };
+
+  // 下拉刷新
+  const handleRefresh = async (event: RefresherCustomEvent) => {
+    await refresh();
+    event.target.complete();
   };
 
   const handleClick = (e: MouseEvent) => {
@@ -455,6 +472,14 @@
   const hideImgViewer = () => {
     viewer.value.forEach((item) => {
       item.hide();
+    });
+  };
+
+  // 时间格式化
+  const dateFormat = (date: string) => {
+    date = date.padEnd(13, '0');
+    return format(new Date(Number(date)), 'PPP HH:mm', {
+      locale: zhCN,
     });
   };
 
@@ -538,27 +563,6 @@
       ],
     });
     await alert.present();
-  };
-
-  // 时间格式化
-  const dateFormat = (date: string) => {
-    date = date.padEnd(13, '0');
-    return format(new Date(Number(date)), 'PPP HH:mm', {
-      locale: zhCN,
-    });
-  };
-
-  const refresh = async () => {
-    page.value = 1;
-    postData.value = null;
-    loadDone.value = false;
-    await getThead();
-  };
-
-  // 下拉刷新
-  const handleRefresh = async (event: RefresherCustomEvent) => {
-    await refresh();
-    event.target.complete();
   };
 
   const openRateModal = (item: Postlist) => {

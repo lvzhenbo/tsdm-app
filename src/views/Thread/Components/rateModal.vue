@@ -1,5 +1,5 @@
 <template>
-  <IonModal :is-open="modalView">
+  <IonModal :is-open="isOpen">
     <IonHeader>
       <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
         <IonButtons slot="start">
@@ -75,16 +75,8 @@
   import { type IonLabel } from '@ionic/vue';
   import { close, checkmark } from 'ionicons/icons';
 
-  const emits = defineEmits(['closeAction']);
-  const route = useRoute();
-  const tenshiCoin = ref(0);
-  const tennenValue = ref(0);
-  const harakuroValue = ref(0);
-  const loading = ref(false);
-  const modalContent = ref(true);
-
   const props = defineProps({
-    modalView: {
+    isOpen: {
       type: Boolean,
       required: true,
     },
@@ -94,8 +86,17 @@
     },
   });
 
+  const emits = defineEmits(['close']);
+
+  const route = useRoute();
+  const tenshiCoin = ref(0);
+  const tennenValue = ref(0);
+  const harakuroValue = ref(0);
+  const loading = ref(false);
+  const modalContent = ref(true);
+
   watch(
-    () => props,
+    () => props.pid,
     (val) => {
       console.log(val);
       // getRemainCoin();
@@ -124,7 +125,7 @@
   };
 
   const closeFunc = () => {
-    emits('closeAction', false);
+    emits('close', false);
   };
 </script>
 

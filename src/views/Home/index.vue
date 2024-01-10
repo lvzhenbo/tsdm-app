@@ -43,7 +43,6 @@
           </IonGrid>
         </IonCardContent>
       </IonCard>
-      <VarCounter v-model="value" />
     </IonContent>
   </IonPage>
 </template>
@@ -66,7 +65,6 @@
     name: 'HomeIndex',
   });
 
-  const value = ref(0);
   const router = useRouter();
   const groupList = ref<Group[]>([]);
   const reload = ref(false);

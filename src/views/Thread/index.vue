@@ -98,11 +98,16 @@
             <div>{{ dateFormat(item.timestamp) }}</div>
             <div class="ml-3 mr-1 text-[--ion-color-primary]">{{ '#' + item.floor }}</div>
             <div>
-              <IonButton :id="'pid-' + item.pid" fill="clear" size="small">
+              <IonButton :id="`pid-${item.pid}`" fill="clear" size="small">
                 <IonIcon slot="icon-only" :icon="ellipsisHorizontal" />
               </IonButton>
-              <IonPopover :trigger="'pid-' + item.pid">
-                <ExtraAction @rate-action="rateModalVisible" />
+              <IonPopover :trigger="`pid-${item.pid}`">
+                <IonContent>
+                  <IonList lines="none">
+                    <IonItem button :detail="false"> 回复 </IonItem>
+                    <IonItem button :detail="false" @click="openRateModal(item)"> 评分 </IonItem>
+                  </IonList>
+                </IonContent>
               </IonPopover>
             </div>
           </div>
@@ -164,8 +169,8 @@
           </IonItem>
         </IonList>
       </IonContent>
-      <RateModal :modal-view="rateVisible" :pid="ratePid" @close-action="rateModalVisible" />
     </IonModal>
+    <RateModal :is-open="rateVisible" :pid="pid" @close="closeRateModal" />
   </IonPage>
 </template>
 
@@ -198,7 +203,6 @@
   import { format } from 'date-fns';
   import { zhCN } from 'date-fns/locale';
   import { baseUrl } from '@/utils/config';
-  import ExtraAction from './Components/extraAction.vue';
   import RateModal from './Components/rateModal.vue';
 
   interface PostData {
@@ -267,7 +271,7 @@
   const contentRef = ref<null | InstanceType<typeof IonContent>>(null);
   const fabVisible = ref(false);
   const rateVisible = ref(false);
-  const ratePid = ref('');
+  const pid = ref('');
   const payInfoData = ref<PayInfoData>({
     author: '',
     price: '',
@@ -557,8 +561,12 @@
     event.target.complete();
   };
 
-  const rateModalVisible = (rateBool: boolean, item: Postlist) => {
-    ratePid.value = item.pid;
+  const openRateModal = (item: Postlist) => {
+    pid.value = item.pid;
+    rateVisible.value = true;
+  };
+
+  const closeRateModal = (rateBool: boolean) => {
     rateVisible.value = rateBool;
   };
 </script>

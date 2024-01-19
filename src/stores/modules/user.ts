@@ -1,4 +1,5 @@
 import { setStorage, removeStorage } from '@/utils';
+import { pinia } from '@/stores';
 
 export interface UserInfo {
   uid: number;
@@ -46,3 +47,7 @@ export const useUserStore = defineStore('user', () => {
     removeUserInfo,
   };
 });
+
+export function useUserStoreWithOut() {
+  return useUserStore(pinia);
+}

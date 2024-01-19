@@ -1,6 +1,8 @@
 import { CapacitorHttp, type HttpOptions, type HttpResponse } from '@capacitor/core';
-import { isPlatform } from '@ionic/vue';
+import { isPlatform, alertController } from '@ionic/vue';
 import { baseUrl } from './config';
+import { useUserStoreWithOut } from '@/stores/modules/user';
+import router from '@/router';
 
 const BaseUrl = isPlatform('hybrid') ? baseUrl : '';
 
@@ -13,6 +15,32 @@ function request(options: HttpOptions): Promise<HttpResponse> {
     CapacitorHttp.request(op)
       .then((response) => {
         if (response.status === 200) {
+          if (response.data.message) {
+            if (response.data.message === 'unauthenticated') {
+              useUserStoreWithOut().removeUserInfo();
+              alertController
+                .create({
+                  header: '提示',
+                  message: '登录已过期，请重新登录',
+                  buttons: [
+                    {
+                      text: '取消',
+                      role: 'cancel',
+                    },
+                    {
+                      text: '去登录',
+                      role: 'confirm',
+                      handler: () => {
+                        router.push({ name: 'Login' });
+                      },
+                    },
+                  ],
+                })
+                .then((alert) => {
+                  alert.present();
+                });
+            }
+          }
           resolve(response);
         } else {
           reject(response);

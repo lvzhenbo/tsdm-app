@@ -28,32 +28,18 @@
         </IonItem>
       </IonList>
       <div v-if="modalContent">
-        <IonList :inset="true">
-          <IonItem>
-            <IonLabel>天使币</IonLabel>
-            <div class="flex flex-col mr-36">
-              <IonNote>TestText</IonNote>
-              <IonNote>TestText</IonNote>
-            </div>
-            <VarCounter v-model="tenshiCoin" :min="-5" :max="10" />
-          </IonItem>
-          <IonItem>
-            <IonLabel>天然</IonLabel>
-            <div class="flex flex-col mr-36">
-              <IonNote>TestText</IonNote>
-              <IonNote>TestText</IonNote>
-            </div>
-            <VarCounter v-model="tennenValue" :min="-5" :max="15" />
-          </IonItem>
-          <IonItem>
-            <IonLabel>腹黑</IonLabel>
-            <div class="flex flex-col mr-36">
-              <IonNote>TestText</IonNote>
-              <IonNote>TestText</IonNote>
-            </div>
-            <VarCounter v-model="harakuroValue" :min="-5" :max="15" />
-          </IonItem>
-        </IonList>
+        <div v-for="items in userRateInfo?.items" :key="items.id">
+          <IonList v-if="items.available != 0" :inset="true">
+            <IonItem>
+              <IonLabel>{{ items.name }}</IonLabel>
+              <div class="flex flex-col mr-36">
+                <IonNote>{{ items.floor }} ~ {{ items.ceil }}</IonNote>
+                <IonNote>今日剩余 {{ items.available }}</IonNote>
+              </div>
+              <VarCounter v-model="items.counterValue" :min="items.floor" :max="items.ceil" />
+            </IonItem>
+          </IonList>
+        </div>
         <IonList :inset="true">
           <IonItem>
             <IonLabel>评分理由</IonLabel>
@@ -64,7 +50,6 @@
             <IonCheckbox label-placement="end" class="ml-4">连续操作</IonCheckbox>
           </div>
         </IonList>
-        <IonButton expand="block" class="mt-4" @click="getRemainCoin">获取信息</IonButton>
       </div>
     </IonContent>
   </IonModal>
@@ -74,6 +59,22 @@
   import { coinRemain } from '@/api/forum';
   import { type IonLabel } from '@ionic/vue';
   import { close, checkmark } from 'ionicons/icons';
+
+  interface UserRateInfo {
+    formhash: string;
+    multiplier: number;
+    status: number;
+    items: Item[];
+  }
+
+  interface Item {
+    name: string;
+    available: number;
+    ceil: number;
+    floor: number;
+    id: number;
+    counterValue: number;
+  }
 
   const props = defineProps({
     isOpen: {
@@ -89,17 +90,15 @@
   const emits = defineEmits(['close']);
 
   const route = useRoute();
-  const tenshiCoin = ref(0);
-  const tennenValue = ref(0);
-  const harakuroValue = ref(0);
   const loading = ref(false);
   const modalContent = ref(true);
+  const userRateInfo = ref<UserRateInfo | null>(null);
 
   watch(
     () => props.pid,
     (val) => {
       console.log(val);
-      // getRemainCoin();
+      getRemainCoin();
     },
   );
 
@@ -111,13 +110,20 @@
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
-          console.log(data);
+          userRateInfo.value = data;
+          if (userRateInfo.value) {
+            userRateInfo.value.items = userRateInfo.value.items.map((item: Item) => {
+              item.counterValue = 0;
+              return item;
+            });
+          }
+          modalContent.value = true;
         } else {
           console.log('获取失败弹窗');
+          modalContent.value = false;
         }
       }
       loading.value = false;
-      modalContent.value = true;
     } catch (error) {
       loading.value = false;
       console.log(error);

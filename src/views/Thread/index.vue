@@ -301,6 +301,10 @@
   useBackButton(10, (processNextHandler) => {
     if (isPicShow.value) {
       hideImgViewer();
+    } else if (isOpen.value) {
+      isOpen.value = false;
+    } else if (rateVisible.value) {
+      rateVisible.value = false;
     } else {
       processNextHandler();
     }

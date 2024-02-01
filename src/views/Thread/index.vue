@@ -133,7 +133,7 @@
         </IonFabList>
       </IonFab>
     </IonContent>
-    <IonModal :is-open="isOpen">
+    <IonModal :is-open="isOpen" @did-dismiss="isOpen = false">
       <IonHeader>
         <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
           <IonButtons slot="start">
@@ -301,10 +301,6 @@
   useBackButton(10, (processNextHandler) => {
     if (isPicShow.value) {
       hideImgViewer();
-    } else if (isOpen.value) {
-      isOpen.value = false;
-    } else if (rateVisible.value) {
-      rateVisible.value = false;
     } else {
       processNextHandler();
     }

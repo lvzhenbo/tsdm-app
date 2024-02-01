@@ -5,6 +5,7 @@ const config: CapacitorConfig = {
   appName: '天使动漫论坛',
   webDir: 'dist',
   server: {
+    hostname: 'www.tsdm39.com',
     androidScheme: 'https',
   },
   plugins: {

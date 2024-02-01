@@ -1,5 +1,5 @@
 <template>
-  <IonModal :is-open="isOpen">
+  <IonModal :is-open="isOpen" @did-dismiss="isOpen = false">
     <IonHeader>
       <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
         <IonButtons slot="start">
@@ -76,11 +76,9 @@
     counterValue: number;
   }
 
+  const isOpen = defineModel('isOpen', { type: Boolean, default: false });
+
   const props = defineProps({
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
     pid: {
       type: String,
       required: true,

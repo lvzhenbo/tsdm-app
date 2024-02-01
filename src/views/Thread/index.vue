@@ -170,7 +170,7 @@
         </IonList>
       </IonContent>
     </IonModal>
-    <RateModal :is-open="rateVisible" :pid="pid" @close="closeRateModal" />
+    <RateModal v-model:is-open="rateVisible" :pid="pid" @close="closeRateModal" />
   </IonPage>
 </template>
 

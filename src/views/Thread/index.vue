@@ -115,6 +115,7 @@
         <IonInfiniteScroll v-if="!loadDone" @ion-infinite="ionInfinite">
           <IonInfiniteScrollContent />
         </IonInfiniteScroll>
+        <div v-else class="py-8"></div>
       </div>
       <IonFab v-if="fabVisible" slot="fixed" vertical="bottom" horizontal="end">
         <IonFabButton>
@@ -359,14 +360,14 @@
           if (postData.value) {
             if (postData.value.postlist.find((item) => item.pid === data.postlist[0].pid)) {
               loadDone.value = true;
+              return;
             }
           }
+        }
+        if (postData.value) {
+          postData.value.postlist.push(...data.postlist);
         } else {
-          if (postData.value) {
-            postData.value.postlist.push(...data.postlist);
-          } else {
-            postData.value = data;
-          }
+          postData.value = data;
         }
       }
       nextTick(() => {

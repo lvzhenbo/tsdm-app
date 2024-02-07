@@ -60,18 +60,26 @@
           </IonToggle>
         </IonItem>
       </IonList>
+      <div v-if="userStore.userInfo" class="px-4 mt-4">
+        <IonButton expand="block" @click="handleLogOut"> 退出登录 </IonButton>
+      </div>
     </IonContent>
   </IonPage>
 </template>
 
 <script setup lang="ts">
   import { useSettingStore } from '@/stores/modules/setting';
+  import { useUserStore } from '@/stores/modules/user';
+  import { CapacitorCookies } from '@capacitor/core';
+  import { alertController } from '@ionic/vue';
 
   defineOptions({
     name: 'SettingsIndex',
   });
 
   const settingStore = useSettingStore();
+  const userStore = useUserStore();
+  const router = useRouter();
 
   onMounted(async () => {
     if (settingStore.config) {
@@ -93,6 +101,29 @@
     },
     { deep: true },
   );
+
+  const handleLogOut = async () => {
+    const alert = await alertController.create({
+      header: '提示',
+      message: '确定要退出登录吗？',
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+        },
+        {
+          text: '确定',
+          role: 'confirm',
+          handler: async () => {
+            await CapacitorCookies.clearAllCookies();
+            userStore.removeUserInfo();
+            router.back();
+          },
+        },
+      ],
+    });
+    await alert.present();
+  };
 </script>
 
 <style scoped></style>

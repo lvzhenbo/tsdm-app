@@ -67,11 +67,15 @@
   const signInTitle = computed(() => {
     if (signInLoading.value) {
       return '签到中';
-    } else if (userStore.signInDate === formatISO(new Date(), { representation: 'date' })) {
+    } else if (
+      userStore.signInDate === formatISO(new Date(), { representation: 'date' }) ||
+      isSignIn.value
+    ) {
       return '已签到';
     }
     return '签到';
   });
+  const isSignIn = ref(false);
 
   onMounted(() => {
     getUserInfo();
@@ -140,6 +144,7 @@
           let message = '签到失败，请稍后重试';
           if (res.data.message === 'already_signed') {
             message = '您今天已经签到过了，明天再来吧~';
+            isSignIn.value = true;
           }
           if (!autoSignIn.value) {
             const alert = await alertController.create({
@@ -159,6 +164,7 @@
           const tempTime = Date.now();
           setStorage('storedStamp', tempTime);
           setStorage('storedDate', formatISO(new Date(tempTime), { representation: 'date' }));
+          isSignIn.value = true;
         }
       }
       signInLoading.value = false;

@@ -354,6 +354,10 @@
         }
         if (data.postlist.length < 10) {
           loadDone.value = true;
+        } else if (data.postlist.length === 0) {
+          if (postData.value?.postlist.find((item) => item.pid === data.postlist[0].pid)) {
+            loadDone.value = true;
+          }
         }
         if (postData.value) {
           postData.value.postlist.push(...data.postlist);

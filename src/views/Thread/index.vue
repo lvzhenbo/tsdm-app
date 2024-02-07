@@ -356,8 +356,10 @@
           loadDone.value = true;
         }
         if (data.postlist.length === 10) {
-          if (postData.value?.postlist.find((item) => item.pid === data.postlist[0].pid)) {
-            loadDone.value = true;
+          if (postData.value) {
+            if (postData.value.postlist.find((item) => item.pid === data.postlist[0].pid)) {
+              loadDone.value = true;
+            }
           }
         } else {
           if (postData.value) {

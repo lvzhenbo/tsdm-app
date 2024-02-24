@@ -13,6 +13,7 @@
   import { autoSignInKey } from '#/provideInject.d';
   import { useUserStore } from '@/stores/modules/user';
   import { formatISO } from 'date-fns';
+  import { CapacitorCookies } from '@capacitor/core';
 
   if (isPlatform('android') && isPlatform('hybrid')) {
     StatusBar.setOverlaysWebView({ overlay: true });
@@ -23,6 +24,9 @@
   const autoSignIn = ref(false);
 
   onMounted(async () => {
+    const cookies = await CapacitorCookies.getCookies();
+    console.log('cookies', cookies);
+
     const config = await getStorage('config');
     if (config) {
       settingStore.setConfig(config);

@@ -11,6 +11,7 @@ const config: CapacitorConfig = {
   plugins: {
     CapacitorCookies: {
       enabled: true,
+      androidCustomSchemeAllowInsecureAccess: true,
     },
   },
 };

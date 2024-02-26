@@ -3,6 +3,7 @@ import { isPlatform, alertController } from '@ionic/vue';
 import { baseUrl } from './config';
 import { useUserStoreWithOut } from '@/stores/modules/user';
 import router from '@/router';
+import { removeCookie } from './cookie';
 
 const BaseUrl = isPlatform('hybrid') ? baseUrl : '';
 
@@ -18,6 +19,7 @@ function request(options: HttpOptions): Promise<HttpResponse> {
           if (response.data.message) {
             if (response.data.message === 'unauthenticated') {
               useUserStoreWithOut().removeUserInfo();
+              removeCookie();
               alertController
                 .create({
                   header: '提示',

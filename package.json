@@ -82,10 +82,5 @@
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^1.8.27"
   },
-  "description": "一个跨平台的第三方天使动漫论坛客户端",
-  "pnpm": {
-    "patchedDependencies": {
-      "@capacitor/android@5.7.0": "patches/@capacitor__android@5.7.0.patch"
-    }
-  }
+  "description": "一个跨平台的第三方天使动漫论坛客户端"
 }

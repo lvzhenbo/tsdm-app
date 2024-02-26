@@ -73,6 +73,9 @@
   import { alertController, loadingController, IonInput } from '@ionic/vue';
   import { captcha, login, userInfo } from '@/api/user';
   import { useUserStore } from '@/stores/modules/user';
+  import { CapacitorCookies } from '@capacitor/core';
+  import { setCookie } from '@/utils/cookie';
+  import { baseUrl } from '@/utils/config';
 
   defineOptions({
     name: 'LoginIndex',
@@ -130,6 +133,10 @@
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {
+          const cookies = await CapacitorCookies.getCookies({
+            url: baseUrl,
+          });
+          await setCookie(cookies);
           await getUserInfo(data.values.uid);
           await loading.dismiss();
           const alert = await alertController.create({

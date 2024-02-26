@@ -1,11 +1,15 @@
 import { setStorage, getStorage, removeStorage } from '.';
 
-export const setCookie = async (value: string) => {
+interface HttpCookieMap {
+  [key: string]: string;
+}
+
+export const setCookie = async (value: HttpCookieMap) => {
   await setStorage('cookie', value);
 };
 
 export const getCookie = async () => {
-  const value = await getStorage('cookie');
+  const value: HttpCookieMap = await getStorage('cookie');
   return value;
 };
 

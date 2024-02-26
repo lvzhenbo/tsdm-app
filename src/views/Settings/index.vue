@@ -72,6 +72,7 @@
   import { useUserStore } from '@/stores/modules/user';
   import { CapacitorCookies } from '@capacitor/core';
   import { alertController } from '@ionic/vue';
+  import { removeCookie } from '@/utils/cookie';
 
   defineOptions({
     name: 'SettingsIndex',
@@ -116,6 +117,7 @@
           role: 'confirm',
           handler: async () => {
             await CapacitorCookies.clearAllCookies();
+            await removeCookie();
             userStore.removeUserInfo();
             router.back();
           },

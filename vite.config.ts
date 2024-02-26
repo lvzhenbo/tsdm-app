@@ -44,6 +44,9 @@ export default defineConfig({
       '#': path.resolve(__dirname, './types'),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 1024,
+  },
   test: {
     globals: true,
     environment: 'jsdom',

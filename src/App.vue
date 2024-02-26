@@ -14,6 +14,8 @@
   import { useUserStore } from '@/stores/modules/user';
   import { formatISO } from 'date-fns';
   import { CapacitorCookies } from '@capacitor/core';
+  import { getCookie } from '@/utils/cookie';
+  import { baseUrl } from '@/utils/config';
 
   if (isPlatform('android') && isPlatform('hybrid')) {
     StatusBar.setOverlaysWebView({ overlay: true });
@@ -23,10 +25,22 @@
   const settingStore = useSettingStore();
   const autoSignIn = ref(false);
 
-  onMounted(async () => {
-    const cookies = await CapacitorCookies.getCookies();
-    console.log('cookies', cookies);
+  onBeforeMount(async () => {
+    const cookie = await getCookie();
+    if (cookie) {
+      const cookieKeys = Object.keys(cookie);
+      const cookieValues = Object.values(cookie);
+      for (let i = 0; i < cookieKeys.length; i++) {
+        CapacitorCookies.setCookie({
+          url: baseUrl.split('www')[1],
+          key: cookieKeys[i],
+          value: cookieValues[i],
+        });
+      }
+    }
+  });
 
+  onMounted(async () => {
     const config = await getStorage('config');
     if (config) {
       settingStore.setConfig(config);

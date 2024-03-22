@@ -12,7 +12,7 @@
             :value="gidRef"
             @ion-change="(e) => $router.replace(`/forum/${e.detail.value}`)"
           >
-            <IonSelectOption v-for="item in groupList" :key="item.gid" :value="item.gid">
+            <IonSelectOption v-for="item in forumStore.groupList" :key="item.gid" :value="item.gid">
               {{ item.title }}
             </IonSelectOption>
           </IonSelect>
@@ -87,16 +87,16 @@
 </template>
 
 <script setup lang="ts">
-  import { getStorage, openUrl } from '@/utils';
+  import { /*getStorage,*/ openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
   import { ellipsisHorizontal, ellipsisVertical, filter as FilterIcon } from 'ionicons/icons';
   import { threadFilterKey } from '#/provideInject.d';
   import { baseUrl } from '@/utils/config';
 
-  interface Group {
-    gid: number;
-    title: string;
-  }
+  // interface Group {
+  //   gid: number;
+  //   title: string;
+  // }
 
   defineOptions({
     name: 'PageLayout',
@@ -104,7 +104,7 @@
 
   const title = ref('天使动漫论坛');
   const route = useRoute();
-  const groupList = ref<Group[]>([]);
+  // const groupList = ref<Group[]>([]);
   const gidRef = ref(0);
   const forumStore = useForumStore();
   const filter = ref('');
@@ -120,14 +120,14 @@
       if (val.name === 'Forum') {
         const gid = val.params.gid as string;
         gidRef.value = Number(gid);
-        const groupListStorage = await getStorage('groupList');
-        if (groupListStorage) {
-          groupList.value = groupListStorage;
-          const group = groupListStorage.find((item: any) => item.gid === Number(gid));
-          if (group) {
-            title.value = group.title;
-          }
+        // const groupListStorage = await getStorage('groupList');
+        // if (groupListStorage) {
+        //   groupList.value = groupListStorage;
+        const group = forumStore.groupList.find((item: any) => item.gid === Number(gid));
+        if (group) {
+          title.value = group.title;
         }
+        // }
       } else if (val.name === 'ForumView') {
         title.value = forumStore.forumTitle;
       } else if (val.meta.title) {

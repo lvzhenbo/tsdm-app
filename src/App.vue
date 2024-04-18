@@ -10,7 +10,7 @@
   import { useSettingStore } from '@/stores/modules/setting';
   import { getStorage } from './utils';
   import { usePreferredDark } from '@vueuse/core';
-  import { autoSignInKey } from '#/provideInject.d';
+  import { autoSignInKey } from '@/utils/provideInjectType';
   import { useUserStore } from '@/stores/modules/user';
   import { formatISO } from 'date-fns';
   import { CapacitorCookies } from '@capacitor/core';

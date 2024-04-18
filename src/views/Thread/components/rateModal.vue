@@ -1,7 +1,10 @@
 <template>
   <IonModal :is-open="isOpen" @did-dismiss="isOpen = false">
     <IonHeader>
-      <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+      <IonToolbar
+        :color="settingStore.isDark ? undefined : 'primary'"
+        class="!pt-[var(--safe-area-inset-top)]"
+      >
         <IonButtons slot="start">
           <IonButton @click="closeFunc">
             <IonIcon slot="icon-only" :icon="close" />
@@ -57,6 +60,7 @@
 
 <script setup lang="ts">
   import { coinRemain } from '@/api/forum';
+  import { useSettingStore } from '@/stores/modules/setting';
   import { type IonLabel } from '@ionic/vue';
   import { close, checkmark } from 'ionicons/icons';
 
@@ -91,6 +95,7 @@
   const loading = ref(false);
   const modalContent = ref(true);
   const userRateInfo = ref<UserRateInfo | null>(null);
+  const settingStore = useSettingStore();
 
   watch(
     () => props.pid,

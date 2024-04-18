@@ -1,7 +1,10 @@
 <template>
   <IonMenu menu-id="main-menu" content-id="main-page">
     <IonHeader>
-      <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+      <IonToolbar
+        :color="settingStore.isDark ? undefined : 'primary'"
+        class="!pt-[var(--safe-area-inset-top)]"
+      >
         <div slot="start" class="p-2">
           <IonAvatar class="flex justify-center items-center">
             <IonIcon v-if="!userStore.userInfo" :icon="personCircle" class="text-6xl"></IonIcon>
@@ -49,7 +52,7 @@
   import { getStorage, openUrl, setStorage } from '@/utils';
   import { useSettingStore } from '@/stores/modules/setting';
   import { signIn } from '@/api/user';
-  import { autoSignInKey, type AutoSignInValue } from '#/provideInject.d';
+  import { autoSignInKey, type AutoSignInValue } from '@/utils/provideInjectType';
   import ClientHash from '@/utils/clientHashPlugin';
   import { formatISO } from 'date-fns';
   import { baseUrl } from '@/utils/config';

@@ -134,7 +134,7 @@
   import { arrowUp, add, star, grid, people } from 'ionicons/icons';
   import { useForumStore } from '@/stores/modules/forum';
   import { toastController } from '@ionic/vue';
-  import { threadFilterKey, type ThreadFilterValue } from '#/provideInject.d';
+  import { threadFilterKey, type ThreadFilterValue } from '@/utils/provideInjectType';
   import { useSettingStore } from '@/stores/modules/setting';
 
   interface ForumData {

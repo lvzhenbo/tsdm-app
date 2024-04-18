@@ -136,7 +136,10 @@
     </IonContent>
     <IonModal :is-open="isOpen" @did-dismiss="isOpen = false">
       <IonHeader>
-        <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+        <IonToolbar
+          :color="settingStore.isDark ? undefined : 'primary'"
+          class="!pt-[var(--safe-area-inset-top)]"
+        >
           <IonButtons slot="start">
             <IonButton @click="isOpen = false">
               <IonIcon slot="icon-only" :icon="close" />

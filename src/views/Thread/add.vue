@@ -1,7 +1,10 @@
 <template>
   <IonPage>
     <IonHeader>
-      <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+      <IonToolbar
+        :color="settingStore.isDark ? undefined : 'primary'"
+        class="!pt-[var(--safe-area-inset-top)]"
+      >
         <IonButtons slot="start">
           <IonBackButton />
         </IonButtons>
@@ -34,6 +37,7 @@
   import Underline from '@tiptap/extension-underline';
   import TextAlign from '@tiptap/extension-text-align';
   import Image from '@tiptap/extension-image';
+  import { useSettingStore } from '@/stores/modules/setting';
 
   defineOptions({
     name: 'ThreadAdd',
@@ -63,6 +67,7 @@
       },
     },
   });
+  const settingStore = useSettingStore();
 
   watch(content, (value) => {
     console.log(value);

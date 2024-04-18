@@ -1,7 +1,10 @@
 <template>
   <IonPage>
     <IonHeader>
-      <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+      <IonToolbar
+        :color="settingStore.isDark ? undefined : 'primary'"
+        class="!pt-[var(--safe-area-inset-top)]"
+      >
         <IonButtons slot="start">
           <IonBackButton />
         </IonButtons>
@@ -19,6 +22,7 @@
 
 <script setup lang="ts">
   import { otherUserInfo } from '@/api/user';
+  import { useSettingStore } from '@/stores/modules/setting';
   import { type UserInfo } from '@/stores/modules/user';
   import { toastController } from '@ionic/vue';
 
@@ -28,6 +32,7 @@
   const toast = ref<null | HTMLIonToastElement>(null);
   const loading = ref(true);
   const showInfoCard = ref(false);
+  const settingStore = useSettingStore();
 
   defineOptions({
     name: 'OtherotherUserInfo',

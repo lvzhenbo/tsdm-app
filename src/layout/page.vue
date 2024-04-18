@@ -1,7 +1,10 @@
 <template>
   <IonPage id="main-page">
     <IonHeader>
-      <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+      <IonToolbar
+        :color="settingStore.isDark ? undefined : 'primary'"
+        class="!pt-[var(--safe-area-inset-top)]"
+      >
         <IonButtons slot="start">
           <IonMenuButton />
         </IonButtons>
@@ -90,8 +93,9 @@
   import { /*getStorage,*/ openUrl } from '@/utils';
   import { useForumStore } from '@/stores/modules/forum';
   import { ellipsisHorizontal, ellipsisVertical, filter as FilterIcon } from 'ionicons/icons';
-  import { threadFilterKey } from '#/provideInject.d';
+  import { threadFilterKey } from '@/utils/provideInjectType';
   import { baseUrl } from '@/utils/config';
+  import { useSettingStore } from '@/stores/modules/setting';
 
   // interface Group {
   //   gid: number;
@@ -109,6 +113,7 @@
   const forumStore = useForumStore();
   const filter = ref('');
   const popover = ref(false);
+  const settingStore = useSettingStore();
 
   provide(threadFilterKey, {
     filter,

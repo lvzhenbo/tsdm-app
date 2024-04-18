@@ -1,7 +1,10 @@
 <template>
   <IonPage>
     <IonHeader>
-      <IonToolbar color="primary" class="!pt-[var(--safe-area-inset-top)]">
+      <IonToolbar
+        :color="settingStore.isDark ? undefined : 'primary'"
+        class="!pt-[var(--safe-area-inset-top)]"
+      >
         <IonButtons slot="start">
           <IonBackButton />
         </IonButtons>

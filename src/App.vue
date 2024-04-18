@@ -62,17 +62,21 @@
       if (val) {
         if (val.theme === 'system') {
           settingStore.isDark = isDark.value;
-          document.body.classList.toggle('dark', isDark.value);
+          document.documentElement.classList.toggle('ion-palette-dark', isDark.value);
+          // document.body.classList.toggle('dark', isDark.value);
         } else if (val.theme === 'light') {
           settingStore.isDark = false;
-          document.body.classList.toggle('dark', false);
+          document.documentElement.classList.toggle('ion-palette-dark', false);
+          // document.body.classList.toggle('dark', false);
         } else if (val.theme === 'dark') {
           settingStore.isDark = true;
-          document.body.classList.toggle('dark', true);
+          document.documentElement.classList.toggle('ion-palette-dark', true);
+          // document.body.classList.toggle('dark', true);
         }
       } else {
         settingStore.isDark = isDark.value;
-        document.body.classList.toggle('dark', isDark.value);
+        document.documentElement.classList.toggle('ion-palette-dark', isDark.value);
+        // document.body.classList.toggle('dark', isDark.value);
       }
     },
     { deep: true, immediate: true },
@@ -82,11 +86,13 @@
     if (settingStore.config) {
       if (settingStore.config.theme === 'system') {
         settingStore.isDark = val;
-        document.body.classList.toggle('dark', val);
+        document.documentElement.classList.toggle('ion-palette-dark', val);
+        // document.body.classList.toggle('dark', val);
       }
     } else {
       settingStore.isDark = val;
-      document.body.classList.toggle('dark', val);
+      document.documentElement.classList.toggle('ion-palette-dark', val);
+      // document.body.classList.toggle('dark', val);
     }
   });
 

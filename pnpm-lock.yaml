@@ -30,11 +30,11 @@ dependencies:
     specifier: ^5.0.7
     version: 5.0.7(@capacitor/core@5.7.5)
   '@ionic/vue':
-    specifier: ^7.8.5
-    version: 7.8.5
+    specifier: ^8.0.0
+    version: 8.0.0
   '@ionic/vue-router':
-    specifier: ^7.8.5
-    version: 7.8.5
+    specifier: ^8.0.0
+    version: 8.0.0
   '@tiptap/extension-color':
     specifier: ^2.3.0
     version: 2.3.0(@tiptap/core@2.3.0)(@tiptap/extension-text-style@2.3.0)
@@ -1860,8 +1860,8 @@ packages:
       - supports-color
     dev: true
 
-  /@ionic/core@7.8.5:
-    resolution: {integrity: sha512-stnh6wxjsL0ZOEU0F26hki2HcCo8M4XF7yD6WxJqhElG0qq5ytYC/9wpR18pj8GOuNvFtRAV/QFZ7jqWu5NcSQ==}
+  /@ionic/core@8.0.0:
+    resolution: {integrity: sha512-jW1LA5mSUYmG4Go9EBWPiLv0Uxwm9vF8+3gwYNeLxJrRwzsirc1qBW/zvDTqcbyMwopAfwtb690iSv5e3i1CwA==}
     dependencies:
       '@stencil/core': 4.16.0
       ionicons: 7.3.1
@@ -2024,16 +2024,16 @@ packages:
       - supports-color
     dev: true
 
-  /@ionic/vue-router@7.8.5:
-    resolution: {integrity: sha512-KrBcHL91LhXZlc3w1pBc5J4LreaZ978La4G/eG7TWJ/ai+g+nY4/UA2sokQm70/MURIWpjbfdsVl/irQHQ4/Aw==}
+  /@ionic/vue-router@8.0.0:
+    resolution: {integrity: sha512-LARP0ASkeGEFapmipCsw2oAUIEh61+Rr7ZKrnq12tW/IZoQHy69mxnuSXjrpaOQ6xEMoymM3gIECya4XSzWSYQ==}
     dependencies:
-      '@ionic/vue': 7.8.5
+      '@ionic/vue': 8.0.0
     dev: false
 
-  /@ionic/vue@7.8.5:
-    resolution: {integrity: sha512-m2x9aLnJb3n7zGWFoCIgv1RlNNpTVZ9Tw9EnuaCuwlyYKYQ1KXbCk7qu5ofqKY9UCZ8OZjTRjTZypfDp3VU5zw==}
+  /@ionic/vue@8.0.0:
+    resolution: {integrity: sha512-jKynlvprQE4GnEDAoUuwp3HCuodI8uT97FoOMOQoe8DelVcjDAN1w9RjcHm9bau+r25vZ5AZMVmCki7kXQDKfg==}
     dependencies:
-      '@ionic/core': 7.8.5
+      '@ionic/core': 8.0.0
       ionicons: 7.3.1
     dev: false
 

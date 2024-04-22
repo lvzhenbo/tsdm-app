@@ -47,10 +47,9 @@ app.use(pinia);
 
 router.isReady().then(async () => {
   await SplashScreen.hide();
-  await SplashScreen.show({
-    autoHide: false,
+  SplashScreen.show({
+    showDuration: 2000,
   });
   app.mount('#app');
   SafeAreaController.injectCSSVariables();
-  await SplashScreen.hide();
 });

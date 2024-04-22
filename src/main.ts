@@ -47,6 +47,9 @@ app.use(router);
 app.use(pinia);
 
 router.isReady().then(async () => {
+  if (isPlatform('android') && isPlatform('hybrid')) {
+    await StatusBar.setOverlaysWebView({ overlay: true });
+  }
   await SplashScreen.hide();
   await SplashScreen.show({
     autoHide: false,
@@ -55,8 +58,5 @@ router.isReady().then(async () => {
   SafeAreaController.injectCSSVariables();
   setTimeout(async () => {
     await SplashScreen.hide();
-    if (isPlatform('android') && isPlatform('hybrid')) {
-      StatusBar.setOverlaysWebView({ overlay: true });
-    }
   }, 500);
 });

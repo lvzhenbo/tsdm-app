@@ -52,11 +52,11 @@ router.isReady().then(async () => {
     autoHide: false,
   });
   app.mount('#app');
+  await SafeAreaController.injectCSSVariables();
   setTimeout(async () => {
     await SplashScreen.hide();
     if (isPlatform('android') && isPlatform('hybrid')) {
       await StatusBar.setOverlaysWebView({ overlay: true });
     }
-    await SafeAreaController.injectCSSVariables();
   }, 500);
 });

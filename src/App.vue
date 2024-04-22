@@ -27,7 +27,7 @@
   const autoSignIn = ref(false);
 
   onBeforeMount(async () => {
-    await SplashScreen.show();
+    await SplashScreen.hide();
     const cookie = await getCookie();
     if (cookie) {
       const cookieKeys = Object.keys(cookie);
@@ -40,6 +40,7 @@
         });
       }
     }
+    await SplashScreen.show();
   });
 
   onMounted(async () => {

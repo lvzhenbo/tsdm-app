@@ -16,7 +16,6 @@
   import { CapacitorCookies } from '@capacitor/core';
   import { getCookie } from '@/utils/cookie';
   import { baseUrl } from '@/utils/config';
-  import { SplashScreen } from '@capacitor/splash-screen';
 
   if (isPlatform('android') && isPlatform('hybrid')) {
     StatusBar.setOverlaysWebView({ overlay: true });
@@ -27,7 +26,6 @@
   const autoSignIn = ref(false);
 
   onBeforeMount(async () => {
-    await SplashScreen.hide();
     const cookie = await getCookie();
     if (cookie) {
       const cookieKeys = Object.keys(cookie);
@@ -40,7 +38,6 @@
         });
       }
     }
-    await SplashScreen.show();
   });
 
   onMounted(async () => {

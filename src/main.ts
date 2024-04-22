@@ -5,6 +5,7 @@ import { pinia } from './stores';
 
 import { IonicVue } from '@ionic/vue';
 import { SafeAreaController } from '@aashu-dubey/capacitor-statusbar-safe-area';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -44,7 +45,8 @@ app.use(IonicVue);
 app.use(router);
 app.use(pinia);
 
-router.isReady().then(() => {
+router.isReady().then(async () => {
+  await SplashScreen.show();
   app.mount('#app');
   SafeAreaController.injectCSSVariables();
 });

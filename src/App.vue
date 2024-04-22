@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-  import { isPlatform } from '@ionic/vue';
-  import { StatusBar } from '@capacitor/status-bar';
   import { useSettingStore } from '@/stores/modules/setting';
   import { getStorage } from './utils';
   import { usePreferredDark } from '@vueuse/core';
@@ -16,10 +14,6 @@
   import { CapacitorCookies } from '@capacitor/core';
   import { getCookie } from '@/utils/cookie';
   import { baseUrl } from '@/utils/config';
-
-  if (isPlatform('android') && isPlatform('hybrid')) {
-    StatusBar.setOverlaysWebView({ overlay: true });
-  }
 
   const userStore = useUserStore();
   const settingStore = useSettingStore();

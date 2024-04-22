@@ -45,9 +45,12 @@ app.use(IonicVue);
 app.use(router);
 app.use(pinia);
 
-router.isReady().then(() => {
-  SplashScreen.hide();
-  SplashScreen.show();
+router.isReady().then(async () => {
+  await SplashScreen.hide();
+  await SplashScreen.show({
+    autoHide: false,
+  });
   app.mount('#app');
   SafeAreaController.injectCSSVariables();
+  await SplashScreen.hide();
 });

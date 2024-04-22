@@ -47,16 +47,16 @@ app.use(router);
 app.use(pinia);
 
 router.isReady().then(async () => {
-  if (isPlatform('android') && isPlatform('hybrid')) {
-    await StatusBar.setOverlaysWebView({ overlay: true });
-  }
   await SplashScreen.hide();
   await SplashScreen.show({
     autoHide: false,
   });
   app.mount('#app');
-  SafeAreaController.injectCSSVariables();
   setTimeout(async () => {
     await SplashScreen.hide();
+    if (isPlatform('android') && isPlatform('hybrid')) {
+      await StatusBar.setOverlaysWebView({ overlay: true });
+    }
+    await SafeAreaController.injectCSSVariables();
   }, 500);
 });

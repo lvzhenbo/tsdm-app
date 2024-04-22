@@ -3,9 +3,10 @@ import App from './App.vue';
 import router from './router';
 import { pinia } from './stores';
 
-import { IonicVue } from '@ionic/vue';
+import { IonicVue, isPlatform } from '@ionic/vue';
 import { SafeAreaController } from '@aashu-dubey/capacitor-statusbar-safe-area';
 import { SplashScreen } from '@capacitor/splash-screen';
+import { StatusBar } from '@capacitor/status-bar';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -47,6 +48,11 @@ app.use(pinia);
 
 router.isReady().then(async () => {
   await SplashScreen.hide();
+  if (isPlatform('android') && isPlatform('hybrid')) {
+    setTimeout(async () => {
+      await StatusBar.setOverlaysWebView({ overlay: true });
+    }, 500);
+  }
   await SplashScreen.show({
     autoHide: false,
   });

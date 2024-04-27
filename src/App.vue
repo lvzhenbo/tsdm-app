@@ -14,6 +14,7 @@
   import { CapacitorCookies } from '@capacitor/core';
   import { getCookie } from '@/utils/cookie';
   import { baseUrl } from '@/utils/config';
+  import { notification } from '@/api/forum';
 
   const userStore = useUserStore();
   const settingStore = useSettingStore();
@@ -45,6 +46,9 @@
     }
     if (userStore.userInfo != undefined && config?.autoSignIn) {
       handleAutoSignIn();
+      // setInterval(() => {
+      //   getNotification();
+      // }, 60000);
     }
   });
 
@@ -57,20 +61,16 @@
         if (val.theme === 'system') {
           settingStore.isDark = isDark.value;
           document.documentElement.classList.toggle('ion-palette-dark', isDark.value);
-          // document.body.classList.toggle('dark', isDark.value);
         } else if (val.theme === 'light') {
           settingStore.isDark = false;
           document.documentElement.classList.toggle('ion-palette-dark', false);
-          // document.body.classList.toggle('dark', false);
         } else if (val.theme === 'dark') {
           settingStore.isDark = true;
           document.documentElement.classList.toggle('ion-palette-dark', true);
-          // document.body.classList.toggle('dark', true);
         }
       } else {
         settingStore.isDark = isDark.value;
         document.documentElement.classList.toggle('ion-palette-dark', isDark.value);
-        // document.body.classList.toggle('dark', isDark.value);
       }
     },
     { deep: true, immediate: true },
@@ -81,12 +81,10 @@
       if (settingStore.config.theme === 'system') {
         settingStore.isDark = val;
         document.documentElement.classList.toggle('ion-palette-dark', val);
-        // document.body.classList.toggle('dark', val);
       }
     } else {
       settingStore.isDark = val;
       document.documentElement.classList.toggle('ion-palette-dark', val);
-      // document.body.classList.toggle('dark', val);
     }
   });
 
@@ -104,6 +102,20 @@
       autoSignIn.value = true;
     } else {
       autoSignIn.value = false;
+    }
+  };
+
+  const getNotification = async () => {
+    try {
+      const res = await notification({
+        last_updated: '1',
+      });
+      if (res.data) {
+        const data = JSON.parse(res.data);
+        console.log(data);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 </script>

@@ -55,37 +55,32 @@
         <IonRow>
           <IonCol size="3">宣传</IonCol>
           <IonCol>
-            {{ userInfo?.extcredits1 ? userInfo.extcredits3.split(':')[1] : '' }}
+            {{ userInfo?.extcredits3 ? userInfo.extcredits3.split(':')[1] : '' }}
           </IonCol>
         </IonRow>
         <IonRow>
           <IonCol size="3">天然</IonCol>
           <IonCol>
-            {{ userInfo?.extcredits1 ? userInfo.extcredits4.split(':')[1] : '' }}
+            {{ userInfo?.extcredits4 ? userInfo.extcredits4.split(':')[1] : '' }}
           </IonCol>
         </IonRow>
         <IonRow>
           <IonCol size="3">腹黑</IonCol>
           <IonCol>
-            {{ userInfo?.extcredits1 ? userInfo.extcredits5.split(':')[1] : '' }}
+            {{ userInfo?.extcredits5 ? userInfo.extcredits5.split(':')[1] : '' }}
           </IonCol>
         </IonRow>
         <IonRow>
           <IonCol size="3">精灵</IonCol>
           <IonCol>
-            {{ userInfo?.extcredits1 ? userInfo.extcredits6.split(':')[1] : '' }}
+            {{ userInfo?.extcredits6 ? userInfo.extcredits6.split(':')[1] : '' }}
           </IonCol>
         </IonRow>
+        <!-- 这里的bug是发现这部分后端数据不是定死的，所以目前只能根据后端数据的改动来修改这部分的写死的代码 -->
         <IonRow>
-          <IonCol size="3">月光</IonCol>
+          <IonCol size="3">龙之印章</IonCol>
           <IonCol>
-            {{ userInfo?.extcredits1 ? userInfo.extcredits7.split(':')[1] : '' }}
-          </IonCol>
-        </IonRow>
-        <IonRow>
-          <IonCol size="3">星辉</IonCol>
-          <IonCol>
-            {{ userInfo?.extcredits1 ? userInfo.extcredits8.split(':')[1] : '' }}
+            {{ userInfo?.extcredits7 ? userInfo.extcredits7.split(':')[1] : '' }}
           </IonCol>
         </IonRow>
       </IonGrid>

@@ -115,6 +115,14 @@ const routes: Array<RouteRecordRaw> = [
       title: '发表帖子',
     },
   },
+  {
+    path: '/notification',
+    name: 'Notification',
+    component: () => import('@/views/Notification/index.vue'),
+    meta: {
+      title: '通知',
+    },
+  },
 ];
 
 const router = createRouter({

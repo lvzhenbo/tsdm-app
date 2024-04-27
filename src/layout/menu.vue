@@ -27,6 +27,10 @@
             <IonIcon slot="start" aria-hidden="true" :icon="home"></IonIcon>
             <IonLabel>首页</IonLabel>
           </IonItem>
+          <IonItem button @click="handleTo('/notification')">
+            <IonIcon slot="start" aria-hidden="true" :icon="notifications"></IonIcon>
+            <IonLabel>通知</IonLabel>
+          </IonItem>
           <IonItem button @click="handleTo('/userInfo', true)">
             <IonIcon slot="start" aria-hidden="true" :icon="person"></IonIcon>
             <IonLabel>我的资料</IonLabel>
@@ -47,7 +51,7 @@
 
 <script setup lang="ts">
   import { menuController, alertController } from '@ionic/vue';
-  import { personCircle, home, person, globe, settings } from 'ionicons/icons';
+  import { personCircle, home, person, globe, settings, notifications } from 'ionicons/icons';
   import { useUserStore } from '@/stores/modules/user';
   import { getStorage, openUrl, setStorage } from '@/utils';
   import { useSettingStore } from '@/stores/modules/setting';

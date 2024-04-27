@@ -36,6 +36,10 @@ export interface RateParams {
   pid: string;
 }
 
+export interface NotificationParams {
+  last_updated: string;
+}
+
 const API = {
   ForumGroup: {
     method: 'GET',
@@ -97,6 +101,13 @@ const API = {
       action: 'rate',
     },
   } as HttpOptions,
+  Notification: {
+    method: 'GET',
+    url: '/plugin.php',
+    params: {
+      id: 'Kahrpba:usernotify',
+    },
+  } as HttpOptions,
 };
 
 export const forumGroup = () => request(API.ForumGroup);
@@ -156,6 +167,15 @@ export const coinRemain = (params: RateParams) =>
     ...API.CoinRemain,
     params: {
       ...API.CoinRemain.params,
+      ...params,
+    },
+  });
+
+export const notification = (params: NotificationParams) =>
+  request({
+    ...API.Notification,
+    params: {
+      ...API.Notification.params,
       ...params,
     },
   });

@@ -27,7 +27,7 @@
             <IonIcon slot="start" aria-hidden="true" :icon="home"></IonIcon>
             <IonLabel>首页</IonLabel>
           </IonItem>
-          <IonItem button @click="handleTo('/notification')">
+          <IonItem button @click="handleTo('/notification', true)">
             <IonIcon slot="start" aria-hidden="true" :icon="notifications"></IonIcon>
             <IonLabel>通知</IonLabel>
           </IonItem>

@@ -108,7 +108,7 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: '/threadAdd/:fid',
+    path: '/threadAdd',
     name: 'ThreadAdd',
     component: () => import('@/views/Thread/add.vue'),
     meta: {

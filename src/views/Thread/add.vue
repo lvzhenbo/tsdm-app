@@ -14,6 +14,20 @@
     <IonContent color="light">
       <IonList :inset="true">
         <IonItem>
+          <IonSelect
+            :value="selectType"
+            label="分类"
+            placeholder="请选择分类"
+            cancel-text="取消"
+            ok-text="确认"
+            @ion-change="selectType = $event.detail.value"
+          >
+            <IonSelectOption v-for="item in threadTypeList" :key="item.typeid" :value="item.typeid">
+              {{ item.name }}
+            </IonSelectOption>
+          </IonSelect>
+        </IonItem>
+        <IonItem>
           <IonInput label="标题" placeholder="请输入标题"></IonInput>
         </IonItem>
         <IonItem>
@@ -38,11 +52,18 @@
   import TextAlign from '@tiptap/extension-text-align';
   import Image from '@tiptap/extension-image';
   import { useSettingStore } from '@/stores/modules/setting';
+  import { newThreadType } from '@/api/forum';
+
+  interface ThreadType {
+    typeid: number;
+    name: string;
+  }
 
   defineOptions({
     name: 'ThreadAdd',
   });
 
+  const route = useRoute();
   const content = ref('');
   const editor = useEditor({
     content: content.value,
@@ -68,11 +89,34 @@
     },
   });
   const settingStore = useSettingStore();
+  const fid = ref('');
+  const threadTypeList = ref<ThreadType[]>([]);
+  const selectType = ref(0);
+
+  onMounted(() => {
+    if (route.query.fid) {
+      fid.value = route.query.fid as string;
+      getNewThreadType();
+    }
+  });
 
   watch(content, (value) => {
     console.log(value);
     console.log(htmlToBBCode(value));
   });
+
+  const getNewThreadType = async () => {
+    try {
+      const res = await newThreadType(fid.value);
+      if (res.data) {
+        const data = JSON.parse(res.data);
+        threadTypeList.value = data.typeids;
+        selectType.value = data.typeids[0].typeid;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 </script>
 
 <style scoped></style>

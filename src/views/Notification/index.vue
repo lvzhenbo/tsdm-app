@@ -12,7 +12,7 @@
       </IonToolbar>
     </IonHeader>
     <IonContent color="light">
-      <var-loading description="加载中" :loading="loading" class="h-full">
+      <VarLoading description="加载中" :loading="loading" class="h-full">
         <IonSegment value="notification" @ion-change="segmentChange">
           <IonSegmentButton value="notification">
             <IonLabel>提醒</IonLabel>
@@ -39,7 +39,7 @@
               <IonLabel>
                 <div>
                   <IonText color="primary"> 私人消息 </IonText>
-                  <ion-note> {{ timeFormat(item.timestamp) }} </ion-note>
+                  <IonNote> {{ timeFormat(item.timestamp) }} </IonNote>
                 </div>
                 <IonNote color="dark">
                   {{
@@ -63,14 +63,14 @@
               <IonLabel>
                 <div>
                   <IonText color="primary"> 公共消息 </IonText>
-                  <ion-note> {{ timeFormat(item.timestamp) }} </ion-note>
+                  <IonNote> {{ timeFormat(item.timestamp) }} </IonNote>
                 </div>
                 <IonNote color="dark"> {{ item.preview }} </IonNote>
               </IonLabel>
             </IonItem>
           </IonList>
         </div>
-      </var-loading>
+      </VarLoading>
     </IonContent>
   </IonPage>
 </template>

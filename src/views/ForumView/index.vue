@@ -365,7 +365,7 @@
   const handleToAdd = () => {
     router.push({
       name: 'ThreadAdd',
-      params: {
+      query: {
         fid: fid,
       },
     });

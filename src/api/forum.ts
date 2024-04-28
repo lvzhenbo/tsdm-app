@@ -108,6 +108,16 @@ const API = {
       id: 'Kahrpba:usernotify',
     },
   } as HttpOptions,
+  NewThreadType: {
+    method: 'GET',
+    url: '/forum.php',
+    params: {
+      mobile: 'yes',
+      tsdmapp: '1',
+      mod: 'post',
+      action: 'newthread',
+    },
+  } as HttpOptions,
 };
 
 export const forumGroup = () => request(API.ForumGroup);
@@ -177,5 +187,14 @@ export const notification = (params: NotificationParams) =>
     params: {
       ...API.Notification.params,
       ...params,
+    },
+  });
+
+export const newThreadType = (params: string) =>
+  request({
+    ...API.NewThreadType,
+    params: {
+      ...API.NewThreadType.params,
+      fid: params,
     },
   });

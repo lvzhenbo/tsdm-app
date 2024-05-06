@@ -83,7 +83,7 @@
   const isOpen = defineModel('isOpen', { type: Boolean, default: false });
 
   const props = defineProps({
-    pid: {
+    ratePid: {
       type: String,
       required: true,
     },
@@ -98,10 +98,10 @@
   const settingStore = useSettingStore();
 
   watch(
-    () => props.pid,
+    () => props.ratePid,
     (val) => {
       console.log(val);
-      getRemainCoin();
+      // getRemainCoin();
     },
   );
 
@@ -109,7 +109,7 @@
     try {
       modalContent.value = false;
       loading.value = true;
-      const res = await coinRemain({ tid: route.params.tid as string, pid: props.pid });
+      const res = await coinRemain({ tid: route.params.tid as string, pid: props.ratePid });
       if (res.data) {
         const data = JSON.parse(res.data);
         if (data.status === 0) {

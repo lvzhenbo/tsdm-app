@@ -98,6 +98,10 @@
       type: Object as PropType<Editor>,
       default: null,
     },
+    mode: {
+      type: String,
+      default: 'add',
+    },
   });
 
   const editorCMD = computed(() => props.editor.chain().focus());

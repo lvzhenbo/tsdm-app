@@ -36,8 +36,14 @@ export interface RateParams {
   pid: string;
 }
 
-export interface NotificationParams {
-  last_updated: string;
+interface ReplyParams {
+  noticetrimstr: string;
+  reppid: string;
+  formhash: string;
+  clienthash: string;
+  message: string;
+  noticeauthor: string;
+  tid: string;
 }
 
 const API = {
@@ -118,6 +124,30 @@ const API = {
       action: 'newthread',
     },
   } as HttpOptions,
+  ReplyInfo: {
+    method: 'GET',
+    url: '/forum.php',
+    params: {
+      mobile: 'yes',
+      tsdmapp: '1',
+      mod: 'post',
+      action: 'reply',
+    },
+  } as HttpOptions,
+  Reply: {
+    method: 'POST',
+    url: '/forum.php',
+    params: {
+      mobile: 'yes',
+      tsdmapp: '1',
+      mod: 'post',
+      action: 'reply',
+      replysubmit: 'yes',
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  } as HttpOptions,
 };
 
 export const forumGroup = () => request(API.ForumGroup);
@@ -181,7 +211,7 @@ export const coinRemain = (params: RateParams) =>
     },
   });
 
-export const notification = (params: NotificationParams) =>
+export const notification = (params: { last_updated: string }) =>
   request({
     ...API.Notification,
     params: {
@@ -197,4 +227,19 @@ export const newThreadType = (params: string) =>
       ...API.NewThreadType.params,
       fid: params,
     },
+  });
+
+export const replyInfo = (params: { tid: string; repquote: string }) =>
+  request({
+    ...API.ReplyInfo,
+    params: {
+      ...API.ReplyInfo.params,
+      ...params,
+    },
+  });
+
+export const reply = (params: ReplyParams) =>
+  request({
+    ...API.Reply,
+    data: params,
   });

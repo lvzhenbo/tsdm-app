@@ -101,10 +101,10 @@
               <IonButton :id="`pid-${item.pid}`" fill="clear" size="small">
                 <IonIcon slot="icon-only" :icon="ellipsisHorizontal" />
               </IonButton>
-              <IonPopover :trigger="`pid-${item.pid}`">
+              <IonPopover :trigger="`pid-${item.pid}`" dismiss-on-select>
                 <IonContent>
                   <IonList lines="none">
-                    <IonItem button :detail="false"> 回复 </IonItem>
+                    <IonItem button :detail="false" @click="openReplyModal(item)"> 回复 </IonItem>
                     <IonItem button :detail="false" @click="openRateModal(item)"> 评分 </IonItem>
                   </IonList>
                 </IonContent>
@@ -174,7 +174,8 @@
         </IonList>
       </IonContent>
     </IonModal>
-    <RateModal v-model:is-open="rateVisible" :pid="pid" @close="closeRateModal" />
+    <RateModal v-model:is-open="rateVisible" :rate-pid @close="closeRateModal" />
+    <ReplyModal v-model:is-open="replyVisible" :reply-pid @close="closeReplyModal" />
   </IonPage>
 </template>
 
@@ -208,6 +209,7 @@
   import { zhCN } from 'date-fns/locale';
   import { baseUrl } from '@/utils/config';
   import RateModal from './components/rateModal.vue';
+  import ReplyModal from './components/replyModal.vue';
 
   interface PostData {
     status: number;
@@ -270,7 +272,9 @@
   const isOpen = ref(false);
   const fabVisible = ref(false);
   const rateVisible = ref(false);
-  const pid = ref('');
+  const ratePid = ref('');
+  const replyVisible = ref(false);
+  const replyPid = ref('');
 
   const loading = ref(false);
   const loadDone = ref(false);
@@ -578,12 +582,24 @@
   };
 
   const openRateModal = (item: Postlist) => {
-    pid.value = item.pid;
+    ratePid.value = item.pid;
     rateVisible.value = true;
   };
 
   const closeRateModal = (rateBool: boolean) => {
     rateVisible.value = rateBool;
+  };
+
+  const openReplyModal = (item: Postlist) => {
+    replyPid.value = item.pid;
+    replyVisible.value = true;
+  };
+
+  const closeReplyModal = (replyBool: boolean) => {
+    replyVisible.value = false;
+    if (replyBool) {
+      refresh();
+    }
   };
 </script>
 

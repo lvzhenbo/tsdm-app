@@ -14,9 +14,6 @@ const config: CapacitorConfig = {
       enabled: true,
       androidCustomSchemeAllowInsecureAccess: true,
     },
-    SafeArea: {
-      enabled: true,
-    },
   },
 };
 

@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@capacitor-community/safe-area':
-        specifier: 6.0.0-alpha.1
-        version: 6.0.0-alpha.1(@capacitor/core@6.0.0)
+        specifier: 6.0.0-alpha.2
+        version: 6.0.0-alpha.2(@capacitor/core@6.0.0)
       '@capacitor/app':
         specifier: ^6.0.0
         version: 6.0.0(@capacitor/core@6.0.0)
@@ -782,8 +782,8 @@ packages:
     resolution: {integrity: sha512-6mQNsaLeXTw0nxYUYu+NSa4Hx4BlF1x1x8/PMFbiR+GBSr+2DkECc69b8hgy2frEodNcvPffeH8YfWd3LI6jhQ==}
     engines: {node: '>=6.9.0'}
 
-  '@capacitor-community/safe-area@6.0.0-alpha.1':
-    resolution: {integrity: sha512-ndZbXCDY7rQK0KMBCAIIITe8T9tdeN7KMfJyat9OnjCdQ6SJ6L1GPLdCDE1CY+sPsP2j91IXq/c8mgjAdI7WSQ==, tarball: https://registry.npmjs.org/@capacitor-community/safe-area/-/safe-area-6.0.0-alpha.1.tgz}
+  '@capacitor-community/safe-area@6.0.0-alpha.2':
+    resolution: {integrity: sha512-2GuTIBMvou2mVGdbfQyNAxz1zyQBM2bLirS2O3uFIcEWG90bTWwWFkGd+tFoCKL2xmSLc+/ChQEM+vG7dUds0A==, tarball: https://registry.npmjs.org/@capacitor-community/safe-area/-/safe-area-6.0.0-alpha.2.tgz}
     peerDependencies:
       '@capacitor/core': ^6.0.0
 
@@ -5804,7 +5804,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.5
       to-fast-properties: 2.0.0
 
-  '@capacitor-community/safe-area@6.0.0-alpha.1(@capacitor/core@6.0.0)':
+  '@capacitor-community/safe-area@6.0.0-alpha.2(@capacitor/core@6.0.0)':
     dependencies:
       '@capacitor/core': 6.0.0
 

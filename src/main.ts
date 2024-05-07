@@ -4,10 +4,9 @@ import router from './router';
 import { pinia } from './stores';
 
 import { IonicVue, isPlatform } from '@ionic/vue';
-// import { SafeAreaController } from '@aashu-dubey/capacitor-statusbar-safe-area';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar } from '@capacitor/status-bar';
-import '@capacitor-community/safe-area';
+import { SafeArea } from '@capacitor-community/safe-area';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -41,6 +40,16 @@ import './theme/variables.css';
 // Tailwind
 import './theme/tailwind.css';
 
+const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+SafeArea.enable({
+  config: {
+    customColorsForSystemBars: true,
+    statusBarColor: isDark ? '#111111' : '#ffffff',
+    statusBarContent: 'light',
+  },
+});
+
 await SplashScreen.hide();
 await SplashScreen.show({
   autoHide: false,
@@ -54,7 +63,6 @@ app.use(pinia);
 
 router.isReady().then(async () => {
   app.mount('#app');
-  // await SafeAreaController.injectCSSVariables();
   setTimeout(async () => {
     await SplashScreen.hide();
     if (isPlatform('android') && isPlatform('hybrid')) {

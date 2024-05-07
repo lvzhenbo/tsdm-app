@@ -2,8 +2,8 @@
 include ':capacitor-android'
 project(':capacitor-android').projectDir = new File('../node_modules/.pnpm/@capacitor+android@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/android/capacitor')
 
-include ':aashu-dubey-capacitor-statusbar-safe-area'
-project(':aashu-dubey-capacitor-statusbar-safe-area').projectDir = new File('../node_modules/.pnpm/@aashu-dubey+capacitor-statusbar-safe-area@2.1.1_@capacitor+core@6.0.0/node_modules/@aashu-dubey/capacitor-statusbar-safe-area/android')
+include ':capacitor-community-safe-area'
+project(':capacitor-community-safe-area').projectDir = new File('../node_modules/.pnpm/@capacitor-community+safe-area@6.0.0-alpha.1_@capacitor+core@6.0.0/node_modules/@capacitor-community/safe-area/android')
 
 include ':capacitor-app'
 project(':capacitor-app').projectDir = new File('../node_modules/.pnpm/@capacitor+app@6.0.0_@capacitor+core@6.0.0/node_modules/@capacitor/app/android')

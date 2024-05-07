@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@aashu-dubey/capacitor-statusbar-safe-area':
-        specifier: ^2.1.1
-        version: 2.1.1(@capacitor/core@6.0.0)
+      '@capacitor-community/safe-area':
+        specifier: 6.0.0-alpha.1
+        version: 6.0.0-alpha.1(@capacitor/core@6.0.0)
       '@capacitor/app':
         specifier: ^6.0.0
         version: 6.0.0(@capacitor/core@6.0.0)
@@ -194,11 +194,6 @@ importers:
         version: 2.0.16(typescript@5.4.5)
 
 packages:
-
-  '@aashu-dubey/capacitor-statusbar-safe-area@2.1.1':
-    resolution: {integrity: sha512-ILzDOx73gsTHVlGEdHEVbzUSZu9/UCOqaul8i/YrNrOOBce/Jt14fwkc1GNzjYkoPbHkCpvH5FBbKrq7hF3tUw==}
-    peerDependencies:
-      '@capacitor/core': ^5.0.3
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -786,6 +781,11 @@ packages:
   '@babel/types@7.24.5':
     resolution: {integrity: sha512-6mQNsaLeXTw0nxYUYu+NSa4Hx4BlF1x1x8/PMFbiR+GBSr+2DkECc69b8hgy2frEodNcvPffeH8YfWd3LI6jhQ==}
     engines: {node: '>=6.9.0'}
+
+  '@capacitor-community/safe-area@6.0.0-alpha.1':
+    resolution: {integrity: sha512-ndZbXCDY7rQK0KMBCAIIITe8T9tdeN7KMfJyat9OnjCdQ6SJ6L1GPLdCDE1CY+sPsP2j91IXq/c8mgjAdI7WSQ==, tarball: https://registry.npmjs.org/@capacitor-community/safe-area/-/safe-area-6.0.0-alpha.1.tgz}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
 
   '@capacitor/android@6.0.0':
     resolution: {integrity: sha512-NwL87VO9F1WY/EgvJZN9pIhjejq688k2fRW6XWNLVe3cgGE6nUb9J34KI68fhx3139cf2LVGPUYs+mwZC8esiQ==}
@@ -5086,10 +5086,6 @@ packages:
 
 snapshots:
 
-  '@aashu-dubey/capacitor-statusbar-safe-area@2.1.1(@capacitor/core@6.0.0)':
-    dependencies:
-      '@capacitor/core': 6.0.0
-
   '@alloc/quick-lru@5.2.0': {}
 
   '@ampproject/remapping@2.3.0':
@@ -5807,6 +5803,10 @@ snapshots:
       '@babel/helper-string-parser': 7.24.1
       '@babel/helper-validator-identifier': 7.24.5
       to-fast-properties: 2.0.0
+
+  '@capacitor-community/safe-area@6.0.0-alpha.1(@capacitor/core@6.0.0)':
+    dependencies:
+      '@capacitor/core': 6.0.0
 
   '@capacitor/android@6.0.0(@capacitor/core@6.0.0)':
     dependencies:

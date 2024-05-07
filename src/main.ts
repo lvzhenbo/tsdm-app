@@ -4,9 +4,10 @@ import router from './router';
 import { pinia } from './stores';
 
 import { IonicVue, isPlatform } from '@ionic/vue';
-import { SafeAreaController } from '@aashu-dubey/capacitor-statusbar-safe-area';
+// import { SafeAreaController } from '@aashu-dubey/capacitor-statusbar-safe-area';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { StatusBar } from '@capacitor/status-bar';
+import '@capacitor-community/safe-area';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/vue/css/core.css';
@@ -40,6 +41,11 @@ import './theme/variables.css';
 // Tailwind
 import './theme/tailwind.css';
 
+await SplashScreen.hide();
+await SplashScreen.show({
+  autoHide: false,
+});
+
 const app = createApp(App);
 
 app.use(IonicVue);
@@ -47,12 +53,8 @@ app.use(router);
 app.use(pinia);
 
 router.isReady().then(async () => {
-  await SplashScreen.hide();
-  await SplashScreen.show({
-    autoHide: false,
-  });
   app.mount('#app');
-  await SafeAreaController.injectCSSVariables();
+  // await SafeAreaController.injectCSSVariables();
   setTimeout(async () => {
     await SplashScreen.hide();
     if (isPlatform('android') && isPlatform('hybrid')) {

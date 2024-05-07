@@ -1,3 +1,4 @@
+/// <reference types="@capacitor-community/safe-area" />
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
@@ -12,6 +13,9 @@ const config: CapacitorConfig = {
     CapacitorCookies: {
       enabled: true,
       androidCustomSchemeAllowInsecureAccess: true,
+    },
+    SafeArea: {
+      enabled: true,
     },
   },
 };

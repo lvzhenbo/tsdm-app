@@ -20,7 +20,7 @@
     "android:sync": "ionic cap sync android"
   },
   "dependencies": {
-    "@aashu-dubey/capacitor-statusbar-safe-area": "^2.1.1",
+    "@capacitor-community/safe-area": "6.0.0-alpha.1",
     "@capacitor/app": "^6.0.0",
     "@capacitor/browser": "^6.0.0",
     "@capacitor/core": "^6.0.0",

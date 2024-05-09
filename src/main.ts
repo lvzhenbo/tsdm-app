@@ -46,7 +46,6 @@ SafeArea.enable({
   config: {
     customColorsForSystemBars: true,
     statusBarColor: isDark ? '#111111' : '#ffffff',
-    statusBarContent: 'light',
   },
 });
 

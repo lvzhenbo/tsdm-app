@@ -84,5 +84,13 @@
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^2.0.16"
   },
-  "description": "一个跨平台的第三方天使动漫论坛客户端"
+  "description": "一个跨平台的第三方天使动漫论坛客户端",
+  "browserslist": [
+    "Chrome >=89",
+    "ChromeAndroid >=89",
+    "Firefox >=75",
+    "Edge >=89",
+    "Safari >=15",
+    "iOS >=15"
+  ]
 }

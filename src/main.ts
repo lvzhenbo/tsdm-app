@@ -46,13 +46,7 @@ SafeArea.enable({
   config: {
     customColorsForSystemBars: true,
     statusBarColor: isDark ? '#111111' : '#ffffff',
-    statusBarContent: 'light',
   },
-});
-
-await SplashScreen.hide();
-await SplashScreen.show({
-  autoHide: false,
 });
 
 const app = createApp(App);
@@ -61,7 +55,11 @@ app.use(IonicVue);
 app.use(router);
 app.use(pinia);
 
-router.isReady().then(async () => {
+SplashScreen.hide().then(async () => {
+  await SplashScreen.show({
+    autoHide: false,
+  });
+  await router.isReady();
   app.mount('#app');
   setTimeout(async () => {
     await SplashScreen.hide();

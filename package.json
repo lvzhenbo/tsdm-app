@@ -19,10 +19,11 @@
     "android:dev": "ionic cap run android -l --external",
     "android:copy": "ionic cap copy android",
     "android:build": "ionic cap build android",
-    "android:sync": "ionic cap sync android"
+    "android:sync": "ionic cap sync android",
+    "pkgManager:pnpm": "corepack use pnpm"
   },
   "dependencies": {
-    "@capacitor-community/safe-area": "6.0.0-alpha.2",
+    "@capacitor-community/safe-area": "6.0.0-alpha.3",
     "@capacitor/app": "^6.0.0",
     "@capacitor/browser": "^6.0.0",
     "@capacitor/core": "^6.0.0",
@@ -41,7 +42,7 @@
     "@tiptap/pm": "^2.4.0",
     "@tiptap/starter-kit": "^2.4.0",
     "@tiptap/vue-3": "^2.4.0",
-    "@varlet/ui": "^3.2.9",
+    "@varlet/ui": "^3.2.10",
     "@vueuse/core": "^10.9.0",
     "date-fns": "^3.6.0",
     "destr": "^2.0.3",
@@ -56,7 +57,7 @@
     "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^6.0.0",
     "@ionic/cli": "^7.2.0",
-    "@rushstack/eslint-patch": "^1.10.2",
+    "@rushstack/eslint-patch": "^1.10.3",
     "@tsconfig/node20": "^20.1.4",
     "@types/node": "^20.12.12",
     "@vitejs/plugin-legacy": "^5.4.0",
@@ -94,5 +95,5 @@
     "Safari >=15",
     "iOS >=15"
   ],
-  "packageManager": "pnpm@9.1.0+sha256.22e36fba7f4880ecf749a5ca128b8435da085ecd49575e7fb9e64d6bf4fad394"
+  "packageManager": "pnpm@9.1.1+sha512.14e915759c11f77eac07faba4d019c193ec8637229e62ec99eefb7cf3c3b75c64447882b7c485142451ee3a6b408059cdfb7b7fa0341b975f12d0f7629c71195"
 }

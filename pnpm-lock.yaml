@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@capacitor-community/safe-area':
-        specifier: 6.0.0-alpha.2
-        version: 6.0.0-alpha.2(@capacitor/core@6.0.0)
+        specifier: 6.0.0-alpha.3
+        version: 6.0.0-alpha.3(@capacitor/core@6.0.0)
       '@capacitor/app':
         specifier: ^6.0.0
         version: 6.0.0(@capacitor/core@6.0.0)
@@ -66,8 +66,8 @@ importers:
         specifier: ^2.4.0
         version: 2.4.0(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0)(vue@3.4.27(typescript@5.4.5))
       '@varlet/ui':
-        specifier: ^3.2.9
-        version: 3.2.9(vue@3.4.27(typescript@5.4.5))
+        specifier: ^3.2.10
+        version: 3.2.10(vue@3.4.27(typescript@5.4.5))
       '@vueuse/core':
         specifier: ^10.9.0
         version: 10.9.0(vue@3.4.27(typescript@5.4.5))
@@ -106,8 +106,8 @@ importers:
         specifier: ^7.2.0
         version: 7.2.0
       '@rushstack/eslint-patch':
-        specifier: ^1.10.2
-        version: 1.10.2
+        specifier: ^1.10.3
+        version: 1.10.3
       '@tsconfig/node20':
         specifier: ^20.1.4
         version: 20.1.4
@@ -782,8 +782,8 @@ packages:
     resolution: {integrity: sha512-6mQNsaLeXTw0nxYUYu+NSa4Hx4BlF1x1x8/PMFbiR+GBSr+2DkECc69b8hgy2frEodNcvPffeH8YfWd3LI6jhQ==}
     engines: {node: '>=6.9.0'}
 
-  '@capacitor-community/safe-area@6.0.0-alpha.2':
-    resolution: {integrity: sha512-2GuTIBMvou2mVGdbfQyNAxz1zyQBM2bLirS2O3uFIcEWG90bTWwWFkGd+tFoCKL2xmSLc+/ChQEM+vG7dUds0A==}
+  '@capacitor-community/safe-area@6.0.0-alpha.3':
+    resolution: {integrity: sha512-FgIo2ZIZp7gaIfl+C+qh4y01z3fBLFqZGZYkISti+IePe9DgIrhDl7SW9uLnyUntIYfZdFgyqPxEYQtfiVLraA==}
     peerDependencies:
       '@capacitor/core': ^6.0.0
 
@@ -1310,8 +1310,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rushstack/eslint-patch@1.10.2':
-    resolution: {integrity: sha512-hw437iINopmQuxWPSUEvqE56NCPsiU8N4AYtfHmJFckclktzK9YQJieD3XkDCDH4OjL+C7zgPUh73R/nrcHrqw==}
+  '@rushstack/eslint-patch@1.10.3':
+    resolution: {integrity: sha512-qC/xYId4NMebE6w/V33Fh9gWxLgURiNYgVNObbJl2LZv0GUUItCcCqC5axQSwRaAgaxl2mELq1rMzlswaQ0Zxg==}
 
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
@@ -1578,19 +1578,19 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@varlet/icons@3.2.9':
-    resolution: {integrity: sha512-vySUjBmt8kCkoyY8HF+uZp8aKGP2J5pRYYNvO3DSVF1S8f+8w+yffXbiw5NeLH1x+m2VmI8S6XzoybGbp+4p9w==}
+  '@varlet/icons@3.2.10':
+    resolution: {integrity: sha512-xpYs+M5yRcFZkM8F54mYaVH4R+z9wnVXTuFi/1uyGsJ6eaUphDdgofvxV8tCIh1IGfQ617di3MQ5gTrrHXP0dQ==}
 
-  '@varlet/shared@3.2.9':
-    resolution: {integrity: sha512-m7LLDca7HMGkFI9NLRrYn8DBQxU7hFp7FzXmNuSbqaUeG9ZuqHitXzo3wPEqQ2wMEJkwFTRs4wniu2o+ofLTtw==}
+  '@varlet/shared@3.2.10':
+    resolution: {integrity: sha512-RBYOTRSNUtde34X+rk35Ujr7XDpnP74ci+brg4DIvLgHdgu47vPHgaHfFmg7WEIBRnB/Ppc44b5lVNNjKX8cwA==}
 
-  '@varlet/ui@3.2.9':
-    resolution: {integrity: sha512-jTFLy+LGOEACeURo2ovHG/fPSgFQNoSWnhRRpSt4hH4Naqcioa3nxNn8E7DDLk8WZfXxzYpZvt6ux93pW8lItg==}
+  '@varlet/ui@3.2.10':
+    resolution: {integrity: sha512-tTb2nrFZtH/sNIYT0jR2J2LWZ9M+RuV8p+uT4jm+XlrvkU1bpuZIsOnsKepJ0mv98hnrSB3ouN5FmcYu8I1TJg==}
     peerDependencies:
       vue: ^3.2.0
 
-  '@varlet/use@3.2.9':
-    resolution: {integrity: sha512-3SBYqrFfMMYGG9AsF3BwS5O5S0rupFG/+aRPafjqM6Ti237ADro4YX+eznRt7CQyHyqYZiVjHLupf+tVTG4nRg==}
+  '@varlet/use@3.2.10':
+    resolution: {integrity: sha512-vQejt+kMSgGfsAJQDRa0zZtwj1F0YWNVyQR2cx+8qiqZM5V9xF82F6QWtlT3rGmMNvyqgE4fGebWdVaQm1M6vw==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -2405,8 +2405,8 @@ packages:
     engines: {node: '>=14'}
     hasBin: true
 
-  electron-to-chromium@1.4.772:
-    resolution: {integrity: sha512-jFfEbxR/abTTJA3ci+2ok1NTuOBBtB4jH+UT6PUmRN+DY3WSD4FFRsgoVQ+QNIJ0T7wrXwzsWCI2WKC46b++2A==}
+  electron-to-chromium@1.4.774:
+    resolution: {integrity: sha512-132O1XCd7zcTkzS3FgkAzKmnBuNJjK8WjcTtNuoylj7MYbqw5eXehjQ5OK91g0zm7OTKIPeaAG4CPoRfD9M1Mg==}
 
   elementtree@0.1.7:
     resolution: {integrity: sha512-wkgGT6kugeQk/P6VZ/f4T+4HB41BVgNBq5CDIZVbQ02nvTVqAiVTbskxxu3eA/X96lMlfYOwnLQpN2v5E1zDEg==}
@@ -5791,7 +5791,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.5
       to-fast-properties: 2.0.0
 
-  '@capacitor-community/safe-area@6.0.0-alpha.2(@capacitor/core@6.0.0)':
+  '@capacitor-community/safe-area@6.0.0-alpha.3(@capacitor/core@6.0.0)':
     dependencies:
       '@capacitor/core': 6.0.0
 
@@ -6420,7 +6420,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.17.2':
     optional: true
 
-  '@rushstack/eslint-patch@1.10.2': {}
+  '@rushstack/eslint-patch@1.10.3': {}
 
   '@sinclair/typebox@0.27.8': {}
 
@@ -6745,23 +6745,23 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@varlet/icons@3.2.9': {}
+  '@varlet/icons@3.2.10': {}
 
-  '@varlet/shared@3.2.9': {}
+  '@varlet/shared@3.2.10': {}
 
-  '@varlet/ui@3.2.9(vue@3.4.27(typescript@5.4.5))':
+  '@varlet/ui@3.2.10(vue@3.4.27(typescript@5.4.5))':
     dependencies:
       '@popperjs/core': 2.11.8
-      '@varlet/icons': 3.2.9
-      '@varlet/shared': 3.2.9
-      '@varlet/use': 3.2.9(vue@3.4.27(typescript@5.4.5))
+      '@varlet/icons': 3.2.10
+      '@varlet/shared': 3.2.10
+      '@varlet/use': 3.2.10(vue@3.4.27(typescript@5.4.5))
       dayjs: 1.11.11
       decimal.js: 10.4.3
       vue: 3.4.27(typescript@5.4.5)
 
-  '@varlet/use@3.2.9(vue@3.4.27(typescript@5.4.5))':
+  '@varlet/use@3.2.10(vue@3.4.27(typescript@5.4.5))':
     dependencies:
-      '@varlet/shared': 3.2.9
+      '@varlet/shared': 3.2.10
       vue: 3.4.27(typescript@5.4.5)
 
   '@vitejs/plugin-legacy@5.4.0(terser@5.30.3)(vite@5.2.11(@types/node@20.12.12)(terser@5.30.3))':
@@ -7175,7 +7175,7 @@ snapshots:
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001620
-      electron-to-chromium: 1.4.772
+      electron-to-chromium: 1.4.774
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
 
@@ -7677,7 +7677,7 @@ snapshots:
       minimatch: 9.0.1
       semver: 7.6.2
 
-  electron-to-chromium@1.4.772: {}
+  electron-to-chromium@1.4.774: {}
 
   elementtree@0.1.7:
     dependencies:

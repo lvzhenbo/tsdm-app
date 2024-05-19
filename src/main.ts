@@ -42,12 +42,14 @@ import './theme/tailwind.css';
 
 const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-SafeArea.enable({
-  config: {
-    customColorsForSystemBars: true,
-    statusBarColor: isDark ? '#111111' : '#ffffff',
-  },
-});
+if (isPlatform('android') && isPlatform('hybrid')) {
+  SafeArea.enable({
+    config: {
+      customColorsForSystemBars: true,
+      statusBarColor: isDark ? '#111111' : '#ffffff',
+    },
+  });
+}
 
 SplashScreen.hide().then(async () => {
   await SplashScreen.show({

@@ -23,7 +23,7 @@
       <IonList :inset="true">
         <IonItem>
           <IonLabel>
-            <Editor :editor="editor" />
+            <Editor :editor="editor" class="max-h-[calc(100dvh-10rem)]" />
           </IonLabel>
         </IonItem>
       </IonList>

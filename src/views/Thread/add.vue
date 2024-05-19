@@ -110,6 +110,7 @@
 
 <style scoped>
   .content {
-    @apply mb-[v-bind(keyboardHeight)] transition-all duration-150;
+    /* @apply mb-[v-bind(keyboardHeight)] transition-all duration-150; */
+    @apply mb-8;
   }
 </style>

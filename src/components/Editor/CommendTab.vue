@@ -200,22 +200,22 @@
     }
   };
 
-  onMounted(() => {
-    // 因 Web 端跨域问题导致不可用，暂时不考虑 web 端
-    if (isPlatform('hybrid')) {
-      Keyboard.addListener('keyboardWillShow', (info) => {
-        keyboardHeight.value = info.keyboardHeight + 'px';
-      });
-      Keyboard.addListener('keyboardWillHide', () => {
-        keyboardHeight.value = '0px';
-      });
-    }
-  });
-  onUnmounted(() => {
-    if (isPlatform('hybrid')) {
-      Keyboard.removeAllListeners();
-    }
-  });
+  // onMounted(() => {
+  //   // 因 Web 端跨域问题导致不可用，暂时不考虑 web 端
+  //   if (isPlatform('hybrid')) {
+  //     Keyboard.addListener('keyboardWillShow', (info) => {
+  //       keyboardHeight.value = info.keyboardHeight + 'px';
+  //     });
+  //     Keyboard.addListener('keyboardWillHide', () => {
+  //       keyboardHeight.value = '0px';
+  //     });
+  //   }
+  // });
+  // onUnmounted(() => {
+  //   if (isPlatform('hybrid')) {
+  //     Keyboard.removeAllListeners();
+  //   }
+  // });
 </script>
 
 <style scoped>

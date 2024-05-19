@@ -12,7 +12,7 @@
       </IonToolbar>
     </IonHeader>
     <IonContent color="light">
-      <IonList :inset="true" class="content">
+      <IonList :inset="true">
         <IonItem>
           <IonSelect
             :value="selectType"
@@ -33,7 +33,7 @@
         <IonItem>
           <IonLabel>
             正文
-            <Editor :editor="editor" />
+            <Editor :editor="editor" class="max-h-[75dvh]" />
           </IonLabel>
         </IonItem>
       </IonList>
@@ -47,8 +47,6 @@
   import { useSettingStore } from '@/stores/modules/setting';
   import { newThreadType } from '@/api/forum';
   import { useMyEditor } from '@/composables/useMyEditor';
-  import { Keyboard } from '@capacitor/keyboard';
-  import { isPlatform } from '@ionic/vue';
 
   interface ThreadType {
     typeid: number;
@@ -65,27 +63,11 @@
   const fid = ref('');
   const threadTypeList = ref<ThreadType[]>([]);
   const selectType = ref(0);
-  const keyboardHeight = ref('16px');
 
   onMounted(() => {
-    // 因 Web 端跨域问题导致不可用，暂时不考虑 web 端
-    if (isPlatform('hybrid')) {
-      Keyboard.addListener('keyboardWillShow', (info) => {
-        keyboardHeight.value = `${info.keyboardHeight + 16}px`;
-      });
-      Keyboard.addListener('keyboardWillHide', () => {
-        keyboardHeight.value = '16px';
-      });
-    }
     if (route.query.fid) {
       fid.value = route.query.fid as string;
       getNewThreadType();
-    }
-  });
-
-  onUnmounted(() => {
-    if (isPlatform('hybrid')) {
-      Keyboard.removeAllListeners();
     }
   });
 
@@ -108,9 +90,4 @@
   };
 </script>
 
-<style scoped>
-  .content {
-    /* @apply mb-[v-bind(keyboardHeight)] transition-all duration-150; */
-    @apply mb-8;
-  }
-</style>
+<style scoped></style>

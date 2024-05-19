@@ -23,9 +23,6 @@ importers:
       '@capacitor/haptics':
         specifier: ^6.0.0
         version: 6.0.0(@capacitor/core@6.0.0)
-      '@capacitor/keyboard':
-        specifier: ^6.0.0
-        version: 6.0.0(@capacitor/core@6.0.0)
       '@capacitor/preferences':
         specifier: ^6.0.0
         version: 6.0.0(@capacitor/core@6.0.0)
@@ -822,11 +819,6 @@ packages:
 
   '@capacitor/haptics@6.0.0':
     resolution: {integrity: sha512-z2TmB+pTbd98Il2I1xpZGClCFwORxxP2m9f1a0rh70c2ubj2atVyZctgxrx1fuoExZTNGSxHaylWfrmjmtelVg==}
-    peerDependencies:
-      '@capacitor/core': ^6.0.0
-
-  '@capacitor/keyboard@6.0.0':
-    resolution: {integrity: sha512-pPX/PQWWjw5ce47kHEYv6IWlHzuhAxgXihqEAAAGLdwK3u3srgGWCljXrYS9juVBPi/lA1uK7UaUzYI0XrgxVQ==}
     peerDependencies:
       '@capacitor/core': ^6.0.0
 
@@ -5879,10 +5871,6 @@ snapshots:
       tslib: 2.6.2
 
   '@capacitor/haptics@6.0.0(@capacitor/core@6.0.0)':
-    dependencies:
-      '@capacitor/core': 6.0.0
-
-  '@capacitor/keyboard@6.0.0(@capacitor/core@6.0.0)':
     dependencies:
       '@capacitor/core': 6.0.0
 

@@ -7,7 +7,6 @@
     <IonModal ref="modal" class="colorPanel" trigger="colorPanel">
       <div class="mb-2.5">
         <h1 class="m-5">选择颜色</h1>
-
         <div class="flex ml-2 flex-wrap">
           <div
             v-for="color in colors"
@@ -25,8 +24,8 @@
           </div>
         </div>
         <div class="text-right mt-6 mr-5 mb-3">
-          <IonButton fill="clear" @click="dismiss">取消</IonButton>
-          <IonButton fill="clear" @click="dismiss">确定</IonButton>
+          <IonButton fill="clear" @click="dismiss"> 取消 </IonButton>
+          <IonButton fill="clear" @click="dismiss"> 确定 </IonButton>
         </div>
       </div>
     </IonModal>
@@ -76,7 +75,7 @@
       header="请输入图片地址"
       :buttons="imageButtons"
       :inputs="imageInputs"
-    ></IonAlert>
+    />
   </div>
 </template>
 
@@ -90,8 +89,7 @@
   import AlignCenterOutlined from '@/assets/svg/AlignCenterOutlined.svg';
   import AlignRightOutlined from '@/assets/svg/AlignRightOutlined.svg';
   import { colorPalette, image, checkmarkOutline } from 'ionicons/icons';
-  import { Keyboard } from '@capacitor/keyboard';
-  import { isPlatform, alertController, type AlertButton, type AlertInput } from '@ionic/vue';
+  import { alertController, type AlertButton, type AlertInput } from '@ionic/vue';
 
   const props = defineProps({
     editor: {
@@ -105,7 +103,6 @@
   });
 
   const editorCMD = computed(() => props.editor.chain().focus());
-  const keyboardHeight = ref('0px');
   const modal = ref();
   const dismiss = () => {
     modal.value.$el.dismiss();
@@ -199,23 +196,6 @@
       editorCMD.value.setColor(color).run();
     }
   };
-
-  // onMounted(() => {
-  //   // 因 Web 端跨域问题导致不可用，暂时不考虑 web 端
-  //   if (isPlatform('hybrid')) {
-  //     Keyboard.addListener('keyboardWillShow', (info) => {
-  //       keyboardHeight.value = info.keyboardHeight + 'px';
-  //     });
-  //     Keyboard.addListener('keyboardWillHide', () => {
-  //       keyboardHeight.value = '0px';
-  //     });
-  //   }
-  // });
-  // onUnmounted(() => {
-  //   if (isPlatform('hybrid')) {
-  //     Keyboard.removeAllListeners();
-  //   }
-  // });
 </script>
 
 <style scoped>
@@ -223,7 +203,7 @@
     @apply relative rounded-full overflow-hidden text-xl w-8 h-8 flex justify-center items-center;
   }
   .cmd {
-    @apply flex overflow-x-auto w-full bottom-[v-bind(keyboardHeight)] transition-all duration-150 p-2 bg-[--ion-background-color] text-[--ion-text-color] border-t border-slate-900/10;
+    @apply flex overflow-x-auto w-full p-2 bg-[--ion-background-color] text-[--ion-text-color] border-t border-slate-900/10;
   }
   .colorPanel {
     --width: 70%;

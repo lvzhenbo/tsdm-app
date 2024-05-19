@@ -12,7 +12,7 @@
       </IonToolbar>
     </IonHeader>
     <IonContent color="light">
-      <IonList :inset="true">
+      <IonList :inset="true" class="mb-8">
         <IonItem>
           <IonSelect
             :value="selectType"

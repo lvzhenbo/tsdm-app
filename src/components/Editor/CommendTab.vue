@@ -203,7 +203,7 @@
     @apply relative rounded-full overflow-hidden text-xl w-8 h-8 flex justify-center items-center;
   }
   .cmd {
-    @apply flex overflow-x-auto w-full p-2 bg-[--ion-background-color] text-[--ion-text-color] border-t border-slate-900/10;
+    @apply flex overflow-x-auto w-full bottom-0 p-2 bg-[--ion-background-color] text-[--ion-text-color] border-t border-slate-900/10;
   }
   .colorPanel {
     --width: 70%;

@@ -33,7 +33,7 @@
         <IonItem>
           <IonLabel>
             正文
-            <Editor :editor="editor" class="max-h-[75dvh]" />
+            <Editor :editor="editor" class="max-h-[calc(100dvh-19rem)]" />
           </IonLabel>
         </IonItem>
       </IonList>

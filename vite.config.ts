@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import legacy from '@vitejs/plugin-legacy';
 import vue from '@vitejs/plugin-vue';
 import path from 'path';
@@ -46,9 +45,5 @@ export default defineConfig({
   },
   build: {
     chunkSizeWarningLimit: 1024,
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
   },
 });
